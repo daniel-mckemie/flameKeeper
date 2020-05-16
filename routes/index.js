@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-// Home page route.
-router.get('/', function (req, res, next) {
-  res.render('index', {title: 'Hey', message: 'Shitass'});
-})
+const audio_controller = require('../controllers/audioController');
 
-// About page route.
-router.get('/about', function (req, res) {
-  res.send('About this wiki');
-})
+// GET Home page route.
+router.get('/', audio_controller.index);
+
+// GET List page route
+router.get('/list', audio_controller.list_function);
+
+// Upload/POST page route
+router.get('/upload', audio_controller.upload_function);
+
 
 module.exports = router;
