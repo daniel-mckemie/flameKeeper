@@ -12,5 +12,8 @@ router.get('/list', audio_controller.list_function);
 // Upload/POST page route
 router.get('/upload', audio_controller.upload_function);
 
+// Test audio
+router.get('/download', audio_controller.download_function);
+
 
 module.exports = router;

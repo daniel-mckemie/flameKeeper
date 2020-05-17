@@ -1,4 +1,4 @@
-let uploadFiles = function () {
+let uploadFiles = function (name, upload) {
 
   // Load the AWS SDK for Node.js
   const AWS = require('aws-sdk');
@@ -15,8 +15,8 @@ let uploadFiles = function () {
   // call S3 to retrieve upload file to specified bucket
   let uploadParams = {
     Bucket: process.argv[2],
-    Key: '',
-    Body: ''
+    Key: name,
+    Body: upload
   };
   let file = process.argv[3];
 
@@ -41,3 +41,4 @@ let uploadFiles = function () {
   });
 }
 
+exports.upload_files = uploadFiles;
