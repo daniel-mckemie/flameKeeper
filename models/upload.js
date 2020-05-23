@@ -1,4 +1,4 @@
-let uploadFiles = function (name, upload) {
+let uploadFiles = function (name, fileToUpload) {  
 
   // Load the AWS SDK for Node.js
   const AWS = require('aws-sdk');
@@ -12,23 +12,28 @@ let uploadFiles = function (name, upload) {
     apiVersion: '2006-03-01'
   });
 
+  let bucketName = name.name;
+  let uploadName = name.fileToUpload;
+
   // call S3 to retrieve upload file to specified bucket
   let uploadParams = {
-    Bucket: process.argv[2],
-    Key: name,
-    Body: upload
+    Bucket: bucketName,
+    Key: 'success.jpeg',
+    Body: uploadName
   };
-  let file = process.argv[3];
+  let file = uploadParams.Body;
+  
 
   // Configure the file stream and obtain the upload parameters
+
   const fs = require('fs');
   let fileStream = fs.createReadStream(file);
   fileStream.on('error', function (err) {
-    console.log('File Error', err);
+    // console.log('File Error', err);
   });
   uploadParams.Body = fileStream;
   const path = require('path');
-  uploadParams.Key = path.basename(__dirname, '/file');
+  uploadParams.Key = path.basename(file);
 
   // call S3 to retrieve upload file to specified bucket
   s3.upload(uploadParams, function (err, data) {
