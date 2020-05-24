@@ -10,12 +10,14 @@ router.get('/dashboard', audio_controller.dashboard_function);
 
 // Upload/POST page route
 router.get('/upload', (req, res) => {
-  res.render('upload')
+  res.render('dashboard')
 })
-router.post('/upload', (req, res, next) => {audio_controller.upload_function, res.render('dashboard')});
+router.post('/upload', audio_controller.upload_function, (req, res, next) => {
+    res.render('dashboard')
+});
 
 // MAYBE USE?!
-router.get('/download', audio_controller.download_function);
+// router.get('/download', audio_controller.download_function);
 
 // GET Home page route.
 router.get('/', audio_controller.list_function);

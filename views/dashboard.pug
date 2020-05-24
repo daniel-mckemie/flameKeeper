@@ -9,14 +9,27 @@ block content
   if error
     p Error getting dynamic content.
   else
-    p The library has the following record counts:
+    p UPLOAD STUFF:
+    form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data")
+      input(type="file" name="theUpload")
+      input(type="submit" form="uploadForm" value="UPLOAD")
+  br
+  br
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The library has the following files:
 
     - let files = fileInfo.Contents
+    
+
     div
-    each file in files.length ? files : ['NO!!!']
-      p= file.name        
+    each file in files.length ? files : ['NO!!!']      
+      p= file.Key
+      p= file.LastModified        
       form(method="GET" action="/download" id="dashboardForm" encType="multipart/form-data")                  
-        input(type="checkbox" name="theDownload" multiple)
-        input(type="submit" form="dashboardForm" value="Submit")
+        input(type="checkbox" name="theDownload" checked="true" multiple)
+    input(type="submit" form="dashboardForm" value="Submit")
           
       

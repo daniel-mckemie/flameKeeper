@@ -55,7 +55,7 @@ exports.render_upload = function (req, res) {
 }
 
 // UPLOAD page
-exports.upload_function = function (req, res, next) {
+exports.upload_function = function (req, res) {
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // console.log('Field', name, field)
@@ -82,21 +82,21 @@ exports.upload_function = function (req, res, next) {
   })}
   
   
-exports.download_function = function(req, res) {
-  console.log(req.headers);
-  async.parallel({
-      download_files: function (callback) {
-        res.render('download', {
-          title: 'SAMPLE',
-          data: Download.download_files({
-            name: 'fk-audio',
-            fileName: 'noise2.mp3',
-            callback
-          })
-        });
-      }
-    },
-    function (err, results) {
-      res.send('ERRONEOUS!');
-    });
-};
+// exports.download_function = function(req, res) {
+//   console.log(req.headers);
+//   async.parallel({
+//       download_files: function (callback) {
+//         res.render('download', {
+//           title: 'SAMPLE',
+//           data: Download.download_files({
+//             name: 'fk-audio',
+//             fileName: 'noise2.mp3',
+//             callback
+//           })
+//         });
+//       }
+//     },
+//     function (err, results) {
+//       res.send('ERRONEOUS!');
+//     });
+// };
