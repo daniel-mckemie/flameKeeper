@@ -30,7 +30,7 @@ exports.dashboard_function = function (req, res) {
   async.parallel({
       list_files: function (callback) {
         res.render('dashboard', {
-          title: 'SAMPLE',
+          title: 'dash',
           data: List.list_files({
             name: 'fk-audio',
             callback
@@ -55,7 +55,7 @@ exports.render_upload = function (req, res) {
 }
 
 // UPLOAD page
-exports.upload_function = function (req, res) {
+exports.upload_function = function (req, res, next) {
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // console.log('Field', name, field)
@@ -63,7 +63,7 @@ exports.upload_function = function (req, res) {
     .on('file', (name, file) => {
       // console.log(file.name)
       res.status(200).send({
-        title: 'SAMPLE',
+        title: 'upper',
         data: Upload.upload_files({
               name: 'fk-audio',
               fileToUpload: file.path

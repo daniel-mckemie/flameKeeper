@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const formidable = require('formidable');
-
 const audio_controller = require('../controllers/audioController');
 const view_controller = require('../controllers/viewController');
 
-// GET Home page route.
-router.get('/', audio_controller.list_function);
 
 // GET Dashboard page route
 router.get('/dashboard', audio_controller.dashboard_function);
@@ -15,10 +12,13 @@ router.get('/dashboard', audio_controller.dashboard_function);
 router.get('/upload', (req, res) => {
   res.render('upload')
 })
-router.post('/upload', audio_controller.upload_function);
+router.post('/upload', (req, res, next) => {audio_controller.upload_function, res.render('dashboard')});
 
-// Test audio
+// MAYBE USE?!
 router.get('/download', audio_controller.download_function);
+
+// GET Home page route.
+router.get('/', audio_controller.list_function);
 
 
 module.exports = router;
