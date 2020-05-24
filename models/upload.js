@@ -1,3 +1,4 @@
+
 let uploadFiles = function (name, fileToUpload) {  
 
   // Load the AWS SDK for Node.js

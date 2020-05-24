@@ -7,13 +7,29 @@ const formidable = require('formidable');
 
 const async = require('async');
 
-// exports.index = function (req,res) {res.send('dude')};
-
-
+// Home page list AUDIO files
 exports.list_function = function (req, res) {
   async.parallel({
       list_files: function (callback) {
         res.render('list', {
+          title: 'SAMPLE',
+          data: List.list_files({
+            name: 'fk-audio',
+            callback
+          })
+        });
+      }
+    },
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    });
+}
+
+// DISPLAY selected files to the home page upon submit
+exports.dashboard_function = function (req, res) {
+  async.parallel({
+      list_files: function (callback) {
+        res.render('dashboard', {
           title: 'SAMPLE',
           data: List.list_files({
             name: 'fk-audio',
@@ -38,62 +54,49 @@ exports.render_upload = function (req, res) {
     });
 }
 
+// UPLOAD page
 exports.upload_function = function (req, res) {
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
-      console.log('Field', name, field)
+      // console.log('Field', name, field)
     })
     .on('file', (name, file) => {
-      console.log(file.name)
+      // console.log(file.name)
       res.status(200).send({
         title: 'SAMPLE',
         data: Upload.upload_files({
               name: 'fk-audio',
               fileToUpload: file.path
-      })
-    })
+      })         
+    })    
     .on('aborted', () => {
       console.error('Request aborted by the user');
     })
     .on('error', (err) => {
       console.error('Error', err)
       throw err
-    })
+    })    
     .on('end', () => {
       res.end()
     })
   })}
   
-  // let form = new formidable.IncomingForm();
-  // form.parse(req);
-  // form.on('fileBegin', function (name, file) {
-  //   let fullFile = `${file.path}/${file.name}`;
-  //   console.log(fullFile);
-    // res.send('upload', {
-    //   title: 'SAMPLE',
-    //   data: Upload.upload_files({
-    //     name: 'fk-audio',
-    //     fileToUpload: fullFile,        
-  //     })
-  //   })
-  // })
-
-// }
-
-// exports.download_function = function (req, res) {
-//   async.parallel({
-//       download_files: function (callback) {
-//         res.render('download', {
-//           title: 'SAMPLE',
-//           data: Download.download_files({
-//             name: 'fk-audio',
-//             fileName: 'noise.mp3',
-//             callback
-//           })
-//         });
-//       }
-//     },
-//     function (err, results) {
-//       res.send('ERRONEOUS!');
-//     });
-// };
+  
+exports.download_function = function(req, res) {
+  console.log(req.headers);
+  async.parallel({
+      download_files: function (callback) {
+        res.render('download', {
+          title: 'SAMPLE',
+          data: Download.download_files({
+            name: 'fk-audio',
+            fileName: 'noise2.mp3',
+            callback
+          })
+        });
+      }
+    },
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    });
+};

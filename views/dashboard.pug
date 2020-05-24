@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to Flame Keeper
+
+  h1 DASHBOARD
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The library has the following record counts:
+
+    - let files = fileInfo.Contents
+    div
+    each file in files.length ? files : ['NO!!!']
+      p= file.name        
+      form(method="GET" action="/download" id="dashboardForm" encType="multipart/form-data")                  
+        input(type="checkbox" name="theDownload" multiple)
+        input(type="submit" form="dashboardForm" value="Submit")
+          
+      
