@@ -28,8 +28,8 @@ let listFiles = function (name) {
   s3.listObjects(bucketParams, function (err, data) {
     if (err) {
       console.log("Error", err);
-    } else {            
-      fileInfo = this.data;            
+    } else {                  
+      fileInfo = this.data;                        
       // console.log(bucketParams);
       
       

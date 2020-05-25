@@ -10,10 +10,18 @@ block content
     p Error getting dynamic content.
   else
     p The library has the following record counts:
-    - console.log(files.lastModified);
 
-      
-    audio(preload="auto", autobuffer, controls)  
-      source(src="downloadedFile.Body" type="audio/mp3")
+    - let returns = fileInfo.Contents.reverse();
+    - let files = returns.slice(0,7);
+    
+    
+
+    div
+    each file in files ? files : ['NO!!!']
+      - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
+      p= file.Key
+      p= file.LastModified
+        audio(controls="", type="audio/mpeg" src=audioSrc)
+          
 
       

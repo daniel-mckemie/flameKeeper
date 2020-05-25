@@ -1,4 +1,3 @@
-
 const List = require('../models/list');
 const Upload = require('../models/upload');
 
@@ -11,10 +10,10 @@ const async = require('async');
 exports.list_function = function (req, res) {
   async.parallel({
       list_files: function (callback) {
-        res.render('list', {
+        res.render('index', {
           title: 'SAMPLE',
           data: List.list_files({
-            name: 'fk-audio',            
+            name: 'fk-audio',
             callback
           })
         });
@@ -43,60 +42,44 @@ exports.dashboard_function = function (req, res) {
     });
 }
 
-exports.render_upload = function (req, res) {
-  async.parallel({
-      upload_files: function (callback) {
-        res.render('upload');
-      }
-    },
-    function (err, results) {
-      res.send('ERRONEOUS!');
-    });
-}
-
-// UPLOAD page
-exports.upload_function = function (req, res) {
-  new formidable.IncomingForm().parse(req)
-    .on('field', (name, field) => {
-      // console.log('Field', name, field)
-    })
-    .on('file', (name, file) => {         
-      res.status(200).send({
-        title: 'upper',
-        data: Upload.upload_files({
-              name: 'fk-audio',
-              fileName: file.name,                      
-              fileToUpload: file.path
-      })         
-    })    
-    .on('aborted', () => {
-      console.error('Request aborted by the user');
-    })
-    .on('error', (err) => {
-      console.error('Error', err)
-      throw err
-    })    
-    .on('end', () => {
-      res.end()
-    })
-  })}
-  
-  
-// exports.download_function = function(req, res) {
-//   console.log(req.headers);
+// exports.render_upload = function (req, res) {
 //   async.parallel({
-//       download_files: function (callback) {
-//         res.render('download', {
-//           title: 'SAMPLE',
-//           data: Download.download_files({
-//             name: 'fk-audio',
-//             fileName: 'noise2.mp3',
-//             callback
-//           })
-//         });
+//       upload_files: function (callback) {
+//         res.render('upload');
 //       }
 //     },
 //     function (err, results) {
 //       res.send('ERRONEOUS!');
 //     });
-// };
+// }
+
+// UPLOAD page
+exports.upload_function = function (req, res, next) {
+  new formidable.IncomingForm().parse(req)
+    .on('field', (name, field) => {
+      // res.status(307).send(field);      
+    })
+    .on('file', (name, file) => {
+      res.status(200).send({
+          title: 'SUCCESS!',
+          data: Upload.upload_files({
+            name: 'fk-audio',
+            fileName: file.name,
+            fileToUpload: file.path
+          })
+        })
+        .on('aborted', () => {
+          console.error('Request aborted by the user');
+        })
+        .on('error', (err) => {
+          console.error('Error', err)
+          throw err
+        })
+        .on('end', () => {
+          res.end();
+        })
+    })
+    .on('success', (name, field) => {
+      console.log('Field')
+    })
+}

@@ -9,12 +9,11 @@ const audio_controller = require('../controllers/audioController');
 router.get('/dashboard', audio_controller.dashboard_function);
 
 // Upload/POST page route
-router.get('/upload', (req, res) => {
-  res.render('dashboard')
-})
-router.post('/upload', audio_controller.upload_function, (req, res, next) => {
-    res.render('dashboard')
-});
+// router.get('/upload', (req, res) => {
+//   res.render('dashboard')
+// })
+router.post('/upload', audio_controller.upload_function);
+
 
 // MAYBE USE?!
 // router.get('/download', audio_controller.download_function);

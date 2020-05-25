@@ -47,7 +47,8 @@ let uploadFiles = function (name, fileToUpload) {
       console.log("Error", err);
     }
     if (data) {
-      console.log("Upload Success", data.key);
+      console.log("Upload Success", data.key);      
+      
     }
   });
 }
