@@ -1,4 +1,4 @@
-const Download = require('../models/download');
+
 const List = require('../models/list');
 const Upload = require('../models/upload');
 
@@ -14,7 +14,7 @@ exports.list_function = function (req, res) {
         res.render('list', {
           title: 'SAMPLE',
           data: List.list_files({
-            name: 'fk-audio',
+            name: 'fk-audio',            
             callback
           })
         });
@@ -60,12 +60,12 @@ exports.upload_function = function (req, res) {
     .on('field', (name, field) => {
       // console.log('Field', name, field)
     })
-    .on('file', (name, file) => {
-      // console.log(file.name)
+    .on('file', (name, file) => {         
       res.status(200).send({
         title: 'upper',
         data: Upload.upload_files({
               name: 'fk-audio',
+              fileName: file.name,                      
               fileToUpload: file.path
       })         
     })    

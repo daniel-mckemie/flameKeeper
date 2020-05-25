@@ -10,7 +10,7 @@ block content
     p Error getting dynamic content.
   else
     p UPLOAD STUFF:
-    form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data")
+    form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data")      
       input(type="file" name="theUpload")
       input(type="submit" form="uploadForm" value="UPLOAD")
   br
@@ -21,11 +21,11 @@ block content
   else
     p The library has the following files:
 
-    - let files = fileInfo.Contents
-    
-
+    - let returns = fileInfo.Contents.reverse();
+    - let files = returns.slice(0,7);
+        
     div
-    each file in files.length ? files : ['NO!!!']      
+    each file in files ? files : ['NO!!!']      
       p= file.Key
       p= file.LastModified        
       form(method="GET" action="/download" id="dashboardForm" encType="multipart/form-data")                  

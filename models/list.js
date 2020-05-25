@@ -13,19 +13,25 @@ let listFiles = function (name) {
     apiVersion: '2006-03-01'
   });
 
-  let bucketName = name.name
+  let bucketName = name.name;  
 
-  // Create the parameters for calling listObjects
+
+  // DEFINE YOUR RETURN THE PARAMS!!!!!!!!
   let bucketParams = {
     Bucket: bucketName,
+    // MaxKeys: 7
+    // StartAfter: startingFile  
   };
-  let audioList = [];
+
+  
   // Call S3 to obtain a list of the objects in the bucket
   s3.listObjects(bucketParams, function (err, data) {
     if (err) {
       console.log("Error", err);
-    } else {      
-      fileInfo = this.data;
+    } else {            
+      fileInfo = this.data;            
+      // console.log(bucketParams);
+      
       
       
       // for (let i = 0; i < fileInfo.Contents.length; i++) {

@@ -12,14 +12,18 @@ let uploadFiles = function (name, fileToUpload) {
   s3 = new AWS.S3({
     apiVersion: '2006-03-01'
   });
-
+  
   let bucketName = name.name;
-  let uploadName = name.fileToUpload;
+  let uploadName = name.fileToUpload;  
+  let fileLabel = `${Date.now()}${name.fileName}`;
+  
+  
+  
 
   // call S3 to retrieve upload file to specified bucket
   let uploadParams = {
     Bucket: bucketName,
-    Key: 'success.jpeg',
+    Key: fileLabel,
     Body: uploadName
   };
   let file = uploadParams.Body;
@@ -34,7 +38,8 @@ let uploadFiles = function (name, fileToUpload) {
   });
   uploadParams.Body = fileStream;
   const path = require('path');
-  uploadParams.Key = path.basename(file);
+  // uploadParams.Key = path.basename(file);
+  uploadParams.Key = fileLabel;
 
   // call S3 to retrieve upload file to specified bucket
   s3.upload(uploadParams, function (err, data) {
@@ -42,7 +47,7 @@ let uploadFiles = function (name, fileToUpload) {
       console.log("Error", err);
     }
     if (data) {
-      console.log("Upload Success");
+      console.log("Upload Success", data.key);
     }
   });
 }
