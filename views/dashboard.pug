@@ -28,18 +28,35 @@ block content
         
         
     div
+    form(method="GET" action="/" id="launchForm")                          
     each file in files ? files : ['NO!!!']   
-      - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                   
+      - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                     
       p= file.Key
-      p= file.LastModified              
-      form(method="GET" action="/" id="launchForm")                  
-        input(type="checkbox" checked="true" multiple)
-        audio(controls, type="audio/mpeg" src=audioSrc)
+      p= file.LastModified
+      li(class="listy" id=file.Key)            
+        audio(controls, type="audio/mpeg" src=audioSrc class="audioElement")
+        input(type="checkbox" checked="true" id="audioCheck")
     input(type="submit" form="launchForm" value="Submit")
+    button(onclick="checkChecks()") CHECK IT! 
+
 
     - let uploadSrc = `https://fk-audio.s3.amazonaws.com/${lastUpload.Key}`
     div
-      audio(controls, type="audio/mpeg" src=uploadSrc)
+      audio(controls, type="audio/mpeg" src=uploadSrc)      
+
+    script.
+
+      let persistData = []
+      function checkChecks(){
+      // Query for only the checked checkboxes and put the result in an array
+      let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
+      // Loop over the array and inspect contents
+      checked.forEach(function(cb){
+        persistData.push(cb.parentNode.id);        
+        });
+      console.log(persistData);
+      };
+      
       
           
       
