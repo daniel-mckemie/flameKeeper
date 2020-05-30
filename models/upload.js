@@ -24,7 +24,8 @@ let uploadFiles = function (name, fileToUpload) {
   let uploadParams = {
     Bucket: bucketName,
     Key: fileLabel,
-    Body: uploadName
+    Body: uploadName,
+    ACL: 'public-read'
   };
   let file = uploadParams.Body;
   

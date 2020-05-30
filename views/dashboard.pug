@@ -37,12 +37,20 @@ block content
         audio(controls, type="audio/mpeg" src=audioSrc class="audioElement")
         input(type="checkbox" checked="true" id="audioCheck")
     input(type="submit" form="launchForm" value="Submit")
-    button(onclick="checkChecks()") CHECK IT! 
-
-
+    button(onclick="checkChecks()") CHECK IT!
+    
+    
     - let uploadSrc = `https://fk-audio.s3.amazonaws.com/${lastUpload.Key}`
+    br
     div
-      audio(controls, type="audio/mpeg" src=uploadSrc)      
+      p= lastUpload.Key
+      audio(controls, type="audio/mpeg" src=uploadSrc)   
+
+    div
+    p DELETE STUFF:
+    form(method="DELETE" action="/delete" id="deleteForm" encType="multipart/form-data" target="_blank")                                        
+    input(type="submit" form="deleteForm" name=lastUpload value="UNDO")
+    
 
     script.
 

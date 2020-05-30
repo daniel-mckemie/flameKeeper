@@ -15,6 +15,10 @@ router.get('/dashboard', audio_controller.dashboard_function);
 router.post('/upload', audio_controller.upload_function);
 
 
+// DELETE File and Render Home Page
+router.get('/delete', audio_controller.delete_function);
+
+
 // MAYBE USE?!
 // router.get('/download', audio_controller.download_function);
 

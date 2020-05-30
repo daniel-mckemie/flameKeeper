@@ -1,10 +1,32 @@
 const List = require('../models/list');
 const Upload = require('../models/upload');
+const Delete = require('../models/delete');
 
 const formidable = require('formidable');
 
 
 const async = require('async');
+
+
+// // REPLACE function when submitting from composer page
+// exports.replace_function = function (req, res) {
+//   async.parallel({
+//       list_files: function (callback) {
+//         res.render('index', {
+//           title: 'SAMPLE',
+//           data: List.list_files({
+//             name: 'fk-audio',
+            
+//             callback
+//           })
+//         });
+//       }
+//     },
+//     function (err, results) {
+//       res.send('ERRONEOUS!');
+//     });
+// }
+
 
 // Home page list AUDIO files
 exports.list_function = function (req, res) {
@@ -83,3 +105,26 @@ exports.upload_function = function (req, res, next) {
       console.log('Field')
     })
 }
+
+exports.delete_function = function (req, res, next) {  
+  console.log(req.params)
+  async.parallel({
+      delete_files: function (callback) {
+        res.render('dashboard', {
+          title: 'DELETED',
+          data: Delete.delete_files({
+            name: 'fk-audio',
+            fileName: req.params.key,
+            callback
+          })
+        });
+      }
+    },
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    });
+}
+
+
+
+
