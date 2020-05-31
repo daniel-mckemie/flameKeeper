@@ -5,10 +5,12 @@ const server = app.listen(8000, function () {
   console.log('Listening on port 8000')
 });
 
+
 const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const methodOverride = require('method-override');
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
@@ -18,7 +20,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(express.static('public'));
+
 
 // const routes = require('./routes.js');
 const indexRouter = require('./routes/index');

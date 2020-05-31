@@ -24,19 +24,19 @@ block content
     - let returns = fileInfo.Contents
     - let returnsReversed = returns.reverse();
     - let files = returnsReversed.slice(0,7);
-    - let lastUpload = returns[returns.length - 1]; 
-        
+    - let lastUpload = returns[returns.length - 1];
+            
         
     div
-    form(method="GET" action="/" id="launchForm")                          
+    form(method="POST" action=`/replace/${lastUpload.Key}?_method=PUT` id="launchForm" encType="multipart/form-data" target="_blank")                          
     each file in files ? files : ['NO!!!']   
       - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                     
       p= file.Key
       p= file.LastModified
       li(class="listy" id=file.Key)            
         audio(controls, type="audio/mpeg" src=audioSrc class="audioElement")
-        input(type="checkbox" checked="true" id="audioCheck")
-    input(type="submit" form="launchForm" value="Submit")
+        input(type="checkbox" id="audioCheck")
+    input(type="submit" form="launchForm" value="REPLACE")
     button(onclick="checkChecks()") CHECK IT!
     
     
@@ -48,19 +48,19 @@ block content
 
     div
     p DELETE STUFF:
-    form(method="DELETE" action="/delete" id="deleteForm" encType="multipart/form-data" target="_blank")                                        
-    input(type="submit" form="deleteForm" name=lastUpload value="UNDO")
+    form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data" target="_blank")                                        
+    input(type="submit" form="deleteForm" value="UNDO")
     
 
     script.
-
-      let persistData = []
+      
+      let persistData;            
       function checkChecks(){
       // Query for only the checked checkboxes and put the result in an array
       let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
       // Loop over the array and inspect contents
       checked.forEach(function(cb){
-        persistData.push(cb.parentNode.id);        
+        persistData = cb.parentNode.id;        
         });
       console.log(persistData);
       };

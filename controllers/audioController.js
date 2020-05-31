@@ -1,6 +1,7 @@
 const List = require('../models/list');
 const Upload = require('../models/upload');
 const Delete = require('../models/delete');
+const Replace = require('../models/replace');
 
 const formidable = require('formidable');
 
@@ -8,24 +9,25 @@ const formidable = require('formidable');
 const async = require('async');
 
 
-// // REPLACE function when submitting from composer page
-// exports.replace_function = function (req, res) {
-//   async.parallel({
-//       list_files: function (callback) {
-//         res.render('index', {
-//           title: 'SAMPLE',
-//           data: List.list_files({
-//             name: 'fk-audio',
-            
-//             callback
-//           })
-//         });
-//       }
-//     },
-//     function (err, results) {
-//       res.send('ERRONEOUS!');
-//     });
-// }
+// REPLACE function when submitting from composer page
+exports.replace_function = function (req, res) {  
+  console.log(req.params)
+  async.parallel({
+      replace_file: function (callback) {
+        res.render('index', {
+          title: 'REPLACED',
+          data: Replace.replace_file({
+            name: 'fk-audio',
+            id: req.params.id,                   
+            callback
+          })
+        });
+      }
+    },
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    });
+}
 
 
 // Home page list AUDIO files
@@ -107,14 +109,14 @@ exports.upload_function = function (req, res, next) {
 }
 
 exports.delete_function = function (req, res, next) {  
-  console.log(req.params)
-  async.parallel({
-      delete_files: function (callback) {
+  console.log(req.params.id)
+  async.parallel({    
+      delete_file: function (callback) {
         res.render('dashboard', {
           title: 'DELETED',
-          data: Delete.delete_files({
+          data: Delete.delete_file({
             name: 'fk-audio',
-            fileName: req.params.key,
+            id: req.params.id,
             callback
           })
         });

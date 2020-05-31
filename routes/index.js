@@ -4,6 +4,8 @@ const formidable = require('formidable');
 const audio_controller = require('../controllers/audioController');
 
 
+// DELETE File and Render Home Page
+router.put('/replace/:id', audio_controller.replace_function);
 
 // GET Dashboard page route
 router.get('/dashboard', audio_controller.dashboard_function);
@@ -16,7 +18,7 @@ router.post('/upload', audio_controller.upload_function);
 
 
 // DELETE File and Render Home Page
-router.get('/delete', audio_controller.delete_function);
+router.post('/delete/:id', audio_controller.delete_function);
 
 
 // MAYBE USE?!
