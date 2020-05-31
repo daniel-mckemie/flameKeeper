@@ -11,11 +11,11 @@ block content
   else
     p The library has the following record counts:
 
-    - let returns = fileInfo.Contents.reverse();
-    - let files = returns.slice(0,7);
-    
-    
-
+    - let returns = fileInfo.Contents
+    - let returnsReversed = returns.reverse();
+    - let files = returnsReversed.slice(0,7);
+    - let lastUpload = returns[returns.length - 1];
+        
     div
     each file in files ? files : ['NO!!!']
       - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           

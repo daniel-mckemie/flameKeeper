@@ -11,7 +11,6 @@ const async = require('async');
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {  
-  console.log(req.params)
   async.parallel({
       replace_file: function (callback) {
         res.render('index', {
@@ -108,8 +107,7 @@ exports.upload_function = function (req, res, next) {
     })
 }
 
-exports.delete_function = function (req, res, next) {  
-  console.log(req.params.id)
+exports.delete_function = function (req, res, next) {    
   async.parallel({    
       delete_file: function (callback) {
         res.render('dashboard', {

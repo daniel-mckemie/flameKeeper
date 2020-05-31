@@ -23,7 +23,7 @@ let deleteFile = function (id) {
   };
 
   s3.deleteObject(params, function (err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
+    if (err) console.log(err); // an error occurred
     else console.log(data); // successful response
   });
 }
