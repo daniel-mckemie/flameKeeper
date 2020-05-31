@@ -1,4 +1,5 @@
-let deleteFiles = function (name, fileToDelete) {
+let deleteFile = function (id) {
+  console.log(id.id)
 
   // Load the AWS SDK for Node.js
   const AWS = require('aws-sdk');
@@ -12,14 +13,9 @@ let deleteFiles = function (name, fileToDelete) {
     apiVersion: '2006-03-01'
   });
 
-  console.log(fileToDelete);
-
-
-
-
   let params = {
     Bucket: 'fk-audio',
-    Key: fileToDelete
+    Key: id.id
     /* 
        where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext'
        - full path name to your file without '/' at the beginning
@@ -32,4 +28,4 @@ let deleteFiles = function (name, fileToDelete) {
   });
 }
 
-exports.delete_files = deleteFiles;
+exports.delete_file = deleteFile;
