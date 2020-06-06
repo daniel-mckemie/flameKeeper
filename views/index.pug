@@ -16,12 +16,31 @@ block content
     - let files = returnsReversed.slice(0,7);
     - let lastUpload = returns[returns.length - 1];
         
-    div
+    div(id="waveform")
     each file in files ? files : ['NO!!!']
       - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
       p= file.Key
       p= file.LastModified
         audio(controls="", type="audio/mpeg" src=audioSrc)
-          
+
+    script.
+      let returns = '!{JSON.stringify(fileInfo.Contents[0].Key)}';
+      console.log(returns);
+
+      
+      //- let returnsReversed = '!{returns.reverse()}';
+      //- console.log(returnsReversed)
+      //- let files = returnsReversed.slice(0,7);
+      //- let lastUpload = returns[returns.length - 1];
+      
+      let wavesurfer = WaveSurfer.create({
+        container: '#waveform'
+      });
+      
+      wavesurfer.load(`https://fk-audio.s3.amazonaws.com/${returns.slice(1, -1)}`);
+      wavesurfer.on('ready', function() {
+        wavesurfer.play();
+      })
+            
 
       

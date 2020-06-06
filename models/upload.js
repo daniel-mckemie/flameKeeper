@@ -1,4 +1,4 @@
-let uploadFiles = function (name, fileToUpload) {  
+let uploadFiles = function (name, fileToUpload, count) {  
 
   // Load the AWS SDK for Node.js
   const AWS = require('aws-sdk');
@@ -14,7 +14,10 @@ let uploadFiles = function (name, fileToUpload) {
   
   let bucketName = name.name;
   let uploadName = name.fileToUpload;  
-  let fileLabel = `${Date.now()}${name.fileName}`;
+  let snapshot = name.count;
+  
+  let fileLabel = `${Date.now()}-${snapshot}-${name.fileName}`;
+  
   
   
   

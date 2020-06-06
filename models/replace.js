@@ -30,13 +30,14 @@ s3.copyObject({
 
   })
   .promise()
-  .then(() =>
-    // Delete the old object
-    s3.deleteObject({
-      Bucket: bucketName,
-      Key: oldKey
-    }).promise()
-  )
+  // .then(() =>
+  //   // Delete the old object
+  //   s3.deleteObject({
+  //     Bucket: bucketName,
+  //     Key: oldKey
+  //   }).promise()
+  // )
+  
   // Error handling is left up to reader
   .catch((e) => console.error(e));
 }

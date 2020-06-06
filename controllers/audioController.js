@@ -4,13 +4,13 @@ const Delete = require('../models/delete');
 const Replace = require('../models/replace');
 
 const formidable = require('formidable');
-
-
 const async = require('async');
+
+global.counter = 0;
 
 
 // REPLACE function when submitting from composer page
-exports.replace_function = function (req, res) {  
+exports.replace_function = function (req, res) {    
   async.parallel({
       replace_file: function (callback) {
         res.render('index', {
@@ -78,6 +78,8 @@ exports.dashboard_function = function (req, res) {
 
 // UPLOAD page
 exports.upload_function = function (req, res, next) {
+  global.counter++;
+  console.log(global.counter);
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // res.status(307).send(field);      
@@ -87,6 +89,7 @@ exports.upload_function = function (req, res, next) {
           title: 'SUCCESS!',
           data: Upload.upload_files({
             name: 'fk-audio',
+            count: global.counter,
             fileName: file.name,
             fileToUpload: file.path
           })
@@ -108,6 +111,7 @@ exports.upload_function = function (req, res, next) {
 }
 
 exports.delete_function = function (req, res, next) {    
+  global.counter--;
   async.parallel({    
       delete_file: function (callback) {
         res.render('dashboard', {
