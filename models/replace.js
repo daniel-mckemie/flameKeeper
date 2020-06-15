@@ -17,7 +17,7 @@ s3 = new AWS.S3({
 console.log('FILEGUYS' + id.id)
 let bucketName = 'fk-audio';
 let oldKey = id.id;
-let newKey = `${id.id}-OLD`
+let newKey = `0${id.id}`
 
 console.log(`${oldKey}`)
 
