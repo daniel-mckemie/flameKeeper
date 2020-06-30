@@ -3,3 +3,6 @@
     padding: 0;
     list-style: none;
 }
+
+.solid {border-style: solid;}
+.dotted {border-style: dotted;}

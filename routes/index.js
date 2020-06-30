@@ -7,6 +7,9 @@ const audio_controller = require('../controllers/audioController');
 // DELETE File and Render Home Page
 router.put('/replace/:id', audio_controller.replace_function);
 
+// GET Upload Form
+router.get('/uploadForm', (req, res) => res.render('./uploadForm'));
+
 // GET Dashboard page route
 router.get('/dashboard', audio_controller.dashboard_function);
 

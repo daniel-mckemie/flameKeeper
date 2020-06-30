@@ -15,6 +15,8 @@ let uploadFiles = function (name, fileToUpload, count) {
   let bucketName = name.name;
   let uploadName = name.fileToUpload;  
   let snapshot = name.count;
+  let redirectLink = name.redirect;
+  
   
   let fileLabel = `${Date.now()}-${snapshot}-${name.fileName}`;
   
@@ -27,8 +29,9 @@ let uploadFiles = function (name, fileToUpload, count) {
     Bucket: bucketName,
     Key: fileLabel,
     Body: uploadName,
-    ACL: 'public-read'
+    ACL: 'public-read',    
   };
+
   let file = uploadParams.Body;
   
 

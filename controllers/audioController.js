@@ -52,7 +52,7 @@ exports.dashboard_function = function (req, res) {
   async.parallel({
       list_files: function (callback) {
         res.render('dashboard', {
-          title: 'dash',
+          title: 'Composer Palette',
           data: List.list_files({
             name: 'fk-audio',
             callback
@@ -85,15 +85,16 @@ exports.upload_function = function (req, res, next) {
       // res.status(307).send(field);      
     })
     .on('file', (name, file) => {
-      res.status(200).send({
+      res.status(200).send({          
           title: 'SUCCESS!',
           data: Upload.upload_files({
             name: 'fk-audio',
-            count: global.counter,
+            count: global.counter,            
             fileName: file.name,
-            fileToUpload: file.path
-          })
+            fileToUpload: file.path            
+          })          
         })
+        
         .on('aborted', () => {
           console.error('Request aborted by the user');
         })
@@ -102,7 +103,7 @@ exports.upload_function = function (req, res, next) {
           throw err
         })
         .on('end', () => {
-          res.end();
+          res.redirect('/');
         })
     })
     .on('success', (name, field) => {

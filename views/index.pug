@@ -9,7 +9,7 @@ block content
     - let files = returnsReversed.slice(0,7);
     - let lastUpload = returns[returns.length - 1];
         
-    div(id="waveform")
+    div(class="waveform")
     each file in files ? files : ['NO!!!']
       - console.log(file.Key);
       //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
@@ -31,7 +31,7 @@ block content
       
       
       let wavesurfer0 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });
       wavesurfer0.load(`https://fk-audio.s3.amazonaws.com/${returns0.slice(1, -1)}`);
       wavesurfer0.on('ready', function() {
@@ -39,7 +39,7 @@ block content
       });
 
       let wavesurfer1 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });      
       wavesurfer1.load(`https://fk-audio.s3.amazonaws.com/${returns1.slice(1, -1)}`);
       wavesurfer1.on('ready', function() {
@@ -47,7 +47,7 @@ block content
       });
       
       let wavesurfer2 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });      
       wavesurfer2.load(`https://fk-audio.s3.amazonaws.com/${returns2.slice(1, -1)}`);
       wavesurfer2.on('ready', function() {
@@ -55,7 +55,7 @@ block content
       });
 
       let wavesurfer3 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });      
       wavesurfer3.load(`https://fk-audio.s3.amazonaws.com/${returns3.slice(1, -1)}`);
       wavesurfer3.on('ready', function() {
@@ -63,7 +63,7 @@ block content
       });
 
       let wavesurfer4 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });      
       wavesurfer4.load(`https://fk-audio.s3.amazonaws.com/${returns4.slice(1, -1)}`);
       wavesurfer4.on('ready', function() {
@@ -71,7 +71,7 @@ block content
       });
 
       let wavesurfer5 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });      
       wavesurfer5.load(`https://fk-audio.s3.amazonaws.com/${returns5.slice(1, -1)}`);
       wavesurfer5.on('ready', function() {
@@ -79,7 +79,7 @@ block content
       });
 
       let wavesurfer6 = WaveSurfer.create({
-        container: '#waveform'
+        container: '.waveform'
       });      
       wavesurfer6.load(`https://fk-audio.s3.amazonaws.com/${returns6.slice(1, -1)}`);
       wavesurfer6.on('ready', function() {

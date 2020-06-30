@@ -1,59 +1,52 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to Flame Keeper
-
-  h1 DASHBOARD
+  
 
   if error
     p Error getting dynamic content.
   else
-    p UPLOAD STUFF:
-    form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data" target="_blank")         
-      input(type="file" name="theUpload")                  
-      input(type="submit" form="uploadForm" value="UPLOAD")         
-  br
-  br
-
-  if error
-    p Error getting dynamic content.
-  else
-    p The library has the following files:
+    p The following files are active:
+    br
 
     - let returns = fileInfo.Contents
     - let returnsReversed = returns.reverse();
     - let files = returnsReversed.slice(0,7);
     - let lastUpload = returns[returns.length - 1];
-
-            
-        
-    div    
-    each file in files ? files : ['NO!!!']   
-      - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                     
-      form(method="POST" action=`/replace/${file.Key}?_method=PUT` id="launchForm" encType="multipart/form-data" target="_blank")                          
-        p= file.Key
-        p= file.LastModified
-        li(class="listy" id=file.Key)            
-          audio(controls, type="audio/mpeg" src=audioSrc class="audioElement")
-          input(type="checkbox" id="audioCheck")
-      input(type="hidden" name="checked")    
-      input(type="submit" form="launchForm" value="REPLACE")      
+                    
+    div   
+      each file in files ? files : ['NO!!!']   
+        - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                     
+        div(class="solid")
+          form(method="POST" action=`/replace/${file.Key}?_method=PUT` id="launchForm" encType="multipart/form-data")                          
+            p= file.Key
+            p= file.LastModified
+            ol(class="listy" id=file.Key)            
+              audio(controls, type="audio/mpeg" src=audioSrc class="audioElement")                
+          input(type="submit" form="launchForm" value="REPLACE")
+          - console.log(file.Key)
+          br
+          br      
     
     
     - let uploadSrc = `https://fk-audio.s3.amazonaws.com/${lastUpload.Key}`
     br
-    div
+    br
+    br
+    div(class="dotted")
+      p LAST FILE YOU UPLOADED:
       p= lastUpload.Key
       audio(controls, type="audio/mpeg" src=uploadSrc)   
-
-    div
-    p DELETE STUFF:
-    form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data" target="_blank")                                        
-    input(type="submit" form="deleteForm" value="UNDO")
+      br      
+      form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data" target="_blank")                                        
+      input(type="submit" form="deleteForm" value="UNDO")
     
 
     script.
+      
+      
+      
+      
       
                
       function checkChecks(){
