@@ -9,20 +9,27 @@ block content
     p The following files are active:
     br
 
-    - let returns = fileInfo.Contents
-    - let returnsReversed = returns.reverse();
-    - let files = returnsReversed.slice(0,7);
+    - let returns = fileInfo.Contents        
+    - let files = returns.slice(0,7);                
     - let lastUpload = returns[returns.length - 1];
-                    
-    div   
-      each file in files ? files : ['NO!!!']   
+    - console.log(lastUpload)
+                        
+    div
+      - let x = 0;   
+      each file in files ? files : ['NO!!!']        
+        - x++        
         - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                     
         div(class="solid")
           form(method="POST" action=`/replace/${file.Key}?_method=PUT` id="launchForm" encType="multipart/form-data")                          
             p= file.Key
             p= file.LastModified
-            ol(class="listy" id=file.Key)            
-              audio(controls, type="audio/mpeg" src=audioSrc class="audioElement")                
+            ol(class="listy" id=file.Key)  
+              div(id="player")          
+                audio(id=`${x}` loop controls type="audio/mpeg" src=audioSrc class="audioElement")
+                br
+                a(href="#" onclick=`document.getElementById(${x}).muted = true;`) MUTE -- 
+                a(href="#" onclick=`document.getElementById(${x}).muted = false;`) -- UNMUTE
+          br                                
           input(type="submit" form="launchForm" value="REPLACE")
           - console.log(file.Key)
           br
@@ -36,18 +43,14 @@ block content
     div(class="dotted")
       p LAST FILE YOU UPLOADED:
       p= lastUpload.Key
-      audio(controls, type="audio/mpeg" src=uploadSrc)   
+      audio(controls loop type="audio/mpeg" src=uploadSrc)       
       br      
-      form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data" target="_blank")                                        
-      input(type="submit" form="deleteForm" value="UNDO")
+      form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data")                                        
+      input(type="submit" form="deleteForm" value="UNDO" onclick="setTimeout(function(){var ww = window.open('/uploadForm', '_blank'); ww.close(); }, 1000);")      
     
 
     script.
-      
-      
-      
-      
-      
+       
                
       function checkChecks(){
       // Query for only the checked checkboxes and put the result in an array
