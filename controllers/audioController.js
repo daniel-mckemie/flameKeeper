@@ -7,10 +7,12 @@ const formidable = require('formidable');
 const async = require('async');
 
 global.counter = 0;
+global.timer = 0;
 
 
 // REPLACE function when submitting from composer page
-exports.replace_function = function (req, res) {    
+exports.replace_function = function (req, res) {
+  global.timer = 0;    
   async.parallel({
       replace_file: function (callback) {
         res.render('index', {
@@ -31,6 +33,7 @@ exports.replace_function = function (req, res) {
 
 // Home page list AUDIO files
 exports.list_function = function (req, res) {
+  console.log(res);
   async.parallel({
       list_files: function (callback) {
         res.render('index', {
@@ -129,7 +132,5 @@ exports.delete_function = function (req, res, next) {
       res.send('ERRONEOUS!');
     });
 }
-
-
 
 
