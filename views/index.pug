@@ -5,7 +5,7 @@ block content
     .profileLogo
       //-- Profile logo. Add a img tag in place of <span>.
       p.logoPlaceholder
-        img(src='./images/me-logo-wht.png' alt='sample logo')
+        img(src='./images/me-logo-wht.png' alt='sample logo')      
     .installation
       if error
         p Error getting dynamic content.
@@ -16,6 +16,8 @@ block content
         - let lastUpload = returns[returns.length - 1];
         
         div(class="waveform")
+        button(class="btn" onclick="startAudio()") Play
+
         each file in files ? files : ['NO!!!']
           - console.log(file.Key);
           //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
@@ -90,6 +92,7 @@ block content
       span Email / Social
   
   script.
+ 
 
       let returns0 = `!{JSON.stringify(fileInfo.Contents[0].Key)}`;
       let returns1 = `!{JSON.stringify(fileInfo.Contents[1].Key)}`;
@@ -99,14 +102,30 @@ block content
       let returns5 = `!{JSON.stringify(fileInfo.Contents[5].Key)}`;
       let returns6 = `!{JSON.stringify(fileInfo.Contents[6].Key)}`;
       console.log(returns0, returns1, returns2, returns3, returns4, returns5, returns6);
-
+      
+      function startAudio() {
+        wavesurfer0.on('ready', wavesurfer0.play());
+      }
+    
       
       
       let wavesurfer0 = WaveSurfer.create({
-        container: '.waveform'
+        container: '.waveform',
+        interact: 'false',
+        scrollParent: true              
       });
-      wavesurfer0.load(`https://fk-audio.s3.amazonaws.com/${returns0.slice(1, -1)}`);
-      wavesurfer0.on('ready', function() {
+      wavesurfer0.load(`https://fk-audio.s3.amazonaws.com/${returns0.slice(1, -1)}`);      
+      //- let samples = wavesurfer0.exportPCM(length);
+      //- console.log(samples);
+      wavesurfer0.on('ready', function() {                        
+        wavesurfer0.play();
+        wavesurfer0.toggleInteraction();
+        wavesurfer0.setHeight(75);
+        
+
+        let timeLength = wavesurfer0.getDuration();                    
+      });
+      wavesurfer0.on('finish', function(){
         wavesurfer0.play();
       });
 
@@ -116,6 +135,11 @@ block content
       wavesurfer1.load(`https://fk-audio.s3.amazonaws.com/${returns1.slice(1, -1)}`);
       wavesurfer1.on('ready', function() {
         wavesurfer1.play();
+        wavesurfer1.toggleInteraction();
+        wavesurfer1.setHeight(75);
+      });
+      wavesurfer1.on('finish', function(){
+        wavesurfer1.play();
       });
       
       let wavesurfer2 = WaveSurfer.create({
@@ -123,6 +147,11 @@ block content
       });      
       wavesurfer2.load(`https://fk-audio.s3.amazonaws.com/${returns2.slice(1, -1)}`);
       wavesurfer2.on('ready', function() {
+        wavesurfer2.play();
+        wavesurfer2.toggleInteraction();
+        wavesurfer2.setHeight(75);
+      });
+      wavesurfer2.on('finish', function(){
         wavesurfer2.play();
       });
 
@@ -132,6 +161,11 @@ block content
       wavesurfer3.load(`https://fk-audio.s3.amazonaws.com/${returns3.slice(1, -1)}`);
       wavesurfer3.on('ready', function() {
         wavesurfer3.play();
+        wavesurfer3.toggleInteraction();
+        wavesurfer3.setHeight(75);
+      });
+      wavesurfer3.on('finish', function(){
+        wavesurfer3.play();
       });
 
       let wavesurfer4 = WaveSurfer.create({
@@ -139,6 +173,11 @@ block content
       });      
       wavesurfer4.load(`https://fk-audio.s3.amazonaws.com/${returns4.slice(1, -1)}`);
       wavesurfer4.on('ready', function() {
+        wavesurfer4.play();
+        wavesurfer4.toggleInteraction();
+        wavesurfer4.setHeight(75);
+      });
+      wavesurfer4.on('finish', function(){
         wavesurfer4.play();
       });
 
@@ -148,6 +187,11 @@ block content
       wavesurfer5.load(`https://fk-audio.s3.amazonaws.com/${returns5.slice(1, -1)}`);
       wavesurfer5.on('ready', function() {
         wavesurfer5.play();
+        wavesurfer5.toggleInteraction();
+        wavesurfer5.setHeight(75);
+      });
+      wavesurfer5.on('finish', function(){
+        wavesurfer5.play();
       });
 
       let wavesurfer6 = WaveSurfer.create({
@@ -155,5 +199,10 @@ block content
       });      
       wavesurfer6.load(`https://fk-audio.s3.amazonaws.com/${returns6.slice(1, -1)}`);
       wavesurfer6.on('ready', function() {
+        wavesurfer6.play();
+        wavesurfer6.toggleInteraction();
+        wavesurfer6.setHeight(75);
+      });
+      wavesurfer6.on('finish', function(){
         wavesurfer6.play();
       });
