@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const server = app.listen(8000, function () {
-  console.log('Listening on port 8000')
-});
+const server = app.listen(process.env.PORT || 8000);
+
 
 
 const createError = require('http-errors');
