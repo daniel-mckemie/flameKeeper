@@ -112,7 +112,8 @@ block content
       let wavesurfer0 = WaveSurfer.create({
         container: '.waveform',
         interact: 'false',
-        scrollParent: true              
+        scrollParent: true,
+        hideScrollBar: true              
       });
       wavesurfer0.load(`https://fk-audio.s3.amazonaws.com/${returns0.slice(1, -1)}`);      
       //- let samples = wavesurfer0.exportPCM(length);

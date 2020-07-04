@@ -1,4 +1,6 @@
-let replaceFile = function (id) {
+const Substitute = require('../models/substitute');
+
+let replaceFile = function(id) {
   
 
 // Load the SDK for JavaScript
@@ -14,20 +16,20 @@ s3 = new AWS.S3({
   apiVersion: '2006-03-01'
 });
 
-console.log('FILEGUYS' + id.id)
+
 let bucketName = 'fk-audio';
-let oldKey = id.id;
-let newKey = `0${id.id}`
+let oldKey = id;
+let newKey = `0${id}`
 
 console.log(`${oldKey}`)
 
 
+setInterval(Substitute.sub_file, 25200000);
 // Copy the object to a new location
 s3.copyObject({
     Bucket: bucketName,
     CopySource: `${bucketName}/${oldKey}`,
     Key: `${newKey}`
-
   })
   .promise()
   // .then(() =>

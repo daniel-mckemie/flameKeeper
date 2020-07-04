@@ -3,6 +3,11 @@ const router = express.Router();
 const formidable = require('formidable');
 const audio_controller = require('../controllers/audioController');
 
+const Substitute = require('../models/substitute');
+const Replace = require('../models/replace')
+
+
+// router.get('/substitute', function(){setTimeout(Substitute.sub_file, 2000)});
 
 // DELETE File and Render Home Page
 router.put('/replace/:id', audio_controller.replace_function);

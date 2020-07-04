@@ -9,10 +9,10 @@ block content
     p The following files are active:
     br
 
-    - let returns = fileInfo.Contents        
-    - let files = returns.slice(0,7);                
-    - let lastUpload = returns[returns.length - 1];
-    - console.log(lastUpload)
+    - let returns = fileInfo.Contents
+    - let lastUpload = returns[returns.length - 1];    
+    - let returnsReversed = returns.reverse()    
+    - let files = returnsReversed.slice(1,8);                          
                         
     div
       - let x = 0;   

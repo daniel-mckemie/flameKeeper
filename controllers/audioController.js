@@ -2,17 +2,16 @@ const List = require('../models/list');
 const Upload = require('../models/upload');
 const Delete = require('../models/delete');
 const Replace = require('../models/replace');
+const Substitute = require('../models/substitute');
 
 const formidable = require('formidable');
 const async = require('async');
 
 global.counter = 0;
-global.timer = 0;
 
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
-  global.timer = 0;    
   async.parallel({
       replace_file: function (callback) {
         res.render('index', {
@@ -27,7 +26,7 @@ exports.replace_function = function (req, res) {
     },
     function (err, results) {
       res.send('ERRONEOUS!');
-    });
+    }).then('/substitute');
 }
 
 

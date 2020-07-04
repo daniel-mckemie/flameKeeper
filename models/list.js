@@ -30,14 +30,6 @@ let listFiles = function (name) {
       console.log("Error", err);
     } else {                  
       fileInfo = this.data;                        
-      // console.log(bucketParams);
-      
-      
-      
-      // for (let i = 0; i < fileInfo.Contents.length; i++) {
-      //   let audioUrl = 'https://' + bucketName + '.s3.amazonaws.com/' + fileInfo.Contents[i].Key;
-        // audioList.push(audioUrl);
-      // } // return audioList;
     }
   });
 
