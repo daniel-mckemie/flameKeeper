@@ -14,7 +14,13 @@ html(lang='en')
     script(src='https://unpkg.com/wavesurfer.js')
     script(src='https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js')
     
-  body(class='css-selector')                 
+  body(class='css-selector')  
+    a(href="/") Home
+      if locals.user
+        a(href="/user") Profile
+        a(href="/logout") Log Out
+      else
+        a(href="/login") Log In               
     block content
     
           

@@ -7,9 +7,30 @@ block content
   else
     div(class="solid")
       p UPLOAD YOUR FILE:
-      form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data")                 
-        input(type="file" name="theUpload")                          
-        input(type="submit" form="uploadForm" value="UPLOAD" onclick="window.open('/dashboard');")  
+      form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data" target="_blank")                 
+        input(type="file" name="theUpload" id="uploadValue")                                          
+        input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD" onclick="return redirect()")  
         
   br
   br
+
+  script.
+    function redirect() {
+      let x = document.getElementById('uploadValue');
+      let y = x.value;            
+      let lastFour = y.substr(y.length - 4); // => ".mp3"            
+      
+      
+      
+      let fi = document.getElementById('uploadValue'); // GET THE FILE INPUT.
+      let fsize = x.files.item(0).size;
+            
+      if (lastFour == '.mp3' && fsize < 209731438) {
+        setTimeout(function(){ document.getElementById("uploadButton").disabled = true }, 1999);
+        setTimeout(function(){ window.open('/dashboard'); }, 2000);                
+      } else {
+        alert('File must be an .mp3!')
+      }          
+    }
+    
+  

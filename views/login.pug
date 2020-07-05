@@ -1,0 +1,14 @@
+block content
+  form(action='/login' method='post')
+    .title
+      h3 Login
+    .field
+      label Username:
+      input(type='text' name='username')
+      br
+    .field
+      label Password:
+      input(type='password' name='password' required='')
+    .field
+      input.submit-btn(type='submit' value='Submit' required='')
+    label#error-message

@@ -24,7 +24,7 @@ let newKey = `0${id}`
 console.log(`${oldKey}`)
 
 
-setInterval(Substitute.sub_file, 25200000);
+setInterval(Substitute.sub_file, 2000);
 // Copy the object to a new location
 s3.copyObject({
     Bucket: bucketName,
