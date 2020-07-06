@@ -1,5 +1,3 @@
-const Substitute = require('../models/substitute');
-
 let replaceFile = function(id) {
   
 
@@ -13,7 +11,8 @@ AWS.config.update({
 
 // Create S3 service object
 s3 = new AWS.S3({
-  apiVersion: '2006-03-01'
+  apiVersion: '2006-03-01',
+  maxRetries: 10
 });
 
 let snapshot = global.counter;
@@ -51,7 +50,8 @@ s3.copyObject({
 }
 
 
-clearInterval(Substitute.sub_file);
-setInterval(Substitute.sub_file, 5000);
+// FK 7 HOUR GRAB FUNCTION
+// clearInterval(Substitute.sub_file);
+// setInterval(Substitute.sub_file, 5000);
 
 exports.replace_file = replaceFile;
