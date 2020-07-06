@@ -14,8 +14,8 @@ let subAction = function (id) {
     apiVersion: '2006-03-01'
   });
 
-  let snapshot = 10;
-  snapshot++;
+  let snapshot = global.counter;
+  // snapshot++;
   console.log('COUNT: ' + global.counter);
   let fileLabel = `${Date.now()}-${snapshot}-${id}`;
   console.log(fileLabel.substring(16))

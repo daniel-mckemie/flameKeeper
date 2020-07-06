@@ -16,19 +16,25 @@ s3 = new AWS.S3({
   apiVersion: '2006-03-01'
 });
 
+let snapshot = global.counter;
+let newId = id.id
+let fileLabel = `${Date.now()}-${snapshot}-${newId.substring(21)}`;
 
+
+// DO SOME STRING SPLICING TO GET THE PROPER KEY!!!
 let bucketName = 'fk-audio';
 let oldKey = id;
-let newKey = `0${id}`
+let newKey = `${fileLabel}`
 
-console.log(`${oldKey}`)
+console.log(`THIS IS THE OLD KEY ${oldKey.id}`);
+console.log('THIS IS THE NEW KEY ' + fileLabel);
 
 
-setInterval(Substitute.sub_file, 2000);
+
 // Copy the object to a new location
 s3.copyObject({
     Bucket: bucketName,
-    CopySource: `${bucketName}/${oldKey}`,
+    CopySource: `${bucketName}/${oldKey.id}`,
     Key: `${newKey}`
   })
   .promise()
@@ -43,5 +49,7 @@ s3.copyObject({
   // Error handling is left up to reader
   .catch((e) => console.error(e));
 }
+
+// setInterval(Substitute.sub_file, 2000);
 
 exports.replace_file = replaceFile;

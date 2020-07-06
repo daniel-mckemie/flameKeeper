@@ -15,12 +15,12 @@ block content
     - let files = returnsReversed.slice(1,8);                          
                         
     div
-      - let x = 0;   
+      - let x = 1;   
       each file in files ? files : ['NO!!!']        
         - x++        
-        - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                     
+        - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                            
         div(class="solid")
-          form(method="POST" action=`/replace/${file.Key}?_method=PUT` id="launchForm" encType="multipart/form-data")                          
+          form(method="POST" action=`/replace/${file.Key}?_method=PUT` id=`launchForm${x}` encType="multipart/form-data")                                
             p= file.Key
             p= file.LastModified
             ol(class="listy" id=file.Key)  
@@ -30,8 +30,7 @@ block content
                 a(href="#" onclick=`document.getElementById(${x}).muted = true;`) MUTE -- 
                 a(href="#" onclick=`document.getElementById(${x}).muted = false;`) -- UNMUTE
           br                                
-          input(type="submit" form="launchForm" value="REPLACE")
-          - console.log(file.Key)
+          input(type="submit" form=`launchForm${x}` value="REPLACE")
           br
           br      
     
@@ -43,13 +42,17 @@ block content
     div(class="dotted")
       p LAST FILE YOU UPLOADED:
       p= lastUpload.Key
-      audio(controls loop type="audio/mpeg" src=uploadSrc)       
+      audio(controls loop type="audio/mpeg" src=uploadSrc id="toDelete")       
       br      
       form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data")                                        
       input(type="submit" form="deleteForm" value="UNDO" onclick="setTimeout(function(){var ww = window.open('/uploadForm', '_blank'); ww.close(); }, 1000);")      
     
 
     script.
+      let x = document.getElementById('toDelete');
+      let srcString = x.src;
+      let snapshot = srcString.substring(48, 54); // => ".mp3"
+      console.log(snapshot);
        
                
       function checkChecks(){

@@ -10,14 +10,14 @@ const async = require('async');
 const secured = require('./userLibs/secured');
 const passport = require('passport');
 
-global.counter = 0;
+global.counter = 100000;
 
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
   async.parallel({
-      replace_file: function (callback) {
-        res.render('index', {
+      replace_file: function (callback) {        
+        res.render('replaceSuccess', {
           title: 'REPLACED',
           data: Replace.replace_file({
             name: 'fk-audio',
@@ -29,7 +29,7 @@ exports.replace_function = function (req, res) {
     },
     function (err, results) {
       res.send('ERRONEOUS!');
-    }).then('/substitute');
+    })
 }
 
 

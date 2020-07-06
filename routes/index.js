@@ -41,7 +41,7 @@ router.post('/delete/:id', audio_controller.delete_function);
 // router.get('/download', audio_controller.download_function);
 
 // GET Home page route.
-router.get('/', audio_controller.list_function);
+router.get('/', (req, res) => audio_controller.list_function(req, res));
 
 
 // Authentication routes
