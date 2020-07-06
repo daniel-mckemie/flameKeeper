@@ -1,7 +1,6 @@
 const Sub = require('../models/subAction');
 
-let subFile = function () {
-  global.counter++
+let subFile = function () {  
   console.log('SUBSTITUTION IN PROGRESS...');
 
 

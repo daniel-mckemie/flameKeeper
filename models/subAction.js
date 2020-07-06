@@ -1,4 +1,5 @@
 let subAction = function (id) {
+  global.counter++
 
 
   // Load the SDK for JavaScript
@@ -15,14 +16,16 @@ let subAction = function (id) {
   });
 
   let snapshot = global.counter;
-  // snapshot++;
-  console.log('COUNT: ' + global.counter);
-  let fileLabel = `${Date.now()}-${snapshot}-${id}`;
-  console.log(fileLabel.substring(16))
+  let cutId = id.substring(21);    
+  let fileLabel = `${Date.now()}-${snapshot}-${cutId}`;
+
+  console.log('OLDID ' + id);
+  console.log('FILELABEL: ' + fileLabel)
+  
 
   let bucketName = 'fk-audio';
   let oldKey = id;
-  let newKey = `${fileLabel.substring(16)}`
+  let newKey = `${fileLabel}`
   
     
   console.log('SUB SUCCESS?!');

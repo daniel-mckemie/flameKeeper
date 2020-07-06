@@ -50,6 +50,8 @@ s3.copyObject({
   .catch((e) => console.error(e));
 }
 
-// setInterval(Substitute.sub_file, 2000);
+
+clearInterval(Substitute.sub_file);
+setInterval(Substitute.sub_file, 5000);
 
 exports.replace_file = replaceFile;
