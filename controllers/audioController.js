@@ -6,7 +6,7 @@ const Replace = require('../models/replace');
 const formidable = require('formidable');
 const async = require('async');
 
-process.env.idCounter = 100000;
+global.counter++;
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
@@ -77,8 +77,7 @@ exports.dashboard_function = function (req, res) {
 
 // UPLOAD page
 exports.upload_function = function (req, res, next) {
-  process.env.idCounter++;
-  console.log(process.env.idCounter);   
+  global.counter++;  
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // res.status(415).send(field);      
@@ -87,7 +86,7 @@ exports.upload_function = function (req, res, next) {
       res.status(200).send({                    
           data: Upload.upload_files({
             name: 'fk-audio',
-            count: process.env.idCounter,            
+            count: global.counter,
             fileName: file.name,
             fileToUpload: file.path            
           })          
@@ -110,7 +109,7 @@ exports.upload_function = function (req, res, next) {
 }
 
 exports.delete_function = function (req, res, next) {    
-  process.env.idCounter--;
+  global.counter++;
   async.parallel({    
       delete_file: function (callback) {
         res.send('dashboard', {

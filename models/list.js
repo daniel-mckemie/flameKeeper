@@ -31,8 +31,12 @@ let listFiles = function (name) {
   s3.listObjects(bucketParams, function (err, data) {
     if (err) {
       console.log("Error", err);
-    } else {                  
-      fileInfo = this.data;                        
+    } else {                        
+      fileInfo = this.data;   
+      global.counter = parseInt(data.Contents[data.Contents.length -1].Key.substring(14,20));                           
+      console.log(data.Contents[data.Contents.length - 1]);
+      console.log(global.counter)
+      
     }
   });
 
