@@ -15,8 +15,12 @@ let listFiles = function (name) {
     apiVersion: '2006-03-01',
     maxRetries: 10
   });
-
-  let bucketName = name.name;  
+  let bucketName;
+  if (name == undefined) {
+    bucketName = 'fk-audio';
+  } else {
+    bucketName = name.name;
+  }
 
 
   // DEFINE YOUR RETURN THE PARAMS!!!!!!!!
@@ -26,17 +30,19 @@ let listFiles = function (name) {
     // StartAfter: startingFile  
   };
 
-  
+
   // Call S3 to obtain a list of the objects in the bucket
   s3.listObjects(bucketParams, function (err, data) {
     if (err) {
       console.log("Error", err);
-    } else {                        
-      fileInfo = this.data;   
-      global.counter = parseInt(data.Contents[data.Contents.length -1].Key.substring(14,20));                           
-      console.log(data.Contents[data.Contents.length - 1]);
+    } else {
+      fileInfo = this.data;
+      global.counter = parseInt(data.Contents[data.Contents.length - 1].Key.substring(14, 20));
+      let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
+      global.subId = data.Contents[randomId];
+      console.log('LISTYSUB: ' + global.subId.Key);
       console.log(global.counter)
-      
+
     }
   });
 

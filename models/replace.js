@@ -1,3 +1,5 @@
+const Substitute = require('../models/subFile')
+
 let replaceFile = function(id) {
   
 
@@ -19,11 +21,7 @@ let snapshot = global.counter;
 let newId = id.id
 let fileLabel = `${Date.now()}${newId.substring(13)}`;
 
-
-
 let newKey = fileLabel.replace(fileLabel.charAt(0), '0');
-console.log(newKey);
-// let subbedId = newFirstLetter + oldStr;
 
 
 
@@ -57,7 +55,9 @@ s3.copyObject({
 
 
 // FK 7 HOUR GRAB FUNCTION
-// clearInterval(Substitute.sub_file);
-// setInterval(Substitute.sub_file, 5000);
+global.subCount = 0;
+setInterval(Substitute.sub_file, 25200000);
+
+global.uploadLock = 0;
 
 exports.replace_file = replaceFile;
