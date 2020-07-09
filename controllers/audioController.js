@@ -85,8 +85,7 @@ exports.upload_function = function (req, res, next) {
     .on('file', (name, file) => {
       res.status(200).send({                    
           data: Upload.upload_files({
-            name: 'fk-audio',
-            count: global.counter,
+            name: 'fk-audio',            
             fileName: file.name,
             fileToUpload: file.path            
           })          

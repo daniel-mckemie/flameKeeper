@@ -1,4 +1,5 @@
-let uploadFiles = function (name, fileToUpload, count) {  
+let uploadFiles = function (name, fileToUpload, count) {   
+  console.log(global.counter);   
   let x = name.fileName
   let lastFour = x.substr(x.length - 4); // => ".mp3"
   console.log(lastFour)
@@ -18,8 +19,7 @@ let uploadFiles = function (name, fileToUpload, count) {
 
     let bucketName = name.name;
     let uploadName = name.fileToUpload;
-    let snapshot = name.count;
-    let redirectLink = name.redirect;
+    let snapshot = global.counter;
 
 
     let fileLabel = `${Date.now()}-${snapshot}-${name.fileName}`;
