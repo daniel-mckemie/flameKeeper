@@ -1,3 +1,5 @@
+// VISIT THIS SO FOR LISTS OF OVER 1000: https://menno.io/posts/listing-s3-objects-with-nodejs/
+
 let listFiles = function (name) {
 
   // Load the SDK for JavaScript

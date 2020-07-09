@@ -15,7 +15,7 @@ s3 = new AWS.S3({
   maxRetries: 10
 });
 
-let snapshot = global.counter;
+let snapshot = process.env.idCounter;
 let newId = id.id
 let fileLabel = `${Date.now()}-${snapshot}-${newId.substring(21)}`;
 
