@@ -109,7 +109,7 @@ exports.upload_function = function (req, res, next) {
 }
 
 exports.delete_function = function (req, res, next) {    
-  global.counter++;
+  global.counter--;
   async.parallel({    
       delete_file: function (callback) {
         res.send('dashboard', {
