@@ -112,7 +112,7 @@ exports.delete_function = function (req, res, next) {
   global.counter--;
   async.parallel({    
       delete_file: function (callback) {
-        res.send('dashboard', {
+        res.status(200).send('dashboard', {
           title: 'DELETED',
           data: Delete.delete_file({
             name: 'fk-audio',

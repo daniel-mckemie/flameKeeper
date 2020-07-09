@@ -19,10 +19,20 @@ let snapshot = global.counter;
 let newId = id.id
 let fileLabel = `${Date.now()}-${snapshot}-${newId.substring(21)}`;
 
+var str = "Hello world!"
+var oldstr = str.substring(1);
+var newfirstletter = "Z";
+var newstr = newfirstletter + oldstr;
+
+let oldStr = (id.id).substring(1);
+let newFirstLetter = '0';
+let subbedId = newFirstLetter + oldStr;
+
+
 
 // DO SOME STRING SPLICING TO GET THE PROPER KEY!!!
 let bucketName = 'fk-audio';
-let oldKey = id;
+let oldKey = subbedId;
 let newKey = `${fileLabel}`
 
 console.log(`THIS IS THE OLD KEY ${oldKey.id}`);
