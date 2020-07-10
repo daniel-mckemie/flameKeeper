@@ -32,7 +32,7 @@ let replaceFile = function (id) {
 
 
   global.subCount = 0;
-  global.uploadLock = 0;
+  global.uploadLock = 1;
 
   console.log('Subcount: ' + global.subCount);
 

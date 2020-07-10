@@ -4,7 +4,7 @@ let uploadFiles = function (name, fileToUpload, count) {
   let x = name.fileName
   let lastFour = x.substr(x.length - 4); // => ".mp3"
   console.log(global.uploadLock)
-  if (lastFour == '.mp3' && global.uploadLock == 1) {    
+  if (lastFour == '.mp3' && global.uploadLock == 0) {    
     global.uploadLock = 2;
     console.log('FROM UPLOD: ' + global.uploadLock);
     // Load the AWS SDK for Node.js

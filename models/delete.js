@@ -1,6 +1,6 @@
 let deleteFile = function (id) {
-  if (global.uploadLock == 2) {
-    global.uploadLock = 1;
+  if (global.uploadLock == 1) {
+    global.uploadLock = 0;
 
     // Load the AWS SDK for Node.js
     const AWS = require('aws-sdk');

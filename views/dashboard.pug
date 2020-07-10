@@ -49,32 +49,32 @@ block content
       br
       br
       br
-      if global.uploadLock == 0
-        div(class="dotted")
-          p LAST FILE YOU UPLOADED:
-          p= lastUpload.Key
-          audio(controls loop type="audio/mpeg" src=uploadSrc id="toDelete")       
-          br      
-          form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data")                                        
-          input(type="submit" form="deleteForm" value="UNDO" onclick="setTimeout(function(){var ww = window.open('/uploadForm', '_blank'); ww.close(); }, 1000);")      
-    
+      
+      div(class="dotted")
+        p LAST FILE YOU UPLOADED:
+        p= lastUpload.Key
+        audio(controls loop type="audio/mpeg" src=uploadSrc id="toDelete")       
+        br      
+        form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data")                                        
+        input(type="submit" form="deleteForm" value="UNDO" onclick="setTimeout(function(){var ww = window.open('/uploadForm', '_blank'); ww.close(); }, 1000);")      
+  
 
-      script.
-        let x = document.getElementById('toDelete');
-        let srcString = x.src;
-        let snapshot = srcString.substring(48, 54); // => ".mp3"
-        console.log(snapshot);
-        
-                
-        function checkChecks(){
-        // Query for only the checked checkboxes and put the result in an array
-        let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
-        // Loop over the array and inspect contents
-        checked.forEach(function(cb){
-          persistData = cb.parentNode.id;        
-          });
-        console.log(persistData);
-        };
+    script.
+      let x = document.getElementById('toDelete');
+      let srcString = x.src;
+      let snapshot = srcString.substring(48, 54); // => ".mp3"
+      console.log(snapshot);
+      
+              
+      function checkChecks(){
+      // Query for only the checked checkboxes and put the result in an array
+      let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
+      // Loop over the array and inspect contents
+      checked.forEach(function(cb){
+        persistData = cb.parentNode.id;        
+        });
+      console.log(persistData);
+      };
       
       
           

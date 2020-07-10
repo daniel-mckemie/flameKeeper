@@ -7,7 +7,7 @@ const formidable = require('formidable');
 const async = require('async');
 
 global.counter = 0;
-global.uploadLock = 1;
+global.uploadLock = 0;
 console.log('From AUDIO CONTROLLER ' + global.uploadLock)
 
 
@@ -33,7 +33,7 @@ exports.replace_function = function (req, res) {
 
 // Home page list AUDIO files
 exports.list_function = function (req, res) {  
-  async.parallel({
+  async.series({
       list_files: function (callback) {
         res.render('index', {
           title: 'SAMPLE',
@@ -51,7 +51,7 @@ exports.list_function = function (req, res) {
 
 // DISPLAY selected files to the home page upon submit
 exports.dashboard_function = function (req, res) {
-  async.parallel({
+  async.series({
       list_files: function (callback) {
         res.render('dashboard', {
           title: 'Composer Palette',

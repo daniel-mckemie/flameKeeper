@@ -4,7 +4,7 @@ let subFile = function () {
   if (global.subCount < 1) {
     global.stopTime = true;
     console.log('No');
-    global.uploadLock = 1;
+    global.uploadLock = 0;
     global.subCount++;
   } else {
     global.counter++;
