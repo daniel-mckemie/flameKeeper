@@ -1,13 +1,12 @@
 let uploadFiles = function (name, fileToUpload, count) {   
-  global.subCount = 0;
-  global.uploadLock = 0;
+  global.subCount = 0;  
 
   let x = name.fileName
   let lastFour = x.substr(x.length - 4); // => ".mp3"
-  console.log(lastFour)
-  if (lastFour == '.mp3' && global.uploadLock == 1) {
+  console.log(global.uploadLock)
+  if (lastFour == '.mp3' && global.uploadLock == 1) {    
     global.uploadLock = 2;
-    console.log(global.uploadLock);
+    console.log('FROM UPLOD: ' + global.uploadLock);
     // Load the AWS SDK for Node.js
     const AWS = require('aws-sdk');
     // Set the region 

@@ -36,12 +36,12 @@ let listFiles = function (name) {
     if (err) {
       console.log("Error", err);
     } else {
-      fileInfo = this.data;
-      global.counter = parseInt(data.Contents[data.Contents.length - 1].Key.substring(14, 20));
+      fileInfo = this.data;      
+      global.counter = parseInt(data.Contents[0].Key.substring(14, 20));
       let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
       global.subId = data.Contents[randomId];
       console.log('From Sub List: ' + global.subId.Key);
-      console.log(global.counter)
+      console.log('counter: ' + global.counter)
 
     }
   });

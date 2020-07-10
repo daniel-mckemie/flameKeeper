@@ -6,8 +6,9 @@ const Replace = require('../models/replace');
 const formidable = require('formidable');
 const async = require('async');
 
-global.counter++;
-global.uploadLock = 0;
+global.counter = 0;
+global.uploadLock = 1;
+console.log('From AUDIO CONTROLLER ' + global.uploadLock)
 
 
 // REPLACE function when submitting from composer page
@@ -68,7 +69,7 @@ exports.dashboard_function = function (req, res) {
 
 // UPLOAD page
 exports.upload_function = function (req, res, next) {
-  global.counter++;  
+  global.counter++;    
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // res.status(415).send(field);      

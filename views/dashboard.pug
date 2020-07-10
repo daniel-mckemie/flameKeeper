@@ -18,10 +18,10 @@ block content
     - let nowCutString = Date.now().toString().substr(1,12);
     - let nowCut = parseInt(nowCutString) - 25200000;
     - let dontRenderIt = lastReplace > nowCut;      
-    - console.log(nowCut);
-    - console.log(dontRenderIt);                    
+    - console.log('Nowcut: ' + nowCut);
+    - console.log('dontrenderit ' + dontRenderIt);                    
 
-    if dontRenderIt || global.upLoadLock == 2
+    if global.uploadLock == 0
       h1 No Guy!
     else                    
       div
@@ -49,7 +49,7 @@ block content
       br
       br
       br
-      if global.uploadLock == 2
+      if global.uploadLock == 0
         div(class="dotted")
           p LAST FILE YOU UPLOADED:
           p= lastUpload.Key
