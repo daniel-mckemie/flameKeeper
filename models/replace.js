@@ -32,6 +32,20 @@ let oldKey = id;
 console.log(`THIS IS THE OLD KEY ${oldKey.id}`);
 console.log('THIS IS THE NEW KEY ' + newKey);
 
+// FK 7 HOUR GRAB FUNCTION
+global.subCount = 1;
+
+
+global.uploadLock = 0;
+
+console.log('Out of the function: ' + global.uploadLock);
+
+setTimeout(() => {
+  global.uploadLock = 1;
+  setInterval(Substitute.sub_file, 5000);
+  console.log('In the function: ' + global.uploadLock);
+}, 5000);
+
 
 
 // Copy the object to a new location
@@ -54,10 +68,7 @@ s3.copyObject({
 }
 
 
-// FK 7 HOUR GRAB FUNCTION
-global.subCount = 0;
-setInterval(Substitute.sub_file, 25200000);
 
-global.uploadLock = 0;
+
 
 exports.replace_file = replaceFile;
