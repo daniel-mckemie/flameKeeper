@@ -40,7 +40,7 @@ let listFiles = function (name) {
       global.counter = parseInt(data.Contents[data.Contents.length - 1].Key.substring(14, 20));
       let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
       global.subId = data.Contents[randomId];
-      console.log('LISTYSUB: ' + global.subId.Key);
+      console.log('From Sub List: ' + global.subId.Key);
       console.log(global.counter)
 
     }

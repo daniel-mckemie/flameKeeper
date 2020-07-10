@@ -1,5 +1,6 @@
 let uploadFiles = function (name, fileToUpload, count) {   
   global.subCount = 0;
+  global.uploadLock = 0;
 
   let x = name.fileName
   let lastFour = x.substr(x.length - 4); // => ".mp3"

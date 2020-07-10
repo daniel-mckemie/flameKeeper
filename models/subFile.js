@@ -1,13 +1,15 @@
 const List = require('../models/list');
 
-let subFile = function () {  
-  global.subCount;
+let subFile = function () {        
   if (global.subCount < 1) {
+    global.stopTime = true;
     console.log('No');
+    global.uploadLock = 1;
     global.subCount++;
   } else {
     global.counter++;
     global.subCount++;
+    console.log('Subcount from Sbfile ' + global.subCount)
 
     List.list_files();
 
@@ -26,7 +28,7 @@ let subFile = function () {
     });
     
     let id = global.subId.Key
-    console.log('SUBBY' + global.subId.Key);
+    
 
     let snapshot = global.counter;
     let cutId = id.substring(21);
@@ -44,7 +46,7 @@ let subFile = function () {
     
 
 
-    console.log('SUB SUCCESS?!');
+    console.log('SUB SUCCESS!');
 
     // Copy the object to a new location
     s3.copyObject({

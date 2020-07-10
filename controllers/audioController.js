@@ -7,6 +7,8 @@ const formidable = require('formidable');
 const async = require('async');
 
 global.counter++;
+global.uploadLock = 0;
+
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
@@ -64,17 +66,6 @@ exports.dashboard_function = function (req, res) {
     });
 }
 
-// exports.render_upload = function (req, res) {
-//   async.parallel({
-//       upload_files: function (callback) {
-//         res.render('upload');
-//       }
-//     },
-//     function (err, results) {
-//       res.send('ERRONEOUS!');
-//     });
-// }
-
 // UPLOAD page
 exports.upload_function = function (req, res, next) {
   global.counter++;  
@@ -109,6 +100,7 @@ exports.upload_function = function (req, res, next) {
 
 exports.delete_function = function (req, res, next) {    
   global.counter--;
+  global.uploadLock = 1;
   async.parallel({    
       delete_file: function (callback) {
         res.status(200).send('dashboard', {
