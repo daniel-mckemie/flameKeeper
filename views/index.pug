@@ -10,6 +10,7 @@ block content
       if error
         p Error getting dynamic content.
       else
+        - console.log('durp' + fileInfo);
         - let returns = fileInfo.Contents
         - let returnsReversed = returns.reverse();
         - let files = returnsReversed.slice(0,7);

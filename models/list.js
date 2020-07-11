@@ -31,21 +31,47 @@ let listFiles = function (name) {
   };
 
 
-  // Call S3 to obtain a list of the objects in the bucket
-  s3.listObjects(bucketParams, function (err, data) {
-    if (err) {
-      console.log("Error", err);
-    } else {
-      fileInfo = this.data;      
-      global.counter = parseInt(data.Contents[0].Key.substring(14, 20));
-      let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
-      global.subId = data.Contents[randomId];
-      console.log('From Sub List: ' + global.subId.Key);
-      console.log('counter: ' + global.counter)
 
-    }
-  });
+  // let fileInfo = [];
+  listAllKeys();
 
+  function listAllKeys() {
+    s3.listObjectsV2(bucketParams, function (err, data) {
+      if (err) {
+        console.log(err, err.stack); // an error occurred
+      } else {
+        fileInfo = this.data;        
+        global.counter = parseInt(data.Contents[0].Key.substring(14, 20));
+        let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
+        global.subId = data.Contents[randomId];
+        console.log('From Sub List: ' + global.subId.Key);
+        console.log('counter: ' + global.counter)
+        if (data.IsTruncated) {
+          bucketParams.ContinuationToken = data.NextContinuationToken;
+          console.log("get further list...");
+          listAllKeys();
+        }
+      }
+    });
+  }
+
+
+
+  // // Call S3 to obtain a list of the objects in the bucket
+  // s3.listObjects(bucketParams, function (err, data) {
+  //   if (err) {
+  //     console.log("Error", err);
+  //   } else {
+  //     fileInfo = this.data;
+  // console.log(fileInfo);
+  // global.counter = parseInt(data.Contents[0].Key.substring(14, 20));
+  // let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
+  // global.subId = data.Contents[randomId];
+  // console.log('From Sub List: ' + global.subId.Key);
+  // console.log('counter: ' + global.counter)
+
+  //   }
+  // });
 
 };
 exports.list_files = listFiles;
