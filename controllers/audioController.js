@@ -13,7 +13,7 @@ console.log('From AUDIO CONTROLLER ' + global.uploadLock)
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
-  async.parallel({
+  async.await({
       replace_file: function (callback) {        
         res.render('replaceSuccess', {
           title: 'REPLACED',

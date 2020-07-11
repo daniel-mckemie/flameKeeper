@@ -26,13 +26,13 @@ let listFiles = function (name) {
   // DEFINE YOUR RETURN THE PARAMS!!!!!!!!
   let bucketParams = {
     Bucket: bucketName,
-    // MaxKeys: 7
+    MaxKeys: 1000
     // StartAfter: startingFile  
   };
 
 
 
-  // let fileInfo = [];
+  let dataList = [];
   listAllKeys();
 
   function listAllKeys() {
@@ -40,12 +40,15 @@ let listFiles = function (name) {
       if (err) {
         console.log(err, err.stack); // an error occurred
       } else {
-        fileInfo = this.data;        
-        global.counter = parseInt(data.Contents[0].Key.substring(14, 20));
-        let randomId = Math.floor(Math.random() * (data.Contents.length - 7))
-        global.subId = data.Contents[randomId];
-        console.log('From Sub List: ' + global.subId.Key);
-        console.log('counter: ' + global.counter)
+        fileInfo = this.data;
+        dataList.push(fileInfo);  
+        console.log(dataList[0].Contents[0]);
+        global.counter = parseInt(dataList[0].Contents[0].Key.substring(14, 20));
+        let randomId = Math.floor(Math.random() * (dataList[0].Contents.length - 7))
+        global.subId = dataList[0].Contents[randomId];
+        console.log('counter ' + global.counter);
+        console.log('Random ID ' + randomId )        
+        console.log('subid ' + global.subId.Key)
         if (data.IsTruncated) {
           bucketParams.ContinuationToken = data.NextContinuationToken;
           console.log("get further list...");

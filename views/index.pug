@@ -9,8 +9,7 @@ block content
     .installation
       if error
         p Error getting dynamic content.
-      else
-        - console.log('durp' + fileInfo);
+      else                
         - let returns = fileInfo.Contents
         - let returnsReversed = returns.reverse();
         - let files = returnsReversed.slice(0,7);
