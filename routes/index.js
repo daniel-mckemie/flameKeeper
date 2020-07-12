@@ -9,7 +9,7 @@ const audio_controller = require('../controllers/audioController');
 router.put('/replace/:id', audio_controller.replace_function);
 
 // GET Upload Form
-router.get('/uploadForm', (req, res) => res.render('./uploadForm'));
+router.get('/upload-form', (req, res) => res.render('./upload-form'));
 
 // GET Dashboard page route
 router.get('/dashboard', audio_controller.dashboard_function);
@@ -30,13 +30,6 @@ router.post('/delete/:id', audio_controller.delete_function);
 
 // GET Home page route.
 router.get('/', (req, res) => audio_controller.list_function(req, res));
-
-
-
-
-
-
-
 
 
 

@@ -1,3 +1,5 @@
+const audio_controller = require('../controllers/audioController');
+
 let uploadFiles = function (name, fileToUpload, count) {   
   global.subCount = 0;  
 
@@ -64,7 +66,8 @@ let uploadFiles = function (name, fileToUpload, count) {
         console.log("Error", err);
       }
       if (data) {
-        console.log("Upload Success", data.key);
+        console.log("Upload Success", data.key);        
+        
 
       }
     })

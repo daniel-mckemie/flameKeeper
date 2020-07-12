@@ -51,7 +51,7 @@ let replaceFile = function (id) {
       setTimeout(() => {
         Substitute.sub_file(global.newId);
       }, 5000);
-    }, 10000);
+    }, 25200000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
@@ -60,7 +60,7 @@ let replaceFile = function (id) {
       setTimeout(() => {
         Substitute.sub_file(global.newId);
       }, 5000);
-    }, 10000);
+    }, 25200000);
     global.stopTime = true;    
   }
 

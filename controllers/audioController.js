@@ -4,7 +4,7 @@ const Delete = require('../models/delete');
 const Replace = require('../models/replace');
 
 const formidable = require('formidable');
-const async = require('async');
+const fs = require('fs');
 
 global.counter = 0;
 global.uploadLock = 0;
@@ -14,114 +14,120 @@ console.log('From AUDIO CONTROLLER ' + global.dashboardLock)
 
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
-  async.parallel({
-      replace_file: function (callback) {        
-        res.render('replaceSuccess', {
-          title: 'REPLACED',
-          data: Replace.replace_file({
-            name: 'fk-audio',            
-            id: req.params.id,                   
-            callback
-          })
-        });
-      }
-    },
+  function replacedFile() {
+    Replace.replace_file({
+      name: 'fk-audio',
+      id: req.params.id
+    })
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.redirect('/'))
+      }, 2000)
+    })
+  }
+  replacedFile(),
+
+
     function (err, results) {
       res.send('ERRONEOUS!');
-    })
+    }
 }
 
 
 // Home page list AUDIO files
-exports.list_function = function (req, res) {  
-  async.series({      
-      list_files: function (callback) {
-        res.render('index', {
-          title: 'SAMPLE',
-          data: List.list_files({
-            name: 'fk-audio',
-            callback
-          })
-        });
-      }
-    },
+exports.list_function = function (req, res) {
+  let fileInfo;
+
+  function getList() {
+    fileInfo = List.list_files({
+      name: 'fk-audio'
+    });
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.render('index', fileInfo))
+      }, 2000)
+    })
+  }
+  getList(),
+
     function (err, results) {
       res.send('ERRONEOUS!');
-    });
+    }
 }
 
 // DISPLAY selected files to the home page upon submit
 exports.dashboard_function = function (req, res) {
-  async.series({
-      list_files: function (callback) {
-        res.render('dashboard', {
-          title: 'Composer Palette',
-          data: List.list_files({
-            name: 'fk-audio',
-            callback
-          })
-        });
-      }
-    },
+  let fileInfo;
+
+  function getDash() {
+    fileInfo = List.list_files({
+      name: 'fk-audio'
+    });
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.render('dashboard', fileInfo))
+      }, 2000)
+    })
+  }
+  getDash(),
+
     function (err, results) {
       res.send('ERRONEOUS!');
-    });
+    }
 }
 
 // UPLOAD page
 exports.upload_function = function (req, res, next) {
-  global.counter++;    
+  global.counter++;  
+  
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // res.status(415).send(field);      
     })
     .on('file', (name, file) => {
-      res.status(200).send({                    
-          data: Upload.upload_files({
-            name: 'fk-audio',            
-            fileName: file.name,
-            fileToUpload: file.path            
-          })          
+      function uploadFile() {
+        Upload.upload_files({
+          name: 'fk-audio',
+          fileName: file.name,
+          fileToUpload: file.path
+        });
+        return new Promise(resolve => {
+          setTimeout(function () {
+            resolve(res.redirect('dashboard'))
+          }, 2000)
         })
-        
-        .on('aborted', () => {
-          console.error('Request aborted by the user');
-        })
-        .on('error', (err) => {
-          console.error('Error', err)
-          throw err
-        })
-        .on('end', () => {
-          res.redirect('/');
-        })
-    })
+      }
+      uploadFile(),
+
+        function (err, results) {
+          res.send('ERRONEOUS!');
+        }
+      })
+    
     .on('success', (name, field) => {
       console.log('Field')
-    })
+    })    
 }
 
-exports.delete_function = function (req, res, next) {    
+exports.delete_function = function (req, res, next) {
   global.counter--;
   global.uploadLock = 1;
-  async.parallel({    
-      delete_file: function (callback) {
-        res.status(200).send('dashboard', {
-          title: 'DELETED',
-          data: Delete.delete_file({
-            name: 'fk-audio',
-            id: req.params.id,
-            callback
-          })
-        });
-      }
-    },
+
+  function deleteLast() {
+    Delete.delete_file({
+      name: 'fk-audio',
+      id: req.params.id,
+    });
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.redirect('/upload-form'))
+      }, 2000)
+    })
+  }
+  deleteLast(),
+
+
     function (err, results) {
       res.send('ERRONEOUS!');
-    });
+    };
 }
-
-
-
-
-
-
