@@ -7,23 +7,23 @@ block content
       p.logoPlaceholder
         img(src='./images/me-logo-wht.png' alt='sample logo')      
     .installation
-      if error
-        p Error getting dynamic content.
-      else                
-        - let returns = fileInfo.Contents
-        - let returnsReversed = returns.reverse();
-        - let files = returnsReversed.slice(1,8);
-        - let lastUpload = returns[returns.length - 1];
-        
-        div(class="waveform")
-        button(class="btn" onclick="startAudio()") Play
+      //- if error
+      //-   p Error getting dynamic content.
+      //- else                
+      - let returns = fileInfo.Contents
+      - let returnsReversed = returns.reverse();
+      - let files = returnsReversed.slice(1,8);
+      - let lastUpload = returns[returns.length - 1];
+      
+      div(class="waveform")
+      button(class="btn" onclick="startAudio()") Play
 
-        each file in files ? files : ['NO!!!']
-          - console.log(file.Key);
-          //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
-          //- p= file.Key
-          //- p= file.LastModified
-          //-   audio(controls="", type="audio/mpeg" src=audioSrc)
+      each file in files ? files : ['NO!!!']
+        - console.log(file.Key);
+        //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
+        //- p= file.Key
+        //- p= file.LastModified
+        //-   audio(controls="", type="audio/mpeg" src=audioSrc)
     
     //- Identity details
     section.profileHeader
@@ -92,12 +92,12 @@ block content
       span Email / Social
   
   script.
-      setTimeout(function () {
-      if(window.location.hash != '#r') {
-          window.location.hash = 'r';
-          window.location.reload(1);
-        }
-      }, 1000);  // After 5 secs
+      //- setTimeout(function () {
+      //- if(window.location.hash != '#r') {
+      //-     window.location.hash = 'r';
+      //-     window.location.reload(1);
+      //-   }
+      //- }, 1000);  // After 5 secs
  
 
       let returns0 = `!{JSON.stringify(fileInfo.Contents[1].Key)}`;
