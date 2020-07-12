@@ -7,11 +7,13 @@ let subFile = function () {
     global.uploadLock = 0;
     global.subCount++;
   } else {
-    global.counter++;
+    List.list_files();        
+    console.log('Counter from Sub ' + global.counter);
     global.subCount++;
     console.log('Subcount from Sbfile ' + global.subCount)
-
-    List.list_files();
+    
+    // LIST FUNCTION MUST RUN AGAIN TO GRAB A KEY!!!
+    global.counter++;
 
     // Load the SDK for JavaScript
     const AWS = require('aws-sdk');
@@ -29,20 +31,19 @@ let subFile = function () {
     
     let id = global.subId.Key
     
-
+    // Renames old file to bring forward
     let snapshot = global.counter;
     let cutId = id.substring(21);
     let fileLabel = `${Date.now()}-${snapshot}-${cutId}`;
 
-    // let newKey = fileLabel.replace(fileLabel.charAt(0), '0');
-
-    console.log('OLDKEY: ' + id);
-    console.log('NEWKEY: ' + fileLabel)
-
+    // Renames new file to kick back  
+    let newReplacement = global.newId.Key
+    let newIdKey = newReplacement.replace(newReplacement.charAt(0), '0');
+    
 
     let bucketName = 'fk-audio';
     let oldKey = id;
-    let newKey = fileLabel
+    let newKey = fileLabel;
     
 
 
@@ -52,16 +53,33 @@ let subFile = function () {
     s3.copyObject({
         Bucket: bucketName,
         CopySource: `${bucketName}/${oldKey}`,
-        Key: `${newKey}`
+        Key: `${newKey}`,
+        ACL: 'public-read',
+        MetaDirective: 'REPLACE'
       })
       .promise()
-      // .then(() =>
+      .then(() =>
+        // Delete the old object
+        s3.copyObject({
+          Bucket: bucketName,
+          CopySource: `${bucketName}/${global.newId.Key}`,
+          Key: `${newIdKey}`,
+          ACL: 'public-read',
+          MetaDirective: 'REPLACE'
+        }).promise()
+      ).then(() =>
+        // Delete the old object
+        s3.deleteObject({
+          Bucket: bucketName,
+          Key: global.newId.Key,
+        }).promise()
+      // ).then(() =>
       //   // Delete the old object
       //   s3.deleteObject({
       //     Bucket: bucketName,
       //     Key: oldKey
       //   }).promise()
-      // )
+      )
 
       // Error handling is left up to reader
       .catch((e) => console.error(e));

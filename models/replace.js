@@ -1,5 +1,5 @@
 const Substitute = require('../models/subFile');
-const StrategyInternal = require('passport-auth0');
+const List = require('../models/list');
 
 let replaceFile = function (id) {
 
@@ -46,13 +46,19 @@ let replaceFile = function (id) {
     console.log('Interval cleared!');
     clearInterval(global.myInterval);
     global.myInterval = setInterval(() => {
-      Substitute.sub_file();
+      List.list_files(); 
+      setTimeout(() => {
+        Substitute.sub_file();
+      }, 5000);
     }, 10000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
     global.myInterval = setInterval(() => {
-      Substitute.sub_file();
+      List.list_files();
+      setTimeout(() => {
+        Substitute.sub_file();
+      }, 5000);
     }, 10000);
     global.stopTime = true;    
   }
@@ -62,16 +68,17 @@ let replaceFile = function (id) {
   s3.copyObject({
       Bucket: bucketName,
       CopySource: `${bucketName}/${oldKey.id}`,
-      Key: `${newKey}`
+      Key: `${newKey}`,
+      MetaDirective: 'REPLACE'
     })
     .promise()
-    // .then(() =>
-    //   // Delete the old object
-    //   s3.deleteObject({
-    //     Bucket: bucketName,
-    //     Key: oldKey
-    //   }).promise()
-    // )
+    .then(() =>
+      // Delete the old object
+      s3.deleteObject({
+        Bucket: bucketName,
+        Key: oldKey.id
+      }).promise()
+    )
 
     // Error handling is left up to reader
     .catch((e) => console.error(e));

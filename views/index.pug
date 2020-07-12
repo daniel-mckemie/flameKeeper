@@ -12,7 +12,7 @@ block content
       else                
         - let returns = fileInfo.Contents
         - let returnsReversed = returns.reverse();
-        - let files = returnsReversed.slice(0,7);
+        - let files = returnsReversed.slice(1,8);
         - let lastUpload = returns[returns.length - 1];
         
         div(class="waveform")
@@ -100,13 +100,13 @@ block content
       //- }, 2000);  // After 5 secs
  
 
-      let returns0 = `!{JSON.stringify(fileInfo.Contents[0].Key)}`;
-      let returns1 = `!{JSON.stringify(fileInfo.Contents[1].Key)}`;
-      let returns2 = `!{JSON.stringify(fileInfo.Contents[2].Key)}`;
-      let returns3 = `!{JSON.stringify(fileInfo.Contents[3].Key)}`;
-      let returns4 = `!{JSON.stringify(fileInfo.Contents[4].Key)}`;
-      let returns5 = `!{JSON.stringify(fileInfo.Contents[5].Key)}`;
-      let returns6 = `!{JSON.stringify(fileInfo.Contents[6].Key)}`;      
+      let returns0 = `!{JSON.stringify(fileInfo.Contents[1].Key)}`;
+      let returns1 = `!{JSON.stringify(fileInfo.Contents[2].Key)}`;
+      let returns2 = `!{JSON.stringify(fileInfo.Contents[3].Key)}`;
+      let returns3 = `!{JSON.stringify(fileInfo.Contents[4].Key)}`;
+      let returns4 = `!{JSON.stringify(fileInfo.Contents[5].Key)}`;
+      let returns5 = `!{JSON.stringify(fileInfo.Contents[6].Key)}`;
+      let returns6 = `!{JSON.stringify(fileInfo.Contents[7].Key)}`;      
       
       function startAudio() {
         wavesurfer0.on('ready', wavesurfer0.play());

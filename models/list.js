@@ -41,14 +41,27 @@ let listFiles = function (name) {
         console.log(err, err.stack); // an error occurred
       } else {
         fileInfo = this.data;
-        dataList.push(fileInfo);  
-        console.log(dataList[0].Contents[0]);
-        global.counter = parseInt(dataList[0].Contents[0].Key.substring(14, 20));
-        let randomId = Math.floor(Math.random() * (dataList[0].Contents.length - 7))
-        global.subId = dataList[0].Contents[randomId];
-        console.log('counter ' + global.counter);
-        console.log('Random ID ' + randomId )        
-        console.log('subid ' + global.subId.Key)
+        dataList.push(fileInfo);
+        let dataLength = dataList[0].Contents.length; 
+        
+        let group = dataList[0].Contents;
+        let oldSubGroup = group.slice(0, -7); 
+        let newSubGroup = group.slice(oldSubGroup.length, group.length);       
+        
+        global.counter = parseInt(dataList[0].Contents[dataLength - 1].Key.substring(14, 20));
+        let randomId = Math.floor(Math.random() * (oldSubGroup.length));
+        let randomReplacement = Math.floor(Math.random() * (newSubGroup.length)); 
+        console.log('Counter ' + global.counter);
+        console.log(randomId);
+        console.log(randomReplacement)
+        global.subId = oldSubGroup[randomId];
+        global.newId = newSubGroup[randomReplacement]
+
+        console.log('oldId' + global.subId.Key);
+        console.log('newId' + global.newId.Key);
+        
+        
+        
         if (data.IsTruncated) {
           bucketParams.ContinuationToken = data.NextContinuationToken;
           console.log("get further list...");
