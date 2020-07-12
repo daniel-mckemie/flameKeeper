@@ -2,6 +2,7 @@ const Substitute = require('../models/subFile');
 const List = require('../models/list');
 
 let replaceFile = function (id) {
+  global.dashboardLock = true;  
 
 
   // Load the SDK for JavaScript
@@ -48,18 +49,18 @@ let replaceFile = function (id) {
     global.myInterval = setInterval(() => {
       List.list_files(); 
       setTimeout(() => {
-        Substitute.sub_file();
-      }, 10000);
-    }, 900000);
+        Substitute.sub_file(global.newId);
+      }, 5000);
+    }, 10000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
     global.myInterval = setInterval(() => {
       List.list_files();
       setTimeout(() => {
-        Substitute.sub_file();
-      }, 10000);
-    }, 900000);
+        Substitute.sub_file(global.newId);
+      }, 5000);
+    }, 10000);
     global.stopTime = true;    
   }
 

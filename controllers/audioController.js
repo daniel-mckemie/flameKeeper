@@ -8,7 +8,8 @@ const async = require('async');
 
 global.counter = 0;
 global.uploadLock = 0;
-console.log('From AUDIO CONTROLLER ' + global.uploadLock)
+global.dashboardLock = true;
+console.log('From AUDIO CONTROLLER ' + global.dashboardLock)
 
 
 // REPLACE function when submitting from composer page

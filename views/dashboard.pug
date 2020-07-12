@@ -13,6 +13,7 @@ block content
     - let lastUpload = returns[returns.length - 1];    
     - let returnsReversed = returns.reverse()    
     - let files = returnsReversed.slice(1,8);
+    - console.log(files);
 
     //- - let lastReplace = parseInt(returns[returns.length - 1].Key.substr(1,12));
     //- - let nowCutString = Date.now().toString().substr(1,12);
@@ -23,7 +24,7 @@ block content
     
     
 
-    if global.uploadLock == 0
+    if global.dashboardLock == true
       h1 No guy
     else                    
       div

@@ -6,6 +6,7 @@ let uploadFiles = function (name, fileToUpload, count) {
   console.log(global.uploadLock)
   if (lastFour == '.mp3' && global.uploadLock == 0) {    
     global.uploadLock = 2;
+    global.dashboardLock = false;
     console.log('FROM UPLOD: ' + global.uploadLock);
     // Load the AWS SDK for Node.js
     const AWS = require('aws-sdk');

@@ -40,7 +40,7 @@ let listFiles = function (name) {
       if (err) {
         console.log(err, err.stack); // an error occurred
       } else {
-        fileInfo = this.data;
+        fileInfo = this.data;        
         dataList.push(fileInfo);
         let dataLength = dataList[0].Contents.length; 
         
@@ -51,14 +51,13 @@ let listFiles = function (name) {
         global.counter = parseInt(dataList[0].Contents[dataLength - 1].Key.substring(14, 20));
         let randomId = Math.floor(Math.random() * (oldSubGroup.length));
         let randomReplacement = Math.floor(Math.random() * (newSubGroup.length)); 
-        console.log('Counter ' + global.counter);
-        console.log(randomId);
-        console.log(randomReplacement)
+        // console.log(newSubGroup);
+        
         global.subId = oldSubGroup[randomId];
-        global.newId = newSubGroup[randomReplacement]
+        global.newId = newSubGroup[randomReplacement].Key;
 
         console.log('oldId' + global.subId.Key);
-        console.log('newId' + global.newId.Key);
+        console.log('newId' + global.newId);
         
         
         
