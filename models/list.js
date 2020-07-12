@@ -62,11 +62,11 @@ let listFiles = function (name) {
         
         
         
-        if (data.IsTruncated) {
-          bucketParams.ContinuationToken = data.NextContinuationToken;
-          console.log("get further list...");
-          listAllKeys();
-        }
+        // if (data.IsTruncated) {
+        //   bucketParams.ContinuationToken = data.NextContinuationToken;
+        //   console.log("get further list...");
+        //   listAllKeys();
+        // }
       }
     });
   }

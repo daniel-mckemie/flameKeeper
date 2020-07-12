@@ -54,8 +54,7 @@ let subFile = function () {
         Bucket: bucketName,
         CopySource: `${bucketName}/${oldKey}`,
         Key: `${newKey}`,
-        ACL: 'public-read',
-        MetaDirective: 'REPLACE'
+        ACL: 'public-read'        
       })
       .promise()
       .then(() =>
@@ -64,8 +63,7 @@ let subFile = function () {
           Bucket: bucketName,
           CopySource: `${bucketName}/${global.newId.Key}`,
           Key: `${newIdKey}`,
-          ACL: 'public-read',
-          MetaDirective: 'REPLACE'
+          ACL: 'public-read'          
         }).promise()
       ).then(() =>
         // Delete the old object

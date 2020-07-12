@@ -14,15 +14,17 @@ block content
     - let returnsReversed = returns.reverse()    
     - let files = returnsReversed.slice(1,8);
 
-    - let lastReplace = parseInt(returns[returns.length - 1].Key.substr(1,12));
-    - let nowCutString = Date.now().toString().substr(1,12);
-    - let nowCut = parseInt(nowCutString) - 25200000;
-    - let dontRenderIt = lastReplace > nowCut;      
-    - console.log('Nowcut: ' + nowCut);
-    - console.log('dontrenderit ' + dontRenderIt);                    
+    //- - let lastReplace = parseInt(returns[returns.length - 1].Key.substr(1,12));
+    //- - let nowCutString = Date.now().toString().substr(1,12);
+    //- - let nowCut = parseInt(nowCutString) - 25200000;
+    //- - let dontRenderIt = lastReplace > nowCut;      
+    //- - console.log('Nowcut: ' + nowCut);
+    //- - console.log('dontrenderit ' + dontRenderIt); 
+    
+    
 
     if global.uploadLock == 0
-      h1 No Guy!
+      h1 No guy
     else                    
       div
         - let x = 1;   

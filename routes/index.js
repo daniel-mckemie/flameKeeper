@@ -3,8 +3,6 @@ const router = express.Router();
 const audio_controller = require('../controllers/audioController');
 
 
-
-
 // router.get('/substitute', function(){setTimeout(Substitute.sub_file, 2000)});
 
 // DELETE File and Render Home Page
@@ -32,6 +30,8 @@ router.post('/delete/:id', audio_controller.delete_function);
 
 // GET Home page route.
 router.get('/', (req, res) => audio_controller.list_function(req, res));
+
+
 
 
 

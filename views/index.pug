@@ -92,12 +92,12 @@ block content
       span Email / Social
   
   script.
-      //- setTimeout(function () {
-      //- if(window.location.hash != '#r') {
-      //-     window.location.hash = 'r';
-      //-     window.location.reload(1);
-      //-   }
-      //- }, 2000);  // After 5 secs
+      setTimeout(function () {
+      if(window.location.hash != '#r') {
+          window.location.hash = 'r';
+          window.location.reload(1);
+        }
+      }, 1000);  // After 5 secs
  
 
       let returns0 = `!{JSON.stringify(fileInfo.Contents[1].Key)}`;

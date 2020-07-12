@@ -49,8 +49,8 @@ let replaceFile = function (id) {
       List.list_files(); 
       setTimeout(() => {
         Substitute.sub_file();
-      }, 5000);
-    }, 10000);
+      }, 10000);
+    }, 900000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
@@ -58,8 +58,8 @@ let replaceFile = function (id) {
       List.list_files();
       setTimeout(() => {
         Substitute.sub_file();
-      }, 5000);
-    }, 10000);
+      }, 10000);
+    }, 900000);
     global.stopTime = true;    
   }
 
@@ -69,7 +69,7 @@ let replaceFile = function (id) {
       Bucket: bucketName,
       CopySource: `${bucketName}/${oldKey.id}`,
       Key: `${newKey}`,
-      MetaDirective: 'REPLACE'
+      ACL: 'public-read'
     })
     .promise()
     .then(() =>
@@ -84,8 +84,5 @@ let replaceFile = function (id) {
     .catch((e) => console.error(e));
 
 }
-
-
-
 
 exports.replace_file = replaceFile;

@@ -33,7 +33,7 @@ exports.replace_function = function (req, res) {
 
 // Home page list AUDIO files
 exports.list_function = function (req, res) {  
-  async.series({
+  async.series({      
       list_files: function (callback) {
         res.render('index', {
           title: 'SAMPLE',
