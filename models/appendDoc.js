@@ -1,6 +1,7 @@
 // VISIT THIS SO FOR LISTS OF OVER 1000: https://menno.io/posts/listing-s3-objects-with-nodejs/
 const fs = require('fs');
 const stringify = require('csv-stringify');
+const neatCsv = require('neat-csv');
 
 let appendCSV = function (name) {
   console.log('appned odc')
@@ -40,19 +41,31 @@ let appendCSV = function (name) {
         console.log(err, err.stack); // an error occurred
       } else {
         fileInfo = this.data;
-        dataList.push(fileInfo);        
+        dataList.push(fileInfo);  
+        
+        let csvData = [];
+
+        fs.readFile('./fileTracker.csv', async (err, data) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+          csvData = await neatCsv(data)
+          global.snapShotId = (csvData[csvData.length - 1].id);
+        });
 
         
 
+        // GET LAST SNAPSHOT NUMBER HERE! 
         let data =[];
         let columns = {
           id: 'id',
           name: 'Name'
         };
         
-        // GET LAST SNAPSHOT NUMBER HERE!        
+               
         for (let i = 0; i < fileInfo.Contents.length; i++) {
-          data.push([i, fileInfo.Contents[i].Key +i]);                              
+          data.push([i, fileInfo.Contents[i].Key]);                              
         } 
 
         stringify(data, {header: true, columns: columns}, (err, output) => {
@@ -62,8 +75,6 @@ let appendCSV = function (name) {
             console.log('fileTracker.csv saved.');
           })
         });
-        
-        
         
         
 
