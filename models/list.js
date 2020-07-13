@@ -1,59 +1,94 @@
 // VISIT THIS SO FOR LISTS OF OVER 1000: https://menno.io/posts/listing-s3-objects-with-nodejs/
 
-let listFiles = function (name) {    
-  // Load the SDK for JavaScript
-  const AWS = require('aws-sdk');
+const fs = require('fs');
+const neatCsv = require('neat-csv');
 
-  // Set the Region 
-  AWS.config.update({
-    region: 'us-east-1'
-  });
+let listFiles = function () {    
+  
+  
+}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // // Load the SDK for JavaScript
+  // const AWS = require('aws-sdk');
 
-  // Create S3 service object
-  s3 = new AWS.S3({
-    apiVersion: '2006-03-01',
-    maxRetries: 10
-  });
-  let bucketName;
-  if (name == undefined) {
-    bucketName = 'fk-audio';
-  } else {
-    bucketName = name.name;
-  }
+  // // Set the Region 
+  // AWS.config.update({
+  //   region: 'us-east-1'
+  // });
+
+  // // Create S3 service object
+  // s3 = new AWS.S3({
+  //   apiVersion: '2006-03-01',
+  //   maxRetries: 10
+  // });
+  // let bucketName;
+  // if (name == undefined) {
+  //   bucketName = 'fk-audio';
+  // } else {
+  //   bucketName = name.name;
+  // }
 
 
-  // DEFINE YOUR RETURN THE PARAMS!!!!!!!!
-  let bucketParams = {
-    Bucket: bucketName,
-    MaxKeys: 1000
-    // StartAfter: startingFile  
-  };
+  // // DEFINE YOUR RETURN THE PARAMS!!!!!!!!
+  // let bucketParams = {
+  //   Bucket: bucketName,
+  //   MaxKeys: 1000
+  //   // StartAfter: startingFile  
+  // };
 
 
 
-  let dataList = [];
-  listAllKeys();
+  // const dataList = [];
+  // listAllKeys();
 
-  function listAllKeys() {
-    s3.listObjectsV2(bucketParams, function (err, data) {
-      if (err) {
-        console.log(err, err.stack); // an error occurred
-      } else {
-        fileInfo = this.data;        
-        dataList.push(fileInfo);
-        let dataLength = dataList[0].Contents.length; 
+  // function listAllKeys() {
+  //   s3.listObjectsV2(bucketParams, function (err, data) {
+  //     if (err) {
+  //       console.log(err, err.stack); // an error occurred
+  //     } else {        
         
-        let group = dataList[0].Contents;
-        let oldSubGroup = group.slice(0, -7); 
-        let newSubGroup = group.slice(oldSubGroup.length, group.length);       
         
-        global.counter = parseInt(dataList[0].Contents[dataLength - 1].Key.substring(14, 20));
-        let randomId = Math.floor(Math.random() * (oldSubGroup.length));
-        let randomReplacement = Math.floor(Math.random() * (newSubGroup.length)); 
-        // console.log(newSubGroup);
         
-        global.subId = oldSubGroup[randomId];
-        global.newId = newSubGroup[randomReplacement].Key;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // fileInfo = this.data;        
+        // dataList.push(fileInfo);
+        // let dataLength = dataList[0].Contents.length; 
+        
+        // let group = dataList[0].Contents;
+        // let oldSubGroup = group.slice(0, -7); 
+        // let newSubGroup = group.slice(oldSubGroup.length, group.length);       
+        
+        // global.counter = parseInt(dataList[0].Contents[dataLength - 1].Key.substring(14, 20));
+        // let randomId = Math.floor(Math.random() * (oldSubGroup.length));
+        // let randomReplacement = Math.floor(Math.random() * (newSubGroup.length)); 
+        // // console.log(newSubGroup);
+        
+        // global.subId = oldSubGroup[randomId];
+        // global.newId = newSubGroup[randomReplacement].Key;
 
         // console.log('oldId' + global.subId.Key);
         // console.log('newId' + global.newId);
@@ -65,9 +100,9 @@ let listFiles = function (name) {
         //   console.log("get further list...");
         //   listAllKeys();
         // }
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
 
 
@@ -87,5 +122,5 @@ let listFiles = function (name) {
   //   }
   // });
 
-};
+// };
 exports.list_files = listFiles;

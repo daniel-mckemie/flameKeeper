@@ -10,16 +10,19 @@ block content
       //- if error
       //-   p Error getting dynamic content.
       //- else                
-      - let returns = fileInfo.Contents
-      - let returnsReversed = returns.reverse();
-      - let files = returnsReversed.slice(0,7);
-      - let lastUpload = returns[returns.length - 1];
+            
+      - let files = fileInfo.Name;
+      
+      //- - let returnsReversed = returns.reverse();
+      //- - let files = returnsReversed.slice(0,7);
+      //- - let lastUpload = returns[returns.length - 1];
+      
       
       div(class="waveform")
       button(class="btn" onclick="startAudio()") Play
 
-      each file in files ? files : ['NO!!!']
-        - console.log(file.Key);
+      //- each file in files ? files : ['NO!!!']
+      //-   - console.log(file.Key);
         //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
         //- p= file.Key
         //- p= file.LastModified
@@ -92,21 +95,14 @@ block content
       span Email / Social
   
   script.
-      //- setTimeout(function () {
-      //- if(window.location.hash != '#r') {
-      //-     window.location.hash = 'r';
-      //-     window.location.reload(1);
-      //-   }
-      //- }, 1000);  // After 5 secs
- 
-
-      let returns0 = `!{JSON.stringify(fileInfo.Contents[0].Key)}`;
-      let returns1 = `!{JSON.stringify(fileInfo.Contents[1].Key)}`;
-      let returns2 = `!{JSON.stringify(fileInfo.Contents[2].Key)}`;
-      let returns3 = `!{JSON.stringify(fileInfo.Contents[3].Key)}`;
-      let returns4 = `!{JSON.stringify(fileInfo.Contents[4].Key)}`;
-      let returns5 = `!{JSON.stringify(fileInfo.Contents[5].Key)}`;
-      let returns6 = `!{JSON.stringify(fileInfo.Contents[6].Key)}`;      
+      
+      let returns0 = `!{JSON.stringify(fileInfo[0].Name)}`;
+      let returns1 = `!{JSON.stringify(fileInfo[1].Name)}`;
+      let returns2 = `!{JSON.stringify(fileInfo[2].Name)}`;
+      let returns3 = `!{JSON.stringify(fileInfo[3].Name)}`;
+      let returns4 = `!{JSON.stringify(fileInfo[4].Name)}`;
+      let returns5 = `!{JSON.stringify(fileInfo[5].Name)}`;
+      let returns6 = `!{JSON.stringify(fileInfo[6].Name)}`;      
       
       function startAudio() {
         wavesurfer0.on('ready', wavesurfer0.play());

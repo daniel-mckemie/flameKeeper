@@ -7,6 +7,8 @@ const AppendDoc = require('../models/appendDoc');
 const formidable = require('formidable');
 const fs = require('fs');
 
+const neatCsv = require('neat-csv');
+
 global.counter = 0;
 global.uploadLock = 0;
 global.dashboardLock = true;
@@ -36,13 +38,18 @@ exports.replace_function = function (req, res) {
 
 
 // Home page list AUDIO files
-exports.list_function = function (req, res) {
-  let fileInfo;
-
+exports.list_function = function (req, res) {  
   function getList() {
-    fileInfo = List.list_files({
-      name: 'fk-audio'
-    });
+    fs.readFile('./fileTracker.csv', async (err, data) => {      
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat = await neatCsv(data);
+      fileInfo = dataToTreat.slice(Math.max(dataToTreat.length - 8, 1));
+      return fileInfo;       
+    });    
+
     return new Promise(resolve => {
       setTimeout(function () {                                        
         resolve(res.render('index', fileInfo));        
