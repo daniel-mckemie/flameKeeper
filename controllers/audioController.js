@@ -3,13 +3,14 @@ const Upload = require('../models/upload');
 const Delete = require('../models/delete');
 const Replace = require('../models/replace');
 const AppendDoc = require('../models/appendDoc');
+const DeleteDoc = require('../models/deleteDoc');
 
 const formidable = require('formidable');
 const fs = require('fs');
 
 const neatCsv = require('neat-csv');
 
-global.counter = 0;
+
 global.uploadLock = 0;
 global.dashboardLock = true;
 console.log('From AUDIO CONTROLLER ' + global.dashboardLock)
@@ -64,12 +65,17 @@ exports.list_function = function (req, res) {
 }
 
 // DISPLAY selected files to the home page upon submit
-exports.dashboard_function = function (req, res) {
-  let fileInfo;
-
+exports.dashboard_function = function (req, res) {  
   function getDash() {
-    fileInfo = List.list_files({
-      name: 'fk-audio'
+    fs.readFile('./fileTracker.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat = await neatCsv(data);
+      fileInfo = dataToTreat.slice(Math.max(dataToTreat.length - 8, 1));      
+      return fileInfo;
+      
     });
     return new Promise(resolve => {
       setTimeout(function () {
@@ -106,7 +112,7 @@ exports.upload_function = function (req, res, next) {
         })
       }
       uploadFile(),
-      // AppendDoc.append_csv('fk-audio'),
+      AppendDoc.append_csv(global.uploadFileLabel),
       
 
         function (err, results) {
@@ -135,6 +141,7 @@ exports.delete_function = function (req, res, next) {
     })
   }
   deleteLast(),
+  // deleteDoc(),
 
 
     function (err, results) {
@@ -143,5 +150,5 @@ exports.delete_function = function (req, res, next) {
 }
 
 exports.test_function = function (req, res) {
-  AppendDoc.append_csv();
+  DeleteDoc.delete_csv();
 }

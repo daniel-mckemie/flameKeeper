@@ -25,10 +25,9 @@ let uploadFiles = function (name, fileToUpload, count) {
 
     let bucketName = name.name;
     let uploadName = name.fileToUpload;
-    let snapshot = global.counter;
 
 
-    let fileLabel = `${Date.now()}-${snapshot}-${name.fileName}`;
+    global.uploadFileLabel = `${Date.now()}-${name.fileName}`;
 
 
 
@@ -37,7 +36,7 @@ let uploadFiles = function (name, fileToUpload, count) {
     // call S3 to retrieve upload file to specified bucket
     let uploadParams = {
       Bucket: bucketName,
-      Key: fileLabel,
+      Key: global.uploadFileLabel,
       Body: uploadName,
       ACL: 'public-read',
     };
@@ -57,7 +56,7 @@ let uploadFiles = function (name, fileToUpload, count) {
     uploadParams.Body = fileStream;
     const path = require('path');
     // uploadParams.Key = path.basename(file);
-    uploadParams.Key = fileLabel;
+    uploadParams.Key = global.uploadFileLabel;
 
     console.log(fileStream);
 
@@ -66,9 +65,7 @@ let uploadFiles = function (name, fileToUpload, count) {
         console.log("Error", err);
       }
       if (data) {
-        console.log("Upload Success", data.key);        
-        
-
+        console.log("Upload Success", data.key);              
       }
     })
   } else {

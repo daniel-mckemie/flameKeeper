@@ -9,11 +9,8 @@ block content
     p The following files are active:
     br
 
-    - let returns = fileInfo.Contents
-    - let lastUpload = returns[returns.length - 1];    
-    - let returnsReversed = returns.reverse()    
-    - let files = returnsReversed.slice(1,8);
-    - console.log(files);
+    - let files = fileInfo.slice(0, 7);
+    - let lastUpload = fileInfo[fileInfo.length - 1];
 
     //- - let lastReplace = parseInt(returns[returns.length - 1].Key.substr(1,12));
     //- - let nowCutString = Date.now().toString().substr(1,12);
@@ -31,12 +28,12 @@ block content
         - let x = 1;   
         each file in files ? files : ['NO!!!']       
           - x++        
-          - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`                            
+          - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Name}`                            
           div(class="solid")
             form(method="POST" action=`/replace/${file.Key}?_method=PUT` id=`launchForm${x}` encType="multipart/form-data")                                
-              p= file.Key
-              p= file.LastModified
-              ol(class="listy" id=file.Key)  
+              p= file.Name
+              
+              ol(class="listy" id=file.Name)  
                 div(id="player")          
                   audio(id=`${x}` loop controls type="audio/mpeg" src=audioSrc class="audioElement")
                   br
@@ -46,38 +43,37 @@ block content
             input(type="submit" form=`launchForm${x}` value="REPLACE")
             br
             br      
-    
-    
-      - let uploadSrc = `https://fk-audio.s3.amazonaws.com/${lastUpload.Key}`
+             
+      - let uploadSrc = `https://fk-audio.s3.amazonaws.com/${lastUpload.Name}`
       br
       br
       br
       
       div(class="dotted")
         p LAST FILE YOU UPLOADED:
-        p= lastUpload.Key
+        p= lastUpload.Name
         audio(controls loop type="audio/mpeg" src=uploadSrc id="toDelete")       
         br      
-        form(method="POST" action=`/delete/${lastUpload.Key}` id="deleteForm" encType="multipart/form-data")                                        
+        form(method="POST" action=`/delete/${lastUpload}` id="deleteForm" encType="multipart/form-data")                                        
         input(type="submit" form="deleteForm" value="UNDO" onclick="setTimeout(function(){var ww = window.open('/uploadForm', '_blank'); ww.close(); }, 1000);")      
   
 
-    script.
-      let x = document.getElementById('toDelete');
-      let srcString = x.src;
-      let snapshot = srcString.substring(48, 54); // => ".mp3"
-      console.log(snapshot);
+    //- script.
+    //-   let x = document.getElementById('toDelete');
+    //-   let srcString = x.src;
+    //-   let snapshot = srcString.substring(48, 54); // => ".mp3"
+    //-   console.log(snapshot);
       
               
-      function checkChecks(){
-      // Query for only the checked checkboxes and put the result in an array
-      let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
-      // Loop over the array and inspect contents
-      checked.forEach(function(cb){
-        persistData = cb.parentNode.id;        
-        });
-      console.log(persistData);
-      };
+    //-   function checkChecks(){
+    //-   // Query for only the checked checkboxes and put the result in an array
+    //-   let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
+    //-   // Loop over the array and inspect contents
+    //-   checked.forEach(function(cb){
+    //-     persistData = cb.parentNode.id;        
+    //-     });
+    //-   console.log(persistData);
+    //-   };
       
       
           

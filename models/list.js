@@ -4,6 +4,7 @@ const fs = require('fs');
 const neatCsv = require('neat-csv');
 
 let listFiles = function () {    
+  console.log('delete LIST function!');
   
   
 }

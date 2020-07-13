@@ -3,13 +3,14 @@ const fs = require('fs');
 const stringify = require('csv-stringify');
 const neatCsv = require('neat-csv');
 
-let appendCSV = function (fileToAppend) {  
-  console.log('from append doc ' + fileToAppend);
+let deleteCSV = function () {
+  console.log('from dELETE doc ');
 
 
 
 
   let csvData = [];
+  let newData = [];
 
   fs.readFile('./fileTracker.csv', async (err, data) => {
     if (err) {
@@ -17,31 +18,39 @@ let appendCSV = function (fileToAppend) {
       return
     }
     csvData = await neatCsv(data)
-    global.snapShotId = parseInt(csvData[csvData.length - 1].id);
-    
+    // global.fileToDelete = parseInt(csvData[csvData.length - 1]);
+    let keys = Object.keys(csvData);
+    let last = keys[keys.length-1];
+    delete csvData[last];           
   });
+
   
+
   setTimeout(() => {
-    global.snapShotId++    
+    csvData.pop()
+    console.log(csvData)
 
     // GET LAST SNAPSHOT NUMBER HERE! 
     let data = [];
     let columns = {
-      // id: global.snapShotId,
-      // name: fileToAppend
-    };
+      id: 'id',
+      name: 'Name'
+    };    
 
-    data.push([global.snapShotId, fileToAppend]);
+    for (let i=0; i<csvData.length; i++) {
+      data.push([csvData[i].id, csvData[i].Name]);
+    }
+    console.log(data)
 
-    stringify(data, (err, output) => {
+    stringify(data, {header: true, columns: columns}, (err, output) => {
       if (err) throw err;
-      fs.appendFile('fileTracker.csv', output, (err) => {
+      fs.writeFile('fileTracker.csv', output, (err) => {
         if (err) throw err;
         console.log('fileTracker.csv saved.');
       })
-    });    
+    });
   }, 2000);
-  
+
 
 
 
@@ -50,7 +59,7 @@ let appendCSV = function (fileToAppend) {
   //   console.log("get further list...");
   //   listAllKeys();
   // }        
-}
+  }
 
 
-exports.append_csv = appendCSV;
+exports.delete_csv = deleteCSV;

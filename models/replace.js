@@ -19,7 +19,7 @@ let replaceFile = function (id) {
     maxRetries: 10
   });
 
-  let snapshot = global.counter;
+  
   let newId = id.id
   let fileLabel = `${Date.now()}${newId.substring(13)}`;
 
