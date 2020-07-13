@@ -1,7 +1,6 @@
 // VISIT THIS SO FOR LISTS OF OVER 1000: https://menno.io/posts/listing-s3-objects-with-nodejs/
 
-let listFiles = function (name) {
-
+let listFiles = function (name) {    
   // Load the SDK for JavaScript
   const AWS = require('aws-sdk');
 
@@ -56,8 +55,8 @@ let listFiles = function (name) {
         global.subId = oldSubGroup[randomId];
         global.newId = newSubGroup[randomReplacement].Key;
 
-        console.log('oldId' + global.subId.Key);
-        console.log('newId' + global.newId);
+        // console.log('oldId' + global.subId.Key);
+        // console.log('newId' + global.newId);
         
         
         

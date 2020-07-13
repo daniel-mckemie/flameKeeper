@@ -2,6 +2,7 @@ const List = require('../models/list');
 const Upload = require('../models/upload');
 const Delete = require('../models/delete');
 const Replace = require('../models/replace');
+const AppendDoc = require('../models/appendDoc');
 
 const formidable = require('formidable');
 const fs = require('fs');
@@ -21,7 +22,7 @@ exports.replace_function = function (req, res) {
     })
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.redirect('/'))
+        resolve(res.redirect('/'))        
       }, 2000)
     })
   }
@@ -43,8 +44,8 @@ exports.list_function = function (req, res) {
       name: 'fk-audio'
     });
     return new Promise(resolve => {
-      setTimeout(function () {
-        resolve(res.render('index', fileInfo))
+      setTimeout(function () {                                        
+        resolve(res.render('index', fileInfo));        
       }, 2000)
     })
   }
@@ -52,7 +53,7 @@ exports.list_function = function (req, res) {
 
     function (err, results) {
       res.send('ERRONEOUS!');
-    }
+    }    
 }
 
 // DISPLAY selected files to the home page upon submit
@@ -98,6 +99,8 @@ exports.upload_function = function (req, res, next) {
         })
       }
       uploadFile(),
+      // AppendDoc.append_csv('fk-audio'),
+      
 
         function (err, results) {
           res.send('ERRONEOUS!');
@@ -130,4 +133,8 @@ exports.delete_function = function (req, res, next) {
     function (err, results) {
       res.send('ERRONEOUS!');
     };
+}
+
+exports.test_function = function (req, res) {
+  AppendDoc.append_csv();
 }
