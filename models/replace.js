@@ -1,88 +1,172 @@
 const Substitute = require('../models/subFile');
 const List = require('../models/list');
 
-let replaceFile = function (id) {
+const fs = require('fs');
+const stringify = require('csv-stringify');
+const neatCsv = require('neat-csv');
+
+let replaceFile = function (fileToReplace) {
+  // console.log(fileToReplace);
   global.dashboardLock = true;  
 
 
-  // Load the SDK for JavaScript
-  const AWS = require('aws-sdk');
+  // // Load the SDK for JavaScript
+  // const AWS = require('aws-sdk');
 
-  // Set the Region 
-  AWS.config.update({
-    region: 'us-east-1'
-  });
+  // // Set the Region 
+  // AWS.config.update({
+  //   region: 'us-east-1'
+  // });
 
-  // Create S3 service object
-  s3 = new AWS.S3({
-    apiVersion: '2006-03-01',
-    maxRetries: 10
-  });
+  // // Create S3 service object
+  // s3 = new AWS.S3({
+  //   apiVersion: '2006-03-01',
+  //   maxRetries: 10
+  // });
 
   
-  let newId = id.id
-  let fileLabel = `${Date.now()}${newId.substring(13)}`;
+  // let newId = id.id
+  // let fileLabel = `${Date.now()}${newId.substring(13)}`;
 
-  let newKey = fileLabel.replace(fileLabel.charAt(0), '0');
-
-
-
-  // DO SOME STRING SPLICING TO GET THE PROPER KEY!!!
-  let bucketName = 'fk-audio';
-  let oldKey = id;
-
-
-  global.subCount = 0;
-  global.uploadLock = 1;
-
-  console.log('Subcount: ' + global.subCount);
+  // let newKey = fileLabel.replace(fileLabel.charAt(0), '0');
 
 
 
+  // // DO SOME STRING SPLICING TO GET THE PROPER KEY!!!
+  // let bucketName = 'fk-audio';
+  // let oldKey = id;
 
-  global.stopTime;
+
+  // global.subCount = 0;
+  // global.uploadLock = 1;
+
+  // console.log('Subcount: ' + global.subCount);
+
+  let newestFile = [];
+  fs.readFile('./fileTracker.csv', async (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    newestFile = await neatCsv(data)
+    newestFile = newestFile[newestFile.length - 1];
+
+  });  
+
+
+  let csvData = [];
+
+  fs.readFile('./homePage.csv', async (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    csvData = await neatCsv(data)
+    // global.fileToDelete = parseInt(csvData[csvData.length - 1]);    
+    
+    // delete csvData[replaceId];
+    
+  });
+
+
+
+  setTimeout(() => {    
+
+    // GET LAST SNAPSHOT NUMBER HERE! 
+    let data = [];
+    let columns = {
+      id: 'id',
+      name: 'Name'
+    };
+    
+    
+    for (var x in csvData) {
+      // data.push({id: csvData[x].id, Name: csvData[x].Name})      
+      if (csvData.hasOwnProperty(x) && csvData[x].Name == fileToReplace.value) {                                             
+        csvData[x].Name = newestFile.Name;
+        // data.push({id: x, Name: newestFile.Name});
+        // delete csvData[x];
+      }
+
+      
+      
+    }
+    
+
+    for (let i = 0; i < csvData.length; i++) {
+      data.push([csvData[i].id, csvData[i].Name]);            
+    }
+
+    console.log(data);
+    
+    
+    
+
+
+
+    stringify(data, {
+      header: true,
+      columns: columns
+    }, (err, output) => {
+      if (err) throw err;
+      fs.writeFile('homePage.csv', output, (err) => {
+        if (err) throw err;
+        console.log('homePage.csv saved.');
+      })
+    });
+  }, 2000);
+
+
+
+
+  // global.stopTime;
   
 
-  if (global.stopTime == true) {
-    console.log('Interval cleared!');
-    clearInterval(global.myInterval);
-    global.myInterval = setInterval(() => {
-      List.list_files(); 
-      setTimeout(() => {
-        Substitute.sub_file(global.newId);
-      }, 5000);
-    }, 25200000);
-    global.stopTime = false;
-  } else {
-    console.log('Interval started!');
-    global.myInterval = setInterval(() => {
-      List.list_files();
-      setTimeout(() => {
-        Substitute.sub_file(global.newId);
-      }, 5000);
-    }, 25200000);
-    global.stopTime = true;    
-  }
+  // if (global.stopTime == true) {
+  //   console.log('Interval cleared!');
+  //   clearInterval(global.myInterval);
+  //   global.myInterval = setInterval(() => {
+  //     List.list_files(); 
+  //     setTimeout(() => {
+  //       Substitute.sub_file(global.newId);
+  //     }, 5000);
+  //   }, 25200000);
+  //   global.stopTime = false;
+  // } else {
+  //   console.log('Interval started!');
+  //   global.myInterval = setInterval(() => {
+  //     List.list_files();
+  //     setTimeout(() => {
+  //       Substitute.sub_file(global.newId);
+  //     }, 5000);
+  //   }, 25200000);
+  //   global.stopTime = true;    
+  // }
 
 
-  // Copy the object to a new location
-  s3.copyObject({
-      Bucket: bucketName,
-      CopySource: `${bucketName}/${oldKey.id}`,
-      Key: `${newKey}`,
-      ACL: 'public-read'
-    })
-    .promise()
-    .then(() =>
-      // Delete the old object
-      s3.deleteObject({
-        Bucket: bucketName,
-        Key: oldKey.id
-      }).promise()
-    )
 
-    // Error handling is left up to reader
-    .catch((e) => console.error(e));
+
+
+
+
+//   // Copy the object to a new location
+//   s3.copyObject({
+//       Bucket: bucketName,
+//       CopySource: `${bucketName}/${oldKey.id}`,
+//       Key: `${newKey}`,
+//       ACL: 'public-read'
+//     })
+//     .promise()
+//     .then(() =>
+//       // Delete the old object
+//       s3.deleteObject({
+//         Bucket: bucketName,
+//         Key: oldKey.id
+//       }).promise()
+//     )
+
+//     // Error handling is left up to reader
+//     .catch((e) => console.error(e));
 
 }
 

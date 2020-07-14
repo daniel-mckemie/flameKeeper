@@ -10,7 +10,6 @@ let deleteCSV = function () {
 
 
   let csvData = [];
-  let newData = [];
 
   fs.readFile('./fileTracker.csv', async (err, data) => {
     if (err) {

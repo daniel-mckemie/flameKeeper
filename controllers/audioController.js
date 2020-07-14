@@ -19,9 +19,8 @@ console.log('From AUDIO CONTROLLER ' + global.dashboardLock)
 // REPLACE function when submitting from composer page
 exports.replace_function = function (req, res) {
   function replacedFile() {
-    Replace.replace_file({
-      name: 'fk-audio',
-      id: req.params.id
+    Replace.replace_file({      
+      value: req.params.id
     })
     return new Promise(resolve => {
       setTimeout(function () {
@@ -41,13 +40,13 @@ exports.replace_function = function (req, res) {
 // Home page list AUDIO files
 exports.list_function = function (req, res) {  
   function getList() {
-    fs.readFile('./fileTracker.csv', async (err, data) => {      
+    fs.readFile('./homePage.csv', async (err, data) => {      
       if (err) {
         console.error(err)
         return
       }
       let dataToTreat = await neatCsv(data);
-      fileInfo = dataToTreat.slice(Math.max(dataToTreat.length - 8, 1));
+      fileInfo = dataToTreat;
       return fileInfo;       
     });    
 
@@ -67,7 +66,7 @@ exports.list_function = function (req, res) {
 // DISPLAY selected files to the home page upon submit
 exports.dashboard_function = function (req, res) {  
   function getDash() {
-    fs.readFile('./fileTracker.csv', async (err, data) => {
+    fs.readFile('./homePage.csv', async (err, data) => {
       if (err) {
         console.error(err)
         return
@@ -91,9 +90,18 @@ exports.dashboard_function = function (req, res) {
 }
 
 // UPLOAD page
-exports.upload_function = function (req, res, next) {
-  global.counter++;  
-  
+exports.upload_function = function (req, res, next) { 
+  function getList() {
+    fs.readFile('./fileTracker.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat = await neatCsv(data);
+      console.log(dataToTreat);
+    })
+  }
+    
   new formidable.IncomingForm().parse(req)
     .on('field', (name, field) => {
       // res.status(415).send(field);      
@@ -111,6 +119,7 @@ exports.upload_function = function (req, res, next) {
           }, 2000)
         })
       }
+      getList(),1
       uploadFile(),
       AppendDoc.append_csv(global.uploadFileLabel),
       
@@ -125,8 +134,7 @@ exports.upload_function = function (req, res, next) {
     })    
 }
 
-exports.delete_function = function (req, res, next) {
-  global.counter--;
+exports.delete_function = function (req, res, next) {  
   global.uploadLock = 1;
 
   function deleteLast() {
@@ -141,7 +149,7 @@ exports.delete_function = function (req, res, next) {
     })
   }
   deleteLast(),
-  // deleteDoc(),
+  DeleteDoc.delete_csv(),
 
 
     function (err, results) {

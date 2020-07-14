@@ -21,7 +21,7 @@ block content
     
     
 
-    if global.dashboardLock == true
+    if false
       h1 No guy
     else                    
       div
@@ -30,7 +30,7 @@ block content
           - x++        
           - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Name}`                            
           div(class="solid")
-            form(method="POST" action=`/replace/${file.Key}?_method=PUT` id=`launchForm${x}` encType="multipart/form-data")                                
+            form(method="POST" action=`/replace/${file.Name}?_method=PUT` id=`launchForm${x}` encType="multipart/form-data")                                
               p= file.Name
               
               ol(class="listy" id=file.Name)  
