@@ -1,69 +1,83 @@
 const List = require('../models/list');
 
-let subFile = function(id) {        
-  if (global.subCount < 1) {
-    global.stopTime = true;
-    console.log('No');
-    global.uploadLock = 0;
-    global.dashboardLock = false;
-    global.subCount++;
-  } else {     
-    console.log('ID FROM SUBFILE :' + id);
-    console.log('IDKEY FROM SUBFILE: ' + id.Key);
+const fs = require('fs');
+const stringify = require('csv-stringify');
+const neatCsv = require('neat-csv');
+
+let subFile = function() { 
+  let newestFile = [];
+  fs.readFile('./fileTracker.csv', async (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    newestFile = await neatCsv(data);        
+  });
+  
+  let csvData = [];
+  fs.readFile('./homePage.csv', async (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    csvData = await neatCsv(data)
     
-    global.subCount++;    
-    // LIST FUNCTION MUST RUN AGAIN TO GRAB A KEY!!!
-    global.counter++;
+    // return fileToReplace
+  });
 
-    const AWS = require('aws-sdk');
+  
+  
+  
+  
 
-    // Set the Region 
-    AWS.config.update({
-      region: 'us-east-1'
-    });
 
-    // Create S3 service object
-    s3 = new AWS.S3({
-      apiVersion: '2006-03-01',
-      maxRetries: 10
-    });
 
-    let snapshot = global.counter;
-    let newId = id
-    let fileLabel = `${Date.now()}${newId.substring(13)}`;
+  setTimeout(() => {    
+    
     
 
+    // GET LAST SNAPSHOT NUMBER HERE! 
+    let data = [];
+    let columns = {
+      id: 'id',
+      name: 'Name'
+    };
 
-    let bucketName = 'fk-audio';
-    let oldKey = id
-    let newKey = fileLabel;
+    function subFunc() {
+      newFile = newestFile[Math.floor(Math.random() * newestFile.length)];
+      fileToReplace = csvData[Math.floor(Math.random() * csvData.length)];
+      console.log(newFile);
+      console.log(fileToReplace);
+      for (var x in csvData) {
+        if (csvData.hasOwnProperty(x) && newFile.Name == csvData[x].Name) {
+          console.log('no sub today...');
+          return subFunc()
+        } else if (csvData[x] == fileToReplace) {
+          return csvData[x].Name = newFile.Name;
+        }
+      }
+    }
+    subFunc();
+    
 
+    for (let i = 0; i < csvData.length; i++) {
+      data.push([csvData[i].id, csvData[i].Name]);
+    }
 
-    global.subCount = 0;
-    global.uploadLock = 1;
+    console.log(data);
 
-    console.log('Subcount: ' + global.subCount);
-
-
-    // Copy the object to a new location
-    s3.copyObject({
-        Bucket: bucketName,
-        CopySource: `${bucketName}/${oldKey}`,
-        Key: `${newKey}`,
-        ACL: 'public-read'
+    stringify(data, {
+      header: true,
+      columns: columns
+    }, (err, output) => {
+      if (err) throw err;
+      fs.writeFile('homePage.csv', output, (err) => {
+        if (err) throw err;
+        console.log('homePage.csv saved.');
       })
-      .promise()
-      .then(() =>
-        // Delete the old object
-        s3.deleteObject({
-          Bucket: bucketName,
-          Key: oldKey
-        }).promise()
-      )
-
-      // Error handling is left up to reader
-      .catch((e) => console.error(e));
-  }
+    });
+  }, 2000);
+  
 }
 
 exports.sub_file = subFile;

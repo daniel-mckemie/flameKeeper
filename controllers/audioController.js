@@ -2,6 +2,7 @@ const List = require('../models/list');
 const Upload = require('../models/upload');
 const Delete = require('../models/delete');
 const Replace = require('../models/replace');
+const Substitute = require('../models/subFile');
 const AppendDoc = require('../models/appendDoc');
 const DeleteDoc = require('../models/deleteDoc');
 
@@ -72,13 +73,25 @@ exports.dashboard_function = function (req, res) {
         return
       }
       let dataToTreat = await neatCsv(data);
-      fileInfo = dataToTreat.slice(Math.max(dataToTreat.length - 8, 1));      
+      fileInfo = dataToTreat;
       return fileInfo;
       
+    })
+    
+    fs.readFile('./fileTracker.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat2 = await neatCsv(data);
+      fileInfo2 = dataToTreat2;
+      return fileInfo2;
+
     });
+  
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.render('dashboard', fileInfo))
+        resolve(res.render('dashboard', [fileInfo, fileInfo2]))
       }, 2000)
     })
   }
@@ -158,5 +171,5 @@ exports.delete_function = function (req, res, next) {
 }
 
 exports.test_function = function (req, res) {
-  DeleteDoc.delete_csv();
+  Substitute.sub_file();
 }
