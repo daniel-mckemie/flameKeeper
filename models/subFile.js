@@ -1,19 +1,21 @@
 const List = require('../models/list');
+const SnapshotAppend = require('../models/snapshotAppend');
 
 const fs = require('fs');
 const stringify = require('csv-stringify');
 const neatCsv = require('neat-csv');
 
-let subFile = function() { 
+
+let subFile = function () {
   let newestFile = [];
   fs.readFile('./fileTracker.csv', async (err, data) => {
     if (err) {
       console.error(err)
       return
     }
-    newestFile = await neatCsv(data);        
+    newestFile = await neatCsv(data);
   });
-  
+
   let csvData = [];
   fs.readFile('./homePage.csv', async (err, data) => {
     if (err) {
@@ -21,20 +23,18 @@ let subFile = function() {
       return
     }
     csvData = await neatCsv(data)
-    
+
     // return fileToReplace
   });
 
-  
-  
-  
-  
 
 
 
-  setTimeout(() => {    
-    
-    
+
+
+
+
+  setTimeout(() => {
 
     // GET LAST SNAPSHOT NUMBER HERE! 
     let data = [];
@@ -43,28 +43,30 @@ let subFile = function() {
       name: 'Name'
     };
 
-    function subFunc() {
-      newFile = newestFile[Math.floor(Math.random() * newestFile.length)];
-      fileToReplace = csvData[Math.floor(Math.random() * csvData.length)];
-      console.log(newFile);
-      console.log(fileToReplace);
-      for (var x in csvData) {
-        if (csvData.hasOwnProperty(x) && newFile.Name == csvData[x].Name) {
-          console.log('no sub today...');
-          return subFunc()
-        } else if (csvData[x] == fileToReplace) {
-          return csvData[x].Name = newFile.Name;
-        }
+
+
+    newFile = newestFile[Math.floor(Math.random() * newestFile.length)];
+    fileToReplace = csvData[Math.floor(Math.random() * csvData.length)];
+    for (var x in csvData) {
+      if (csvData.hasOwnProperty(x) && newFile.Name == csvData[x].Name) {
+        console.log('no sub today...');                        
+        break;
+      }
+      else if (csvData.hasOwnProperty(x) && csvData[x] == fileToReplace) {
+        csvData[x].Name = newFile.Name;
       }
     }
-    subFunc();
-    
+
+
+
+
+
+
 
     for (let i = 0; i < csvData.length; i++) {
       data.push([csvData[i].id, csvData[i].Name]);
     }
-
-    console.log(data);
+    
 
     stringify(data, {
       header: true,
@@ -76,8 +78,10 @@ let subFile = function() {
         console.log('homePage.csv saved.');
       })
     });
+    
+    SnapshotAppend.append_snapshot_csv(data);
   }, 2000);
-  
+
 }
 
 exports.sub_file = subFile;

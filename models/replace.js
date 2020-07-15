@@ -1,5 +1,6 @@
 const Substitute = require('../models/subFile');
 const List = require('../models/list');
+const SnapshotAppend = require('../models/snapshotAppend');
 
 const fs = require('fs');
 const stringify = require('csv-stringify');
@@ -60,10 +61,7 @@ let replaceFile = function (fileToReplace) {
 
     for (let i = 0; i < csvData.length; i++) {
       data.push([csvData[i].id, csvData[i].Name]);            
-    }
-
-    console.log(data);
-    
+    }    
   
 
     stringify(data, {
@@ -76,6 +74,10 @@ let replaceFile = function (fileToReplace) {
         console.log('homePage.csv saved.');
       })
     });
+    
+    
+    SnapshotAppend.append_snapshot_csv(data);
+    
   }, 2000);
 
 
@@ -83,25 +85,19 @@ let replaceFile = function (fileToReplace) {
 
   global.stopTime;
   
-
+  // FIX If/ELSE IN SUB FILE TO NOT FIRE ON FIRST 7 HOUR, BUT WILL UNLOCK UPLOAD FORM
   if (global.stopTime == true) {
     console.log('Interval cleared!');
     clearInterval(global.myInterval);
-    global.myInterval = setInterval(() => {
-      List.list_files(); 
-      setTimeout(() => {
-        Substitute.sub_file(global.newId);
-      }, 5000);
-    }, 25200000);
+    global.myInterval = setInterval(() => {      
+      Substitute.sub_file();      
+    }, 10000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
     global.myInterval = setInterval(() => {
-      List.list_files();
-      setTimeout(() => {
-        Substitute.sub_file(global.newId);
-      }, 5000);
-    }, 25200000);
+      Substitute.sub_file();      
+    }, 10000);
     global.stopTime = true;    
   }
 

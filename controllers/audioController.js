@@ -5,6 +5,7 @@ const Replace = require('../models/replace');
 const Substitute = require('../models/subFile');
 const AppendDoc = require('../models/appendDoc');
 const DeleteDoc = require('../models/deleteDoc');
+const SnapshotAppend = require('../models/snapshotAppend');
 
 const formidable = require('formidable');
 const fs = require('fs');
@@ -171,5 +172,5 @@ exports.delete_function = function (req, res, next) {
 }
 
 exports.test_function = function (req, res) {
-  Substitute.sub_file();
+  List.list_files();
 }

@@ -9,7 +9,7 @@ block content
     p The following files are active:
     br
 
-    - let files = fileInfo
+    - let files = fileInfo.slice(0,7);
     - let lastUpload = fileInfo2[fileInfo2.length - 1];
     
 
@@ -26,7 +26,7 @@ block content
       h1 No guy
     else                    
       div
-        - let x = 1;   
+        - let x = 0;   
         each file in files ? files : ['NO!!!']       
           - x++        
           - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Name}`                            
