@@ -1,4 +1,5 @@
 extends layout
+
 block content
   body
   
@@ -11,20 +12,10 @@ block content
 
       - let files = fileInfo.slice(0,7);
       - let lastUpload = fileInfo2[fileInfo2.length - 1];
-      
+           
 
-      //- - let lastReplace = parseInt(returns[returns.length - 1].Key.substr(1,12));
-      //- - let nowCutString = Date.now().toString().substr(1,12);
-      //- - let nowCut = parseInt(nowCutString) - 25200000;
-      //- - let dontRenderIt = lastReplace > nowCut;      
-      //- - console.log('Nowcut: ' + nowCut);
-      //- - console.log('dontrenderit ' + dontRenderIt); 
-      
-      
-
-      if global.uploadLock == true && isAuthenticated == true
-        h1 No access, you must 
-          a(href="/login") LOGIN!
+      if global.uploadLock == false || isAuthenticated == false
+        h1 No guy
       else                    
         div
           - let x = 0;   
@@ -58,24 +49,7 @@ block content
           br      
           form(method="POST" action=`/delete/${lastUpload}` id="deleteForm" encType="multipart/form-data")                                        
           input(type="submit" form="deleteForm" value="UNDO" onclick="setTimeout(function(){var ww = window.open('/uploadForm', '_blank'); ww.close(); }, 1000);")      
-    
-
-      //- script.
-      //-   let x = document.getElementById('toDelete');
-      //-   let srcString = x.src;
-      //-   let snapshot = srcString.substring(48, 54); // => ".mp3"
-      //-   console.log(snapshot);
-        
-                
-      //-   function checkChecks(){
-      //-   // Query for only the checked checkboxes and put the result in an array
-      //-   let checked = Array.prototype.slice.call(document.querySelectorAll("input[type='checkbox']:checked"));      
-      //-   // Loop over the array and inspect contents
-      //-   checked.forEach(function(cb){
-      //-     persistData = cb.parentNode.id;        
-      //-     });
-      //-   console.log(persistData);
-      //-   };
+         
         
         
             

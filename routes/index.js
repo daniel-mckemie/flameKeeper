@@ -3,6 +3,13 @@ const router = express.Router();
 const audio_controller = require('../controllers/audioController');
 
 
+const secured = (req, res, next) => {
+  if (req.user) {
+    return next();
+  }
+  req.session.returnTo = req.originalUrl;
+  res.redirect("/login");
+};
 
 // DELETE File and Render Home Page
 router.put('/replace/:id', audio_controller.replace_function);
