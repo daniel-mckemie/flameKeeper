@@ -34,6 +34,7 @@ router.post('/delete/:id', audio_controller.delete_function);
 // router.get('/download', audio_controller.download_function);
 
 // GET Home page route.
+router.get('/pastComposers', (req, res) => audio_controller.past_composers_function(req, res));
 router.get('/', (req, res) => audio_controller.list_function(req, res));
 
 router.get('/test', (req, res) => audio_controller.test_function(req, res));

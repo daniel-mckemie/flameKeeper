@@ -1,4 +1,5 @@
 const List = require('../models/list');
+const ListComposers = require('../models/pastComposers')
 const Upload = require('../models/upload');
 const Intern = require('../models/intern-upload');
 const Delete = require('../models/delete');
@@ -218,6 +219,32 @@ exports.intern_upload_function = function (req, res, next) {
     })
 }
 
+
+exports.past_composers_function = function (req, res) {
+  // ListComposers.list_composers();
+  function getList() {
+    fs.readFile('./pastComposers.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat = await neatCsv(data);
+      fileInfo = dataToTreat;
+      return fileInfo;
+    });
+
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.render('pastComposers', fileInfo));
+      }, 2000)
+    })
+  }
+  getList(),
+
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    }
+}
 
 exports.test_function = function (req, res) {
   List.list_files();

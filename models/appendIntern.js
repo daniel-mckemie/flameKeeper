@@ -11,7 +11,7 @@ let appendIntern = function (fileToAppend) {
 
   let csvData = [];
 
-  fs.readFile('./composerInfo.csv', async (err, data) => {
+  fs.readFile('./pastComposers.csv', async (err, data) => {
     if (err) {
       console.error(err)
       return
@@ -35,9 +35,9 @@ let appendIntern = function (fileToAppend) {
 
     stringify(data, (err, output) => {
       if (err) throw err;
-      fs.appendFile('composerInfo.csv', output, (err) => {
+      fs.appendFile('pastComposers.csv', output, (err) => {
         if (err) throw err;
-        console.log('composerInfo.csv saved.');
+        console.log('pastComposers.csv saved.');
       })
     });
   }, 2000);
