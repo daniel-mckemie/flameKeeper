@@ -11,6 +11,8 @@ router.put('/replace/:id', audio_controller.replace_function);
 
 // GET Upload Form
 router.get('/upload-form', (req, res) => res.render('./upload-form'));
+router.get('/intern-form', (req, res) => res.render('./intern-form'));
+
 
 // GET Dashboard page route
 router.get('/dashboard', audio_controller.dashboard_function);
@@ -20,6 +22,8 @@ router.get('/dashboard', audio_controller.dashboard_function);
 //   res.render('dashboard')
 // })
 router.post('/upload', audio_controller.upload_function);
+
+router.post('/intern-upload', audio_controller.intern_upload_function);
 
 
 // DELETE File and Render Home Page

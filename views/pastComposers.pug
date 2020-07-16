@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  - let files = fileInfo.Name;  
+  each file in files ? files : ['NO!!!']
+    - console.log(file);
+    - let photoSrc = `https://fk-composer-info.s3.amazonaws.com/${file}`           
+    p= file     
+      img(src=`${photoSrc}` alt='sample logo')

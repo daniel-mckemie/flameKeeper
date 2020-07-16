@@ -1,0 +1,53 @@
+block content
+  h1= title
+  p INTERN FORM
+  - console.log(global.isLoggedIn)
+  if error
+    p Error getting dynamic content.
+  else    
+    if isLoggedIn == true
+      div(class="solid")
+        p UPLOAD YOUR FILE:
+        form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
+          input(type="file" name="theUpload" id="uploadValue")                                          
+          input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
+          
+    br
+    br
+
+    //- script.
+      
+                
+      
+
+    //-   document.getElementById("uploadButton").disabled = true;
+    //-   document.getElementById("uploadValue").disabled = false;
+
+
+      //- function disableSubmit() {
+      //-   let x = document.getElementById('uploadValue');
+      //-   let y = x.value;                           
+      //-     document.getElementbyId("uploadValue").disabled = true;        
+      //-     document.getElementById("uploadButton").disabled = true;        
+      //-   } else {
+          
+      //-     document.getElementById("uploadButton").disabled = false;
+          
+      //-   }}
+      
+      //- function redirect() {                 
+      //-   let x = document.getElementById('uploadValue');
+      //-   let y = x.value; 
+      //-   let lastFour = y.substr(y.length - 4); // => ".mp3"                         
+      //-   let fsize = x.files.item(0).size;
+              
+      //-   if (fsize < 209731438) {
+      //-     setTimeout(function(){ document.getElementById("uploadButton").disabled = true }, 10);
+      //-     setTimeout(function(){ window.open('/dashboard'); }, 10000);
+      //-     elm = document.createElement('p');
+      //-     elm.innerHTML = 'PLEASE WAIT...The file is uploading (this can take up to 10 seconds)...';
+      //-     document.body.appendChild(elm);                        
+      //-   }        
+      //- }
+    
+  
