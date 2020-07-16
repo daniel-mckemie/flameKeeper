@@ -5,7 +5,7 @@ block content
   if error
     p Error getting dynamic content.
   else
-    if global.uploadLock == false && isAuthenticated
+    if global.uploadLock == false && isAuthenticated == true
       div(class="solid")
         p UPLOAD YOUR FILE:
         form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data")                 

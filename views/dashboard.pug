@@ -22,8 +22,9 @@ block content
       
       
 
-      if global.uploadLock == false && isAuthenticated
-        h1 No guy
+      if global.uploadLock == true && isAuthenticated == true
+        h1 No access, you must 
+          a(href="/login") LOGIN!
       else                    
         div
           - let x = 0;   
