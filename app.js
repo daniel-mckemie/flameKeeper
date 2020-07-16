@@ -103,6 +103,11 @@ passport.deserializeUser(function (user, done) {
   done(null, user);
 });
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
+
 
 
 

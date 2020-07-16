@@ -1,210 +1,211 @@
 extends layout
 block content
-  //-- Header content
-  header
-    .profileLogo
-      //-- Profile logo. Add a img tag in place of <span>.
-      p.logoPlaceholder
-        img(src='./images/me-logo-wht.png' alt='sample logo')      
-    .installation
-      //- if error
-      //-   p Error getting dynamic content.
-      //- else                
-            
-      - let files = fileInfo.Name;      
-      
-      //- - let returnsReversed = returns.reverse();
-      //- - let files = returnsReversed.slice(0,7);
-      //- - let lastUpload = returns[returns.length - 1];
-      
-      
-      div(class="waveform")
-      button(class="btn" onclick="startAudio()") Play
-
-      //- each file in files ? files : ['NO!!!']
-      //-   - console.log(file.Key);
-        //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
-        //- p= file.Key
-        //- p= file.LastModified
-        //-   audio(controls="", type="audio/mpeg" src=audioSrc)
-    
-    //- Identity details
-    section.profileHeader
-      h1 The FlameKeeper
-      h3 A LIVE STREAMING ART INSTALLATION&nbsp;
-      p
-        | Introductory text about the project goes here. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in.
-      br
-    hr
-    br
-    br
-    br
-    .profilePhoto
-      //- Profile photo
-      img(src='./images/profilephoto.png' alt='sample')
-    //- Identity details
-    section.profileHeader
-      h3 This Week&apos;s Curator
-      h1 Composer Name Here
-      p
-        | Short bio goes here. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      p
-        a(href='#') See all our past curators &raquo;
-  //- content
-  section.mainContent
-    //- Contact details
-    section.section1
-      h2.sectionTitle How It Works
-      hr.sectionTitleRule
-      hr.sectionTitleRule2
-      .section1Content
-        h2.sectionContentTitle Our FlameKeepers
-        p.sectionContent
-          | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Nam liber tempor cum soluta nobis eleifend option congue ihil imperdiet doming id quod mazim placerat facer possim assum.
-        h2.sectionContentTitle The 7-Hour Lockdown
-        p.sectionContent
-          | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-        h2.sectionContentTitle Ghosts from the Past
-        p.sectionContent
-          | Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-    //- Previous experience details
-    section.section2
-      h2.sectionTitle Meet the  TEAM
-      hr.sectionTitleRule
-      hr.sectionTitleRule2
-      //- First Title & company details
-      article.section2Content
-        h2.sectionContentTitle Full Name
-        h3.sectionContentSubTitle Role on Project, Professional Role
-        p.sectionContent
-          | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-      //- Second Title & company details
-      article.section2Content
-        h2.sectionContentTitle Full Name
-        h3.sectionContentSubTitle Role on Project, Professional Role
-        p.sectionContent
-          | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-      //- Replicate the above Div block to add more title and company details
-  footer
-    hr
-    p.footerDisclaimer
-      | &copy; 2020 Metropolis Ensemble - 
-      span All Rights Reserved
-    p.footerNote
-      | Contact Us - 
-      span Email / Social
-  
-  script.
-      
-      let returns0 = `!{JSON.stringify(fileInfo[0].Name)}`;
-      let returns1 = `!{JSON.stringify(fileInfo[1].Name)}`;
-      let returns2 = `!{JSON.stringify(fileInfo[2].Name)}`;
-      let returns3 = `!{JSON.stringify(fileInfo[3].Name)}`;
-      let returns4 = `!{JSON.stringify(fileInfo[4].Name)}`;
-      let returns5 = `!{JSON.stringify(fileInfo[5].Name)}`;
-      let returns6 = `!{JSON.stringify(fileInfo[6].Name)}`;      
-      
-      function startAudio() {
-        wavesurfer0.on('ready', wavesurfer0.play());
-      }
-    
-      
-      
-      let wavesurfer0 = WaveSurfer.create({
-        container: '.waveform',
-        interact: 'false',
-        scrollParent: true,
-        hideScrollBar: true              
-      });
-      wavesurfer0.load(`https://fk-audio.s3.amazonaws.com/${returns0.slice(1, -1)}`);      
-      //- let samples = wavesurfer0.exportPCM(length);
-      //- console.log(samples);
-      wavesurfer0.on('ready', function() {                        
-        wavesurfer0.play();
-        wavesurfer0.toggleInteraction();
-        wavesurfer0.setHeight(75);
+  body(class='css-selector')               
+    //-- Header content
+    header
+      .profileLogo
+        //-- Profile logo. Add a img tag in place of <span>.
+        p.logoPlaceholder
+          img(src='./images/me-logo-wht.png' alt='sample logo')      
+      .installation
+        //- if error
+        //-   p Error getting dynamic content.
+        //- else                
+              
+        - let files = fileInfo.Name;      
         
+        //- - let returnsReversed = returns.reverse();
+        //- - let files = returnsReversed.slice(0,7);
+        //- - let lastUpload = returns[returns.length - 1];
+        
+        
+        div(class="waveform")
+        button(class="btn" onclick="startAudio()") Play
 
-        let timeLength = wavesurfer0.getDuration();                    
-      });
-      wavesurfer0.on('finish', function(){
-        wavesurfer0.play();
-      });
-
-      let wavesurfer1 = WaveSurfer.create({
-        container: '.waveform'
-      });      
-      wavesurfer1.load(`https://fk-audio.s3.amazonaws.com/${returns1.slice(1, -1)}`);
-      wavesurfer1.on('ready', function() {
-        wavesurfer1.play();
-        wavesurfer1.toggleInteraction();
-        wavesurfer1.setHeight(75);
-      });
-      wavesurfer1.on('finish', function(){
-        wavesurfer1.play();
-      });
+        //- each file in files ? files : ['NO!!!']
+        //-   - console.log(file.Key);
+          //- - let audioSrc = `https://fk-audio.s3.amazonaws.com/${file.Key}`           
+          //- p= file.Key
+          //- p= file.LastModified
+          //-   audio(controls="", type="audio/mpeg" src=audioSrc)
       
-      let wavesurfer2 = WaveSurfer.create({
-        container: '.waveform'
-      });      
-      wavesurfer2.load(`https://fk-audio.s3.amazonaws.com/${returns2.slice(1, -1)}`);
-      wavesurfer2.on('ready', function() {
-        wavesurfer2.play();
-        wavesurfer2.toggleInteraction();
-        wavesurfer2.setHeight(75);
-      });
-      wavesurfer2.on('finish', function(){
-        wavesurfer2.play();
-      });
+      //- Identity details
+      section.profileHeader
+        h1 The FlameKeeper
+        h3 A LIVE STREAMING ART INSTALLATION&nbsp;
+        p
+          | Introductory text about the project goes here. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in.
+        br
+      hr
+      br
+      br
+      br
+      .profilePhoto
+        //- Profile photo
+        img(src='./images/profilephoto.png' alt='sample')
+      //- Identity details
+      section.profileHeader
+        h3 This Week&apos;s Curator
+        h1 Composer Name Here
+        p
+          | Short bio goes here. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        p
+          a(href='#') See all our past curators &raquo;
+    //- content
+    section.mainContent
+      //- Contact details
+      section.section1
+        h2.sectionTitle How It Works
+        hr.sectionTitleRule
+        hr.sectionTitleRule2
+        .section1Content
+          h2.sectionContentTitle Our FlameKeepers
+          p.sectionContent
+            | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Nam liber tempor cum soluta nobis eleifend option congue ihil imperdiet doming id quod mazim placerat facer possim assum.
+          h2.sectionContentTitle The 7-Hour Lockdown
+          p.sectionContent
+            | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+          h2.sectionContentTitle Ghosts from the Past
+          p.sectionContent
+            | Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+      //- Previous experience details
+      section.section2
+        h2.sectionTitle Meet the  TEAM
+        hr.sectionTitleRule
+        hr.sectionTitleRule2
+        //- First Title & company details
+        article.section2Content
+          h2.sectionContentTitle Full Name
+          h3.sectionContentSubTitle Role on Project, Professional Role
+          p.sectionContent
+            | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+        //- Second Title & company details
+        article.section2Content
+          h2.sectionContentTitle Full Name
+          h3.sectionContentSubTitle Role on Project, Professional Role
+          p.sectionContent
+            | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+        //- Replicate the above Div block to add more title and company details
+    footer
+      hr
+      p.footerDisclaimer
+        | &copy; 2020 Metropolis Ensemble - 
+        span All Rights Reserved
+      p.footerNote
+        | Contact Us - 
+        span Email / Social
+    
+    script.
+        
+        let returns0 = `!{JSON.stringify(fileInfo[0].Name)}`;
+        let returns1 = `!{JSON.stringify(fileInfo[1].Name)}`;
+        let returns2 = `!{JSON.stringify(fileInfo[2].Name)}`;
+        let returns3 = `!{JSON.stringify(fileInfo[3].Name)}`;
+        let returns4 = `!{JSON.stringify(fileInfo[4].Name)}`;
+        let returns5 = `!{JSON.stringify(fileInfo[5].Name)}`;
+        let returns6 = `!{JSON.stringify(fileInfo[6].Name)}`;      
+        
+        function startAudio() {
+          wavesurfer0.on('ready', wavesurfer0.play());
+        }
+      
+        
+        
+        let wavesurfer0 = WaveSurfer.create({
+          container: '.waveform',
+          interact: 'false',
+          scrollParent: true,
+          hideScrollBar: true              
+        });
+        wavesurfer0.load(`https://fk-audio.s3.amazonaws.com/${returns0.slice(1, -1)}`);      
+        //- let samples = wavesurfer0.exportPCM(length);
+        //- console.log(samples);
+        wavesurfer0.on('ready', function() {                        
+          wavesurfer0.play();
+          wavesurfer0.toggleInteraction();
+          wavesurfer0.setHeight(75);
+          
 
-      let wavesurfer3 = WaveSurfer.create({
-        container: '.waveform'
-      });      
-      wavesurfer3.load(`https://fk-audio.s3.amazonaws.com/${returns3.slice(1, -1)}`);
-      wavesurfer3.on('ready', function() {
-        wavesurfer3.play();
-        wavesurfer3.toggleInteraction();
-        wavesurfer3.setHeight(75);
-      });
-      wavesurfer3.on('finish', function(){
-        wavesurfer3.play();
-      });
+          let timeLength = wavesurfer0.getDuration();                    
+        });
+        wavesurfer0.on('finish', function(){
+          wavesurfer0.play();
+        });
 
-      let wavesurfer4 = WaveSurfer.create({
-        container: '.waveform'
-      });      
-      wavesurfer4.load(`https://fk-audio.s3.amazonaws.com/${returns4.slice(1, -1)}`);
-      wavesurfer4.on('ready', function() {
-        wavesurfer4.play();
-        wavesurfer4.toggleInteraction();
-        wavesurfer4.setHeight(75);
-      });
-      wavesurfer4.on('finish', function(){
-        wavesurfer4.play();
-      });
+        let wavesurfer1 = WaveSurfer.create({
+          container: '.waveform'
+        });      
+        wavesurfer1.load(`https://fk-audio.s3.amazonaws.com/${returns1.slice(1, -1)}`);
+        wavesurfer1.on('ready', function() {
+          wavesurfer1.play();
+          wavesurfer1.toggleInteraction();
+          wavesurfer1.setHeight(75);
+        });
+        wavesurfer1.on('finish', function(){
+          wavesurfer1.play();
+        });
+        
+        let wavesurfer2 = WaveSurfer.create({
+          container: '.waveform'
+        });      
+        wavesurfer2.load(`https://fk-audio.s3.amazonaws.com/${returns2.slice(1, -1)}`);
+        wavesurfer2.on('ready', function() {
+          wavesurfer2.play();
+          wavesurfer2.toggleInteraction();
+          wavesurfer2.setHeight(75);
+        });
+        wavesurfer2.on('finish', function(){
+          wavesurfer2.play();
+        });
 
-      let wavesurfer5 = WaveSurfer.create({
-        container: '.waveform'
-      });      
-      wavesurfer5.load(`https://fk-audio.s3.amazonaws.com/${returns5.slice(1, -1)}`);
-      wavesurfer5.on('ready', function() {
-        wavesurfer5.play();
-        wavesurfer5.toggleInteraction();
-        wavesurfer5.setHeight(75);
-      });
-      wavesurfer5.on('finish', function(){
-        wavesurfer5.play();
-      });
+        let wavesurfer3 = WaveSurfer.create({
+          container: '.waveform'
+        });      
+        wavesurfer3.load(`https://fk-audio.s3.amazonaws.com/${returns3.slice(1, -1)}`);
+        wavesurfer3.on('ready', function() {
+          wavesurfer3.play();
+          wavesurfer3.toggleInteraction();
+          wavesurfer3.setHeight(75);
+        });
+        wavesurfer3.on('finish', function(){
+          wavesurfer3.play();
+        });
 
-      let wavesurfer6 = WaveSurfer.create({
-        container: '.waveform'
-      });      
-      wavesurfer6.load(`https://fk-audio.s3.amazonaws.com/${returns6.slice(1, -1)}`);
-      wavesurfer6.on('ready', function() {
-        wavesurfer6.play();
-        wavesurfer6.toggleInteraction();
-        wavesurfer6.setHeight(75);
-      });
-      wavesurfer6.on('finish', function(){
-        wavesurfer6.play();
-      });
+        let wavesurfer4 = WaveSurfer.create({
+          container: '.waveform'
+        });      
+        wavesurfer4.load(`https://fk-audio.s3.amazonaws.com/${returns4.slice(1, -1)}`);
+        wavesurfer4.on('ready', function() {
+          wavesurfer4.play();
+          wavesurfer4.toggleInteraction();
+          wavesurfer4.setHeight(75);
+        });
+        wavesurfer4.on('finish', function(){
+          wavesurfer4.play();
+        });
+
+        let wavesurfer5 = WaveSurfer.create({
+          container: '.waveform'
+        });      
+        wavesurfer5.load(`https://fk-audio.s3.amazonaws.com/${returns5.slice(1, -1)}`);
+        wavesurfer5.on('ready', function() {
+          wavesurfer5.play();
+          wavesurfer5.toggleInteraction();
+          wavesurfer5.setHeight(75);
+        });
+        wavesurfer5.on('finish', function(){
+          wavesurfer5.play();
+        });
+
+        let wavesurfer6 = WaveSurfer.create({
+          container: '.waveform'
+        });      
+        wavesurfer6.load(`https://fk-audio.s3.amazonaws.com/${returns6.slice(1, -1)}`);
+        wavesurfer6.on('ready', function() {
+          wavesurfer6.play();
+          wavesurfer6.toggleInteraction();
+          wavesurfer6.setHeight(75);
+        });
+        wavesurfer6.on('finish', function(){
+          wavesurfer6.play();
+        });
