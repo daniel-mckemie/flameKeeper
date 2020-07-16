@@ -14,7 +14,7 @@ dotenv.config();
 router.get('/login', passport.authenticate('auth0', {
   scope: 'openid email profile'
 }), function (req, res) {
-  res.redirect('/');
+  res.redirect('/upload-form');
 });
 
 // Perform the final stage of authentication and redirect to previously requested URL or '/user'
@@ -25,8 +25,9 @@ router.get('/callback', function (req, res, next) {
     req.logIn(user, function (err) {
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;
+      global.isLoggedIn = true;
       delete req.session.returnTo;
-      res.redirect(returnTo || '/');
+      res.redirect(returnTo || '/upload-form');
     });
   })(req, res, next);
 });
@@ -34,7 +35,8 @@ router.get('/callback', function (req, res, next) {
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
   req.logout();
-
+  global.isLoggedIn = false;
+  
   let returnTo = req.protocol + '://' + req.hostname;
   const port = req.connection.localPort;
   if (port !== undefined && port !== 80 && port !== 443) {

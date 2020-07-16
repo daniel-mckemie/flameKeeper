@@ -3,13 +3,8 @@ const app = express();
 const router = express.Router();
 const server = app.listen(process.env.PORT || 8000);
 
-
-
-
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
-
-
 
 const createError = require('http-errors');
 const path = require('path');
@@ -48,14 +43,9 @@ if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
 }
 
-
-
-
 // Load environment variables from .env
 const dotenv = require('dotenv');
 dotenv.config();
-
-
 
 
 
@@ -113,8 +103,8 @@ const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 
 
+
 const authRouter = require('./routes/auth');
-const usersRouter = require('./routes/users');
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
@@ -122,7 +112,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', authRouter);
-app.use('/', usersRouter);
+
 
 
 // catch 404 and forward to error handler

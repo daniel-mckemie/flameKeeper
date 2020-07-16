@@ -7,6 +7,11 @@ const neatCsv = require('neat-csv');
 
 
 let subFile = function () {
+  if (global.subLock = true) {
+    console.log('NO!');
+    global.subLock = false;
+    global.uploadLock = false;
+  }  
   let newestFile = [];
   fs.readFile('./fileTracker.csv', async (err, data) => {
     if (err) {

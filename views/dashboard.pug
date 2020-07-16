@@ -7,15 +7,16 @@ block content
     if error
       p Error getting dynamic content.
     else
-      p The following files are active:
+      p The following files are active:      
       br
 
       - let files = fileInfo.slice(0,7);
       - let lastUpload = fileInfo2[fileInfo2.length - 1];
            
-
-      if global.uploadLock == false || isAuthenticated == false
-        h1 No guy
+      - console.log('lock on dash:' + global.uploadLock)
+      - console.log('isLogged on dahs:' + global.isLoggedIn)
+      if global.dashboardLock == true || global.isLoggedIn == false
+        a(href='/login') You must LOGIN!
       else                    
         div
           - let x = 0;   
