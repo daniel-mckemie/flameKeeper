@@ -103,10 +103,7 @@ passport.deserializeUser(function (user, done) {
   done(null, user);
 });
 
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.isAuthenticated();
-  next();
-});
+
 
 
 
@@ -115,11 +112,15 @@ app.use((req, res, next) => {
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 
-const userInViews = require('./lib/middleware/userInViews');
+
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 
-app.use(userInViews());
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
+
 app.use('/', authRouter);
 app.use('/', usersRouter);
 
