@@ -50,8 +50,8 @@ exports.list_function = function (req, res) {
         console.error(err)
         return
       }
-      let dataToTreat = await neatCsv(data);
-      fileInfo = dataToTreat;
+      let dataToTreat = await neatCsv(data);      
+      fileInfo = dataToTreat;      
       return fileInfo;
     });
 
@@ -231,11 +231,51 @@ exports.past_composers_function = function (req, res) {
       let dataToTreat = await neatCsv(data);
       fileInfo = dataToTreat;
       return fileInfo;
+      
+    })
+    
+    fs.readFile('./snapshot.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let snapData = await neatCsv(data);
+      snaps = snapData;
+      return snaps;
+
+    })
+
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.render('pastComposers', [fileInfo, snaps]));
+      }, 2000)
+    })
+  }
+  getList(),
+
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    }
+}
+
+exports.history_function = function (req, res) {  
+  function getList() {
+    fs.readFile('./fileTracker.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat = await neatCsv(data);
+      fileInfo = dataToTreat;
+      let startSlice = parseInt(req.params.id);    
+      let endSlice = startSlice + 7      
+      slicedFiles = fileInfo.slice(startSlice, endSlice);                
+      return slicedFiles;
     });
 
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.render('pastComposers', fileInfo));
+        resolve(res.render('history', slicedFiles));
       }, 2000)
     })
   }

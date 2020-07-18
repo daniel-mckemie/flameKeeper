@@ -29,8 +29,8 @@ block content
         br
         br
         br
-        - let files = fileInfo;          
-        each file in files ? files : ['NO!!!']
+        - let files = fileInfo;                 
+        each file in files ? files : ['NO!!!']                    
           - let photoSrc = `https://fk-composer-info.s3.amazonaws.com/${file.Name}`                           
           .profilePhoto
             //- Profile photo
@@ -41,8 +41,44 @@ block content
             h1 #{file.Composer}
             p
               | #{file.Bio}
-            p              
-    
+            p            
+            h1 The select element
 
-    
-      
+            p select element is used to create a drop-down list.            
+        
+              //- - let sliceCount = parseInt(file.EndSlice) - parseInt(file.StartSlice) + 1
+              - let sliceStart = parseInt(file.StartSlice)
+              - let sliceEnd = parseInt(file.EndSlice)
+              - let sliceArr = []                
+              - for (let i=sliceStart; i<=sliceEnd; i++) {sliceArr.push(i);}
+             
+              each val in sliceArr 
+                div
+                  form(action=`/history/${val}` method="post")
+                    label(for=`history/${val}`)
+                    //- select(name=val id=val)                  
+                                                            
+                    //-   option(value=val)=val                                            
+                    input(type='submit', value=val)
+                
+                
+                
+                
+            //-     form(method="GET" action=`/history/${file.StartSlice}` id=`launchForm${val}`)
+            //-       label(for="cars")
+            //-       select(name="cars" id="cars")               
+            //-         option(value=`${val}`) #{val}  
+            //-     input(type="submit" form=`launchform${val}`)                              
+            //-   br
+            //-   br
+            //-   input(type="submit" value="Submit" form=`launchform${x}`)
+            //- form
+
+            p Click the "Submit" button and the form-data will be sent to a page on the called "action_page.php".
+            
+            
+                          
+                
+
+                
+                  
