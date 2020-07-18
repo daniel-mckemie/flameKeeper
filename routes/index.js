@@ -5,6 +5,10 @@ const audio_controller = require('../controllers/audioController');
 global.uploadLock = false;
 global.dashboardLock = true;
 
+setInterval(() => {
+  var today = new Date()
+  console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
+}, 1700000);
 
 // DELETE File and Render Home Page
 router.put('/replace/:id', audio_controller.replace_function);
