@@ -62,12 +62,6 @@ let subFile = function () {
       }
     }
 
-
-
-
-
-
-
     for (let i = 0; i < csvData.length; i++) {
       data.push([csvData[i].id, csvData[i].Name]);
     }

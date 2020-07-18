@@ -1,16 +1,68 @@
 block content
   h1= title
   p INTERN FORM
-  - console.log(global.isLoggedIn)
+  - global.isLoggedIn = true
+  - let files = fileInfo  
+
   if error
     p Error getting dynamic content.
   else    
-    if isLoggedIn == true
+    if global.isLoggedIn == true
+      each file in files
+        div=file.id
+          form(method="POST" action=`/intern-update`)
+            input(type="hidden" id="id" name="id" value=file.id)
+            
+            label(for="Name") Photo File Name:
+            input(type="text" id="Name" name="Name" value=file.Name)
+            br
+            label(for="Composer") Composer Name:
+            input(type="text" id="Composer" name="Composer" value=file.Composer)
+            br
+            label(for="StartSlice") Starting Snapshot:
+            input(type="text" id="StartSlice" name="StartSlice" value=file.StartSlice)
+            br
+            label(for="EndSlice") Ending Snapshot
+            input(type="text" id="EndSlice" name="EndSlice" value=file.EndSlice)            
+            br  
+            label(for="Bio") Bio
+            input(type="text" id="Bio" name="Bio" value=file.Bio)
+            br                                  
+            input(type="submit" value="Submit")
+          br
+          br
+        
+        div=file.id
+          form(method="POST" action=`/intern-update`)
+            input(type="text" id="id" name="id" value=file.id)            
+            label(for="Name") Photo File Name:
+            input(type="text" id="Name" name="Name" value=file.Name)
+            br
+            label(for="Composer") Composer Name:
+            input(type="text" id="Composer" name="Composer" value=file.Composer)
+            br
+            label(for="StartSlice") Starting Snapshot:
+            input(type="text" id="StartSlice" name="StartSlice" value=file.StartSlice)
+            br
+            label(for="EndSlice") Ending Snapshot
+            input(type="text" id="EndSlice" name="EndSlice" value=file.EndSlice)            
+            br  
+            label(for="Bio") Bio
+            input(type="text" id="Bio" name="Bio" value=file.Bio)
+            br                                  
+            input(type="submit" value="Submit")
+          br
+          br
+
+
+
+
       div(class="solid")
         p UPLOAD YOUR FILE:
         form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
           input(type="file" name="theUpload" id="uploadValue")                                          
           input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
+      
           
     br
     br

@@ -15,7 +15,9 @@ router.put('/replace/:id', audio_controller.replace_function);
 
 // GET Upload Form
 router.get('/upload-form', (req, res) => res.render('./upload-form'));
-router.get('/intern-form', (req, res) => res.render('./intern-form'));
+router.get('/intern-form', audio_controller.intern_form);
+// router.post('/intern-update/:id', (req, res) => audio_controller.intern_update(req, res))
+router.post('/intern-update', (req, res) => audio_controller.intern_update(req, res))
 
 
 // GET Dashboard page route

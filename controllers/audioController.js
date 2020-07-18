@@ -7,6 +7,7 @@ const Replace = require('../models/replace');
 const Substitute = require('../models/subFile');
 const AppendDoc = require('../models/appendDoc');
 const AppendIntern = require('../models/appendIntern');
+const UpdateIntern = require('../models/updateIntern');
 const DeleteDoc = require('../models/deleteDoc');
 const SnapshotAppend = require('../models/snapshotAppend');
 
@@ -174,11 +175,53 @@ exports.delete_function = function (req, res, next) {
     };
 }
 
+exports.intern_form = function (req, res) {  
+  // ListComposers.list_composers();
+  function getList() {
+    fs.readFile('./pastComposers.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let dataToTreat = await neatCsv(data);
+      fileInfo = dataToTreat;
+      return fileInfo;
+
+    })
+
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.render('intern-form', [fileInfo]));
+      }, 2000)
+    })
+  }
+  getList(),
+
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    }
+}
+
+exports.intern_update = function (req, res) {  
+  const uploadInfo = {
+    id: req.body.id,
+    Name: req.body.Name,
+    Composer: req.body.Composer,
+    StartSlice: req.body.StartSlice,
+    EndSlice: req.body.EndSlice,
+    Bio: req.body.Bio
+    
+  } 
+  UpdateIntern.update_intern(uploadInfo)
+}
+  
+
+
 
 // INTERN UPLOAD page
 exports.intern_upload_function = function (req, res, next) {
   function getList() {
-    fs.readFile('./composerInfo.csv', async (err, data) => {
+    fs.readFile('./pastComposers.csv', async (err, data) => {
       if (err) {
         console.error(err)
         return
@@ -205,13 +248,13 @@ exports.intern_upload_function = function (req, res, next) {
         })
       }
       getList(),
-        uploadFile(),
-        AppendIntern.append_intern(global.internUploadLabel),
+      uploadFile(),
+      AppendIntern.append_intern(global.internUploadLabel),
 
 
-        function (err, results) {
-          res.send('ERRONEOUS!');
-        }
+      function (err, results) {
+        res.send('ERRONEOUS!');
+      }
     })
 
     .on('success', (name, field) => {
