@@ -260,23 +260,27 @@ exports.past_composers_function = function (req, res) {
 
 exports.history_function = function (req, res) {  
   function getList() {
-    fs.readFile('./fileTracker.csv', async (err, data) => {
+    fs.readFile('./snapshot.csv', async (err, data) => {
       if (err) {
         console.error(err)
         return
       }
       let dataToTreat = await neatCsv(data);
-      fileInfo = dataToTreat;
-      let startSlice = parseInt(req.params.id);    
-      let endSlice = startSlice + 7      
-      slicedFiles = fileInfo.slice(startSlice, endSlice);                
-      return slicedFiles;
+      fileInfo = dataToTreat;      
+      let startSlice = parseInt(req.params.id);          
+      slicedFiles = [] 
+      for (let i=0; i<fileInfo.length; i++) {        
+        if (fileInfo[i].id == startSlice) {          
+          slicedFiles.push(fileInfo[i])                 
+        }
+      }
+      return slicedFiles            
     });
 
     return new Promise(resolve => {
       setTimeout(function () {
         resolve(res.render('history', slicedFiles));
-      }, 2000)
+      }, 3000)
     })
   }
   getList(),

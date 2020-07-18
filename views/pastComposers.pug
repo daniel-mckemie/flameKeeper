@@ -53,7 +53,7 @@ block content
               - for (let i=sliceStart; i<=sliceEnd; i++) {sliceArr.push(i);}
              
               each val in sliceArr 
-                div
+                
                   form(action=`/history/${val}` method="post")
                     label(for=`history/${val}`)
                     //- select(name=val id=val)                  

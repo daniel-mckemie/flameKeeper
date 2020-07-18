@@ -91,13 +91,13 @@ let replaceFile = function (fileToReplace) {
     clearInterval(global.myInterval);
     global.myInterval = setInterval(() => {      
       Substitute.sub_file();      
-    }, 10000);
+    }, 25200000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
     global.myInterval = setInterval(() => {
       Substitute.sub_file();      
-    }, 10000);
+    }, 25200000);
     global.stopTime = true;    
   }
 
