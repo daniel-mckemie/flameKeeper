@@ -7,8 +7,6 @@ let appendIntern = function (fileToAppend) {
   console.log('from intern doc ' + fileToAppend);
 
 
-
-
   let csvData = [];
 
   fs.readFile('./pastComposers.csv', async (err, data) => {

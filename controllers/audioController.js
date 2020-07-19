@@ -8,6 +8,9 @@ const Substitute = require('../models/subFile');
 const AppendDoc = require('../models/appendDoc');
 const AppendIntern = require('../models/appendIntern');
 const UpdateIntern = require('../models/updateIntern');
+const DeleteIntern = require('../models/deleteIntern');
+const DeleteBucket = require('../models/deleteBucket');
+const DeletePhoto = require('../models/deletePhoto');
 const DeleteDoc = require('../models/deleteDoc');
 const SnapshotAppend = require('../models/snapshotAppend');
 
@@ -51,8 +54,8 @@ exports.list_function = function (req, res) {
         console.error(err)
         return
       }
-      let dataToTreat = await neatCsv(data);      
-      fileInfo = dataToTreat;      
+      let dataToTreat = await neatCsv(data);
+      fileInfo = dataToTreat;
       return fileInfo;
     });
 
@@ -175,7 +178,7 @@ exports.delete_function = function (req, res, next) {
     };
 }
 
-exports.intern_form = function (req, res) {  
+exports.intern_form = function (req, res) {
   // ListComposers.list_composers();
   function getList() {
     fs.readFile('./pastComposers.csv', async (err, data) => {
@@ -186,12 +189,22 @@ exports.intern_form = function (req, res) {
       let dataToTreat = await neatCsv(data);
       fileInfo = dataToTreat;
       return fileInfo;
+    })
+
+    fs.readFile('./bucketStuff.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let bucketData = await neatCsv(data);
+      bucketStuff = bucketData;
+      return bucketStuff;
 
     })
 
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.render('intern-form', [fileInfo]));
+        resolve(res.render('intern-form', [fileInfo, bucketStuff]));
       }, 2000)
     })
   }
@@ -202,7 +215,7 @@ exports.intern_form = function (req, res) {
     }
 }
 
-exports.intern_update = function (req, res) {  
+exports.intern_update = function (req, res) {
   const uploadInfo = {
     id: req.body.id,
     Name: req.body.Name,
@@ -210,12 +223,42 @@ exports.intern_update = function (req, res) {
     StartSlice: req.body.StartSlice,
     EndSlice: req.body.EndSlice,
     Bio: req.body.Bio
-    
-  } 
+
+  }
   UpdateIntern.update_intern(uploadInfo)
 }
+
+exports.intern_delete = function (req, res) {
+  const deleteInfo = {
+    id: req.body.id,
+    Name: req.body.Name,
+    Composer: req.body.Composer,
+    StartSlice: req.body.StartSlice,
+    EndSlice: req.body.EndSlice,
+    Bio: req.body.Bio
+  }
+  DeleteIntern.delete_intern(deleteInfo);  
+}
+
+exports.delete_photo = function (req, res) {   
+  function deleteLast() {
+    DeleteBucket.delete_bucket(req.body.file),
+    DeletePhoto.delete_photo({
+      id: req.body.file
+    });
+    return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(res.redirect('/intern-form'))
+      }, 2000)
+    })
+  }
+  deleteLast(),
   
 
+    function (err, results) {
+      res.send('ERRONEOUS!');
+    };
+}
 
 
 // INTERN UPLOAD page
@@ -226,7 +269,7 @@ exports.intern_upload_function = function (req, res, next) {
         console.error(err)
         return
       }
-      let dataToPush = await neatCsv(data);      
+      let dataToPush = await neatCsv(data);
     })
   }
 
@@ -248,13 +291,13 @@ exports.intern_upload_function = function (req, res, next) {
         })
       }
       getList(),
-      uploadFile(),
-      AppendIntern.append_intern(global.internUploadLabel),
+        uploadFile(),
+        AppendIntern.append_intern(global.internUploadLabel),
 
 
-      function (err, results) {
-        res.send('ERRONEOUS!');
-      }
+        function (err, results) {
+          res.send('ERRONEOUS!');
+        }
     })
 
     .on('success', (name, field) => {
@@ -274,9 +317,9 @@ exports.past_composers_function = function (req, res) {
       let dataToTreat = await neatCsv(data);
       fileInfo = dataToTreat;
       return fileInfo;
-      
+
     })
-    
+
     fs.readFile('./snapshot.csv', async (err, data) => {
       if (err) {
         console.error(err)
@@ -301,7 +344,7 @@ exports.past_composers_function = function (req, res) {
     }
 }
 
-exports.history_function = function (req, res) {  
+exports.history_function = function (req, res) {
   function getList() {
     fs.readFile('./snapshot.csv', async (err, data) => {
       if (err) {
@@ -309,15 +352,15 @@ exports.history_function = function (req, res) {
         return
       }
       let dataToTreat = await neatCsv(data);
-      fileInfo = dataToTreat;      
-      let startSlice = parseInt(req.params.id);          
-      slicedFiles = [] 
-      for (let i=0; i<fileInfo.length; i++) {        
-        if (fileInfo[i].id == startSlice) {          
-          slicedFiles.push(fileInfo[i])                 
+      fileInfo = dataToTreat;
+      let startSlice = parseInt(req.params.id);
+      slicedFiles = []
+      for (let i = 0; i < fileInfo.length; i++) {
+        if (fileInfo[i].id == startSlice) {
+          slicedFiles.push(fileInfo[i])
         }
       }
-      return slicedFiles            
+      return slicedFiles
     });
 
     return new Promise(resolve => {
@@ -332,6 +375,7 @@ exports.history_function = function (req, res) {
       res.send('ERRONEOUS!');
     }
 }
+
 
 exports.test_function = function (req, res) {
   List.list_files();

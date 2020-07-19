@@ -2,7 +2,8 @@ block content
   h1= title
   p INTERN FORM
   - global.isLoggedIn = true
-  - let files = fileInfo  
+  - let files = fileInfo 
+  - let bucketFiles = bucketStuff  
 
   if error
     p Error getting dynamic content.
@@ -28,40 +29,51 @@ block content
             label(for="Bio") Bio
             input(type="text" id="Bio" name="Bio" value=file.Bio)
             br                                  
-            input(type="submit" value="Submit")
-          br
-          br
-        
-        div=file.id
-          form(method="POST" action=`/intern-update`)
-            input(type="text" id="id" name="id" value=file.id)            
-            label(for="Name") Photo File Name:
-            input(type="text" id="Name" name="Name" value=file.Name)
+            input(type="submit" value="UPDATE")
+
+          form(method="POST" action=`/intern-delete`)
+            input(type="submit" value="DELETE")
+            input(type="hidden" id="id" name="id" value=file.id)            
+            label(for="Name") 
+            input(type="hidden" id="Name" name="Name" value=file.Name)
             br
-            label(for="Composer") Composer Name:
-            input(type="text" id="Composer" name="Composer" value=file.Composer)
+            label(for="Composer")
+            input(type="hidden" id="Composer" name="Composer" value=file.Composer)
             br
-            label(for="StartSlice") Starting Snapshot:
-            input(type="text" id="StartSlice" name="StartSlice" value=file.StartSlice)
+            label(for="StartSlice")
+            input(type="hidden" id="StartSlice" name="StartSlice" value=file.StartSlice)
             br
-            label(for="EndSlice") Ending Snapshot
-            input(type="text" id="EndSlice" name="EndSlice" value=file.EndSlice)            
+            label(for="EndSlice")
+            input(type="hidden" id="EndSlice" name="EndSlice" value=file.EndSlice)            
             br  
-            label(for="Bio") Bio
-            input(type="text" id="Bio" name="Bio" value=file.Bio)
+            label(for="Bio")
+            input(type="hidden" id="Bio" name="Bio" value=file.Bio)
             br                                  
-            input(type="submit" value="Submit")
+            
           br
           br
 
+      h1 Image File Names
+      each thing in bucketStuff
+        h3=thing.Name
+        form(method="POST" action=`/delete-photo`)          
+          input(type="hidden" id="id" name="file" value=thing.Name)   
+          label(for="file")
+          input(type="submit" value="DELETE")
+        
+          
+      br
+      br
+      br
 
 
 
-      div(class="solid")
-        p UPLOAD YOUR FILE:
-        form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
-          input(type="file" name="theUpload" id="uploadValue")                                          
-          input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
+
+    div(class="solid")
+      p UPLOAD YOUR FILE:
+      form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
+        input(type="file" name="theUpload" id="uploadValue")                                          
+        input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
       
           
     br
