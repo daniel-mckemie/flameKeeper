@@ -24,8 +24,7 @@ router.get('/callback', function (req, res, next) {
     if (!user) { return res.redirect('/login'); }
     req.logIn(user, function (err) {
       if (err) { return next(err); }
-      const returnTo = req.session.returnTo;
-      global.isLoggedIn = true;
+      const returnTo = req.session.returnTo;      
       delete req.session.returnTo;
       res.redirect(returnTo || '/upload-form');
     });
@@ -34,9 +33,7 @@ router.get('/callback', function (req, res, next) {
 
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
-  req.logout();
-  global.isLoggedIn = false;
-  
+  req.logout();    
   let returnTo = req.protocol + '://' + req.hostname;
   const port = req.connection.localPort;
   if (port !== undefined && port !== 80 && port !== 443) {

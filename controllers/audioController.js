@@ -199,12 +199,21 @@ exports.intern_form = function (req, res) {
       let bucketData = await neatCsv(data);
       bucketStuff = bucketData;
       return bucketStuff;
-
+    })
+    
+    fs.readFile('./snapshot.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      let snapShotData = await neatCsv(data);
+      snaps = snapShotData;
+      return snaps;
     })
 
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.render('intern-form', [fileInfo, bucketStuff]));
+        resolve(res.render('intern-form', [fileInfo, bucketStuff, snaps]));
       }, 2000)
     })
   }
@@ -333,7 +342,7 @@ exports.past_composers_function = function (req, res) {
 
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.render('pastComposers', [fileInfo, snaps]));
+        resolve(res.render('past-composers', [fileInfo, snaps]));
       }, 2000)
     })
   }

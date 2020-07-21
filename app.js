@@ -94,16 +94,6 @@ passport.deserializeUser(function (user, done) {
 });
 
 
-
-
-
-
-// const routes = require('./routes.js');
-const indexRouter = require('./routes/index');
-app.use('/', indexRouter);
-
-
-
 const authRouter = require('./routes/auth');
 
 app.use((req, res, next) => {
@@ -112,6 +102,13 @@ app.use((req, res, next) => {
 });
 
 app.use('/', authRouter);
+
+
+
+
+// const routes = require('./routes.js');
+const indexRouter = require('./routes/index');
+app.use('/', indexRouter);
 
 
 

@@ -8,7 +8,9 @@ global.dashboardLock = true;
 setInterval(() => {
   var today = new Date()
   console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
-}, 1700000);
+}, 7200000);
+
+router.get('/all-links', (req, res) => res.render('./all-links'));
 
 // DELETE File and Render Home Page
 router.put('/replace/:id', audio_controller.replace_function);
@@ -41,7 +43,7 @@ router.post('/delete/:id', audio_controller.delete_function);
 // router.get('/download', audio_controller.download_function);
 
 // GET Home page route.
-router.get('/pastComposers', (req, res) => audio_controller.past_composers_function(req, res));
+router.get('/past-composers', (req, res) => audio_controller.past_composers_function(req, res));
 router.post('/history/:id', (req, res) => audio_controller.history_function(req, res));
 
 

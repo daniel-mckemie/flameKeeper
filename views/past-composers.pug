@@ -52,14 +52,13 @@ block content
               - let sliceArr = []                
               - for (let i=sliceStart; i<=sliceEnd; i++) {sliceArr.push(i);}
              
-              each val in sliceArr 
-                
-                  form(action=`/history/${val}` method="post")
-                    label(for=`history/${val}`)
-                    //- select(name=val id=val)                  
-                                                            
-                    //-   option(value=val)=val                                            
-                    input(type='submit', value=val)
+              each val in sliceArr                 
+                form(action=`/history/${val}` method="post")
+                  span
+                  label(for=`history/${val}`)
+                  //- select(name=val id=val)                                                                              
+                  //-   option(value=val)=val                                            
+                  input(type='submit', value=val)
                 
                 
                 

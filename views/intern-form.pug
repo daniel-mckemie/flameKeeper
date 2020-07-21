@@ -1,16 +1,17 @@
 block content
   h1= title
-  p INTERN FORM
-  - global.isLoggedIn = true
-  - let files = fileInfo 
-  - let bucketFiles = bucketStuff  
+  p INTERN FORM  
+  - let files = fileInfo;
+  - let bucketFiles = bucketStuff;
+  - let snapshots = snaps;  
 
   if error
     p Error getting dynamic content.
   else    
-    if global.isLoggedIn == true
+    if isAuthenticated
+      h1 Current snapshot: #{snapshots[snapshots.length - 1].id}
       each file in files
-        div=file.id
+        div=file.id        
           form(method="POST" action=`/intern-update`)
             input(type="hidden" id="id" name="id" value=file.id)
             
@@ -69,15 +70,18 @@ block content
 
 
 
-    div(class="solid")
-      p UPLOAD YOUR FILE:
-      form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
-        input(type="file" name="theUpload" id="uploadValue")                                          
-        input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
-      
-          
-    br
-    br
+      div(class="solid")
+        p UPLOAD YOUR FILE:
+        form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
+          input(type="file" name="theUpload" id="uploadValue")                                          
+          input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
+        
+            
+      br
+      br
+    else
+      a(href="/login")
+        div Log in
 
     //- script.
       
