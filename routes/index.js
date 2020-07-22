@@ -8,7 +8,7 @@ global.dashboardLock = true;
 setInterval(() => {
   var today = new Date()
   console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
-}, 7200000);
+}, 1500000);
 
 router.get('/all-links', (req, res) => res.render('./all-links'));
 
