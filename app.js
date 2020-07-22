@@ -24,11 +24,13 @@ app.set('view engine', 'pug');
 // Session/Login
 
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 
 // config express-session
 const sess = {
+  store: new MemoryStore,
   secret: 'ITS A SEEEECRET',
-  cookie: {},
+  cookie: {maxAge: 60000},
   resave: false,
   saveUninitialized: true
 };
@@ -66,9 +68,6 @@ const strategy = new Auth0Strategy({
 
 
 passport.use(strategy);
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 
