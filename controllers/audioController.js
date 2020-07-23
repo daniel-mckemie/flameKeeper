@@ -392,13 +392,13 @@ exports.cycle_function = function() {
     clearInterval(global.myInterval);
     global.myInterval = setInterval(() => {
       Substitute.sub_file();
-    }, 1800000);
+    }, 25200000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
     global.myInterval = setInterval(() => {
       Substitute.sub_file();
-    }, 1800000);
+    }, 25200000);
     global.stopTime = true;
   }
 }
