@@ -387,17 +387,18 @@ exports.history_function = function (req, res) {
 exports.cycle_function = function() {  
   if (global.stopTime == true || global.stopTime == undefined) {
     console.log('Interval cleared!');
+    var today = new Date()
     console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
     clearInterval(global.myInterval);
     global.myInterval = setInterval(() => {
       Substitute.sub_file();
-    }, 3600000);
+    }, 1800000);
     global.stopTime = false;
   } else {
     console.log('Interval started!');
     global.myInterval = setInterval(() => {
       Substitute.sub_file();
-    }, 3600000);
+    }, 1800000);
     global.stopTime = true;
   }
 }

@@ -6,13 +6,13 @@ global.uploadLock = false;
 global.dashboardLock = true;
 global.stopTime;
 
-audio_controller.cycle_function;
+audio_controller.cycle_function();
 
 
 
 
 // setInterval(() => {
-//   var today = new Date()
+  // var today = new Date()
 //   console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
 // }, 1500000);
 
