@@ -9,6 +9,8 @@ block content
           img(src='./images/me-logo-wht.png' alt='sample logo')      
       #installation
         - let files = fileInfo.Name; 
+        - console.log(fileInfo)
+        
         //- if error
         //-   p Error getting dynamic content.
         //- else                
@@ -33,6 +35,7 @@ block content
       //- Identity details
       section.profileHeader
         button(id="btn") Play
+        button(id="fullscreen" onclick="goFullScreen()") Fullscreen
         h1 The FlameKeeper
         h3 A LIVE STREAMING ART INSTALLATION&nbsp;
         p
@@ -267,14 +270,15 @@ block content
             group.appendChild(svg);
             animate(svg, waveformWidth, wf.viewWidth, animateViewHeight, wf.speed);
           });
+          document.getElementById('btn').addEventListener('click', function() {
+            audioCtx.resume().then(() => {
+            console.log('Playback resumed successfully');
+        });
+      });
       });
       //});
 
-      //- document.getElementById('btn').addEventListener('click', function() {
-      //-   audioContext.resume().then(() => {
-      //-     console.log('Playback resumed successfully');
-      //-   });
-      //- });
+      
 
       function visualize(audioBuffer, waveformHeight) {
         const duration = audioBuffer.duration;
@@ -365,5 +369,41 @@ block content
         requestAnimationFrame(draw);
       }
 
+
+      function goFullScreen(){
+        var elem = document.getElementById("installation");
+
+        if(elem.requestFullscreen){
+            elem.requestFullscreen();              
+            elem.className += 'css-selector';
+        }
+        else if(elem.mozRequestFullScreen){
+            elem.mozRequestFullScreen();
+            elem.className += 'css-selector';
+        }
+        else if(elem.webkitRequestFullscreen){
+            elem.webkitRequestFullscreen();
+            elem.className += 'css-selector';
+        }
+        else if(elem.msRequestFullscreen){
+            elem.msRequestFullscreen();
+            elem.className += 'css-selector';
+        }
+      }
+
+      function exitFullScreen() {
+        if(document.exitFullscreen){
+            document.exitFullscreen();
+        }
+        else if(document.mozCancelFullScreen){
+            document.mozCancelFullScreen();
+        }
+        else if(document.webkitExitFullscreen){
+            document.webkitExitFullscreen();
+        }
+        else if(document.msExitFullscreen){
+            document.msExitFullscreen();
+        }
+      }
         
         

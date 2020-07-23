@@ -6,7 +6,8 @@ block content
       .profileLogo
         //-- Profile logo. Add a img tag in place of <span>.
         p.logoPlaceholder
-          img(src='../images/me-logo-wht.png' alt='sample logo')      
+          img(src='../images/me-logo-wht.png' alt='sample logo')  
+       
       #installation
         //- if error
         //-   p Error getting dynamic content.
@@ -18,10 +19,12 @@ block content
         //- - let returnsReversed = returns.reverse();
         //- - let files = returnsReversed.slice(0,7);
         //- - let lastUpload = returns[returns.length - 1];
+    div
+      button(id="btn") Play
+      button(id="fullscreen" onclick="goFullScreen()") Fullscreen   
         
         
-        div(class="waveform")
-        button(class="btn") Play
+        
 
     
     script.
@@ -188,14 +191,15 @@ block content
             group.appendChild(svg);
             animate(svg, waveformWidth, wf.viewWidth, animateViewHeight, wf.speed);
           });
+          document.getElementById('btn').addEventListener('click', function() {
+            audioCtx.resume().then(() => {
+            console.log('Playback resumed successfully');
+        });
+      });
       });
       //});
 
-      //- document.getElementById('btn').addEventListener('click', function() {
-      //-   audioContext.resume().then(() => {
-      //-     console.log('Playback resumed successfully');
-      //-   });
-      //- });
+      
 
       function visualize(audioBuffer, waveformHeight) {
         const duration = audioBuffer.duration;
@@ -284,4 +288,40 @@ block content
           requestAnimationFrame(draw);
         }
         requestAnimationFrame(draw);
+      }
+      
+      function goFullScreen(){
+        var elem = document.getElementById("installation");
+
+        if(elem.requestFullscreen){
+            elem.requestFullscreen();              
+            elem.className += 'css-selector';
+        }
+        else if(elem.mozRequestFullScreen){
+            elem.mozRequestFullScreen();
+            elem.className += 'css-selector';
+        }
+        else if(elem.webkitRequestFullscreen){
+            elem.webkitRequestFullscreen();
+            elem.className += 'css-selector';
+        }
+        else if(elem.msRequestFullscreen){
+            elem.msRequestFullscreen();
+            elem.className += 'css-selector';
+        }
+      }
+
+      function exitFullScreen() {
+        if(document.exitFullscreen){
+            document.exitFullscreen();            
+        }
+        else if(document.mozCancelFullScreen){
+            document.mozCancelFullScreen();            
+        }
+        else if(document.webkitExitFullscreen){
+            document.webkitExitFullscreen();            
+        }
+        else if(document.msExitFullscreen){
+            document.msExitFullscreen();            
+        }
       }
