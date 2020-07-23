@@ -240,7 +240,7 @@ header .profilePhoto {
 	display: inline-block;
 	margin-bottom: 10%;
 }
-header .installation {
+header #installation {
 	display: inline-block;
 	height: 50px;	
 	padding-top: 50px;

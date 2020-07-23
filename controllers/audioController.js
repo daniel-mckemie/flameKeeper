@@ -56,7 +56,7 @@ exports.list_function = function (req, res) {
       let dataToTreat = await neatCsv(data);
       fileInfo = dataToTreat;
       return fileInfo;
-    });
+    });    
 
     return new Promise(resolve => {
       setTimeout(function () {
