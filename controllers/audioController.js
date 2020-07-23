@@ -20,9 +20,8 @@ const fs = require('fs');
 const neatCsv = require('neat-csv');
 
 
-global.uploadLock = 0;
 global.dashboardLock = true;
-console.log('From AUDIO CONTROLLER ' + global.dashboardLock)
+
 
 
 // REPLACE function when submitting from composer page
@@ -136,13 +135,13 @@ exports.upload_function = function (req, res, next) {
         });
         return new Promise(resolve => {
           setTimeout(function () {
-            resolve(res.redirect('dashboard'))
+            resolve(res.redirect('upload-form'))
           }, 2000)
         })
       }
       getList(),
-        uploadFile(),
-        AppendDoc.append_csv(global.uploadFileLabel),
+      uploadFile(),
+      AppendDoc.append_csv(global.uploadFileLabel),
 
 
         function (err, results) {
@@ -383,6 +382,24 @@ exports.history_function = function (req, res) {
     function (err, results) {
       res.send('ERRONEOUS!');
     }
+}
+
+exports.cycle_function = function() {  
+  if (global.stopTime == true || global.stopTime == undefined) {
+    console.log('Interval cleared!');
+    console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
+    clearInterval(global.myInterval);
+    global.myInterval = setInterval(() => {
+      Substitute.sub_file();
+    }, 3600000);
+    global.stopTime = false;
+  } else {
+    console.log('Interval started!');
+    global.myInterval = setInterval(() => {
+      Substitute.sub_file();
+    }, 3600000);
+    global.stopTime = true;
+  }
 }
 
 

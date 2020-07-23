@@ -1,11 +1,12 @@
 block content
   h1= title
   p Welcome to Flame Keeper  
+  - console.log(global.uploadLock)
   
   if error
     p Error getting dynamic content.
   else    
-    if isAuthenticated
+    if isAuthenticated && global.uploadLock == false
       div(class="solid")
         p UPLOAD YOUR FILE:
         form(method="POST" action="/upload" id="uploadForm" encType="multipart/form-data")                 
@@ -14,9 +15,12 @@ block content
           
       br
       br
-    else
+    else if isAuthenticated && global.uploadLock == true
+      a(href="/dashboard")
+        div Go to the DASHBOARD.
+    else if isAuthenticated == false 
       a(href="/login")
-        div Log in
+        div YOU MUST LOGIN.
 
     script.
       

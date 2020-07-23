@@ -4,10 +4,13 @@ let uploadFiles = function (name, fileToUpload, count) {
 
   let x = name.fileName
   let lastFour = x.substr(x.length - 4); // => ".mp3"
-  console.log(global.uploadLock)
-  if (lastFour == '.mp3' && global.uploadLock == false) {
+  console.log('From upload: ' + global.uploadLock)
+  if (lastFour != '.mp3' || global.uploadLock == true) {
+    return name.title = 'YOU MUST WAIT 7 HOURS TO UPLOAD AGAIN!'
+  } else {
     global.uploadLock = true;
     global.dashboardLock = false;
+    global.stopTime = true;
     
     // Load the AWS SDK for Node.js
     const AWS = require('aws-sdk');
@@ -67,9 +70,7 @@ let uploadFiles = function (name, fileToUpload, count) {
         console.log("Upload Success", data.key);              
       }
     })
-  } else {
-    return name.title = 'YOU MUST WAIT 7 HOURS TO UPLOAD AGAIN!'
-  }
+  } 
 }
 
 

@@ -19,6 +19,7 @@ let appendSnapshotCSV = function (filesToAppend) {
 
   setTimeout(() => {    
     global.snapId++
+    console.log('SNAPID ' + global.snapId);
 
     // GET LAST SNAPSHOT NUMBER HERE! 
     let data = []

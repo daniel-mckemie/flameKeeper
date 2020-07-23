@@ -4,11 +4,17 @@ const audio_controller = require('../controllers/audioController');
 
 global.uploadLock = false;
 global.dashboardLock = true;
+global.stopTime;
 
-setInterval(() => {
-  var today = new Date()
-  console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
-}, 1500000);
+audio_controller.cycle_function;
+
+
+
+
+// setInterval(() => {
+//   var today = new Date()
+//   console.log('INDICATION: ' + today.getHours() + ":" + today.getMinutes())
+// }, 1500000);
 
 router.get('/all-links', (req, res) => res.render('./all-links'));
 
