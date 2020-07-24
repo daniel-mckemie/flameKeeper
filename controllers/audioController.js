@@ -32,7 +32,7 @@ exports.replace_function = function (req, res) {
     })
     return new Promise(resolve => {
       setTimeout(function () {
-        resolve(res.redirect('/'))
+        resolve(res.redirect('/dashboard'))
       }, 2000)
     })
   }

@@ -290,38 +290,37 @@ block content
         requestAnimationFrame(draw);
       }
       
+      
       function goFullScreen(){
-        var elem = document.getElementById("installation");
+        const elem = document.getElementById('installation');
 
         if(elem.requestFullscreen){
-            elem.requestFullscreen();              
-            elem.className += 'css-selector';
+          elem.requestFullscreen();              
+          elem.className += 'css-selector';
         }
         else if(elem.mozRequestFullScreen){
-            elem.mozRequestFullScreen();
-            elem.className += 'css-selector';
+          elem.mozRequestFullScreen();
+          elem.className += 'css-selector';
         }
         else if(elem.webkitRequestFullscreen){
-            elem.webkitRequestFullscreen();
-            elem.className += 'css-selector';
+          elem.webkitRequestFullscreen();
+          elem.className += 'css-selector';
         }
         else if(elem.msRequestFullscreen){
-            elem.msRequestFullscreen();
-            elem.className += 'css-selector';
+          elem.msRequestFullscreen();
+          elem.className += 'css-selector';
+        }
+      }    
+      
+
+      function exitFullScreen() { 
+        const elem = document.getElementById('installation');                       
+        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+          elem.classList.remove('css-selector');
         }
       }
 
-      function exitFullScreen() {
-        if(document.exitFullscreen){
-            document.exitFullscreen();            
-        }
-        else if(document.mozCancelFullScreen){
-            document.mozCancelFullScreen();            
-        }
-        else if(document.webkitExitFullscreen){
-            document.webkitExitFullscreen();            
-        }
-        else if(document.msExitFullscreen){
-            document.msExitFullscreen();            
-        }
-      }
+      document.addEventListener('fullscreenchange', exitFullScreen);
+      document.addEventListener('webkitfullscreenchange', exitFullScreen);
+      document.addEventListener('mozfullscreenchange', exitFullScreen);
+      document.addEventListener('MSFullscreenChange', exitFullScreen);

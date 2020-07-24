@@ -32,6 +32,10 @@
     100%{background-position:0% 97%}
 }
 
+html {
+	background-color: transparent;
+}
+
 body {
 	margin-left: auto;
 	margin-right: auto;
