@@ -37,6 +37,10 @@ let appendIntern = function (fileToAppend) {
         if (err) throw err;
         console.log('pastComposers.csv saved.');
       })
+      fs.appendFile('bucketStuff.csv', output, (err) => {
+        if (err) throw err;
+        console.log('bucketStuff.csv saved.');
+      })
     });
   }, 2000);
 

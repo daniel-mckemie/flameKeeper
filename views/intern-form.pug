@@ -8,36 +8,21 @@ block content
   if error
     p Error getting dynamic content.
   else    
-    if isAuthenticated
+    if isAuthenticated                  
+      br     
       h1 Current snapshot: #{snapshots[snapshots.length - 1].id}
-      each file in files
-        div=file.id        
-          form(method="POST" action=`/intern-update`)
-            input(type="hidden" id="id" name="id" value=file.id)
-            
-            label(for="Name") Photo File Name:
-            input(type="text" id="Name" name="Name" value=file.Name)
-            br
-            label(for="Composer") Composer Name:
-            input(type="text" id="Composer" name="Composer" value=file.Composer)
-            br
-            label(for="StartSlice") Starting Snapshot:
-            input(type="text" id="StartSlice" name="StartSlice" value=file.StartSlice)
-            br
-            label(for="EndSlice") Ending Snapshot
-            input(type="text" id="EndSlice" name="EndSlice" value=file.EndSlice)            
-            br  
-            label(for="Bio") Bio
-            input(type="text" id="Bio" name="Bio" value=file.Bio)
-            br                                  
-            input(type="submit" value="UPDATE")
+      br
+      br
+      br
 
+      each file in files            
+        if (file.id != 0)          
+          img(style="width:200px;height:200px;" src=`https://fk-composer-info.s3.amazonaws.com/${file.Name}`)
           form(method="POST" action=`/intern-delete`)
-            input(type="submit" value="DELETE")
+            input(type="submit" value="DELETE COMPOSER")
             input(type="hidden" id="id" name="id" value=file.id)            
             label(for="Name") 
-            input(type="hidden" id="Name" name="Name" value=file.Name)
-            br
+            input(type="hidden" id="Name" name="Name" value=file.Name)            
             label(for="Composer")
             input(type="hidden" id="Composer" name="Composer" value=file.Composer)
             br
@@ -48,74 +33,65 @@ block content
             input(type="hidden" id="EndSlice" name="EndSlice" value=file.EndSlice)            
             br  
             label(for="Bio")
-            input(type="hidden" id="Bio" name="Bio" value=file.Bio)
-            br                                  
-            
-          br
-          br
-
-      h1 Image File Names
-      each thing in bucketStuff
-        h3=thing.Name
-        form(method="POST" action=`/delete-photo`)          
-          input(type="hidden" id="id" name="file" value=thing.Name)   
-          label(for="file")
-          input(type="submit" value="DELETE")
-        
-          
+            input(type="hidden" id="Bio" name="Bio" value=file.Bio)            
+          div=file.id                          
+            form(method="POST" action=`/intern-update`)
+              label(for="Name") Id #[strong (do not change this unless absolutely necessary!]): 
+              input(type="text" id="id" name="id" value=file.id)
+              br
+              label(for="Name") Photo File Name: 
+              input(type="text" id="Name" name="Name" value=file.Name)
+              br
+              label(for="Composer") Composer Name: 
+              input(type="text" id="Composer" name="Composer" value=file.Composer)
+              br
+              label(for="StartSlice") Starting Snapshot: 
+              input(type="text" id="StartSlice" name="StartSlice" value=file.StartSlice)
+              br
+              label(for="EndSlice") Ending Snapshot:  
+              input(type="text" id="EndSlice" name="EndSlice" value=file.EndSlice)            
+              br  
+              label(for="Bio") Bio:  
+              textarea(rows="5" cols="200" spellcheck="true" wrap="hard" id="Bio" name="Bio") #{file.Bio}
+              br                                  
+              input(type="submit" value="UPDATE")
+          h3 ---------------------------
       br
       br
-      br
-
-
-
 
       div(class="solid")
-        p UPLOAD YOUR FILE:
+        h3 #[strong CREATE A NEW COMPOSER BY UPLOADING A HEADSHOT]:
         form(method="POST" action="/intern-upload" id="uploadForm" encType="multipart/form-data")                 
-          input(type="file" name="theUpload" id="uploadValue")                                          
-          input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")  
-        
-            
+          input(type="file" name="theUpload" id="uploadValue" accept="image/*")                                          
+          input(type="submit" form="uploadForm" id="uploadButton" value="UPLOAD")                      
       br
       br
+      br
+      br
+
+      h3 Images in the bucket
+      div(class="intern-row")
+        div(class="intern-column")          
+        each thing in bucketStuff
+          img(style="width:200px;height:200px;" src=`https://fk-composer-info.s3.amazonaws.com/${thing.Name}`)
+          h3=thing.Name
+          form(method="POST" action=`/delete-photo`)          
+            input(type="hidden" id="id" name="file" value=thing.Name)   
+            label(for="file")
+            input(type="submit" value="DELETE IMAGE")
+                  
+      br
+      br
+      br
+
+      h1 Snapshots by Date/Time
+      each snap in snaps      
+        if (snap.id != 0)
+          h3 #[strong #{snap.id}]: #{snap.date}
+          
+
     else
       a(href="/login")
         div Log in
 
-    //- script.
       
-                
-      
-
-    //-   document.getElementById("uploadButton").disabled = true;
-    //-   document.getElementById("uploadValue").disabled = false;
-
-
-      //- function disableSubmit() {
-      //-   let x = document.getElementById('uploadValue');
-      //-   let y = x.value;                           
-      //-     document.getElementbyId("uploadValue").disabled = true;        
-      //-     document.getElementById("uploadButton").disabled = true;        
-      //-   } else {
-          
-      //-     document.getElementById("uploadButton").disabled = false;
-          
-      //-   }}
-      
-      //- function redirect() {                 
-      //-   let x = document.getElementById('uploadValue');
-      //-   let y = x.value; 
-      //-   let lastFour = y.substr(y.length - 4); // => ".mp3"                         
-      //-   let fsize = x.files.item(0).size;
-              
-      //-   if (fsize < 209731438) {
-      //-     setTimeout(function(){ document.getElementById("uploadButton").disabled = true }, 10);
-      //-     setTimeout(function(){ window.open('/dashboard'); }, 10000);
-      //-     elm = document.createElement('p');
-      //-     elm.innerHTML = 'PLEASE WAIT...The file is uploading (this can take up to 10 seconds)...';
-      //-     document.body.appendChild(elm);                        
-      //-   }        
-      //- }
-    
-  

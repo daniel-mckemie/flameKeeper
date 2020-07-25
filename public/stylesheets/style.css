@@ -470,3 +470,21 @@ footer .footerNote {
     border-top-right-radius: 0.5em 0.5em;
     border-bottom-right-radius: 1em 0.7em;
 }
+
+
+/* Daniel's Styles */
+.mutes {
+  background-color: darkgray;
+  box-shadow: 0 5px 0 darkgray;
+  color: white;
+  padding: .25em .25em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.mutes:hover {
+	cursor: pointer;
+
+}
+

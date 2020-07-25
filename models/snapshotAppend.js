@@ -27,9 +27,10 @@ let appendSnapshotCSV = function (filesToAppend) {
       // id: global.snapId,
       // name: filesToAppend
     };
-
+    const d = new Date();
+    const n = d.toString();
     for (let x=0; x<filesToAppend.length; x++) {
-      data.push([global.snapId, filesToAppend[x][1]]);
+      data.push([global.snapId, filesToAppend[x][1], n]);
       console.log([global.snapId, filesToAppend[x][1]]);
     }
     

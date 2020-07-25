@@ -19,9 +19,14 @@ let internUpload = function (name, fileToUpload, count) {
   });
 
   let uploadName = name.fileToUpload;
-
-
-  global.internUploadLabel = `${Date.now()}-${name.fileName}`;
+  
+  const year = new Date().getFullYear()
+  const month = new Date().getMonth();
+  const day = new Date().getDay(); 
+  const hour = new Date().getHours(); 
+  const dateString = year.toString() + month.toString() + day.toString() + hour.toString();
+  
+  global.internUploadLabel = `${dateString}-${name.fileName}`;
 
 
 

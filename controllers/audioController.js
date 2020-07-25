@@ -206,7 +206,18 @@ exports.intern_form = function (req, res) {
         return
       }
       let snapShotData = await neatCsv(data);
-      snaps = snapShotData;
+      snapResults = snapShotData;
+      snaps = [];
+      const map = new Map();
+      for (const item of snapResults) {
+        if (!map.has(item.id)) {
+          map.set(item.id, true); // set any value to Map
+          snaps.push({
+            id: item.id,
+            date: item.Date
+          });
+        }
+      }
       return snaps;
     })
 
@@ -233,7 +244,15 @@ exports.intern_update = function (req, res) {
     Bio: req.body.Bio
 
   }
-  UpdateIntern.update_intern(uploadInfo)
+  UpdateIntern.update_intern(uploadInfo);
+  return new Promise(resolve => {
+    setTimeout(function () {
+      resolve(res.redirect('/intern-form'))
+    }, 2000)
+  }),
+  function (err, results) {
+    res.redirect('/intern-form');
+  };
 }
 
 exports.intern_delete = function (req, res) {
@@ -245,7 +264,12 @@ exports.intern_delete = function (req, res) {
     EndSlice: req.body.EndSlice,
     Bio: req.body.Bio
   }
-  DeleteIntern.delete_intern(deleteInfo);  
+  DeleteIntern.delete_intern(deleteInfo);
+  return new Promise(resolve => {
+    setTimeout(function () {
+      resolve(res.redirect('/intern-form'))
+    }, 2000)
+  })
 }
 
 exports.delete_photo = function (req, res) {   
@@ -278,7 +302,7 @@ exports.intern_upload_function = function (req, res, next) {
         return
       }
       let dataToPush = await neatCsv(data);
-    })
+    });    
   }
 
   new formidable.IncomingForm().parse(req)
@@ -294,7 +318,7 @@ exports.intern_upload_function = function (req, res, next) {
         });
         return new Promise(resolve => {
           setTimeout(function () {
-            resolve(res.redirect('dashboard'))
+            resolve(res.redirect('/intern-form'))
           }, 2000)
         })
       }
@@ -305,12 +329,12 @@ exports.intern_upload_function = function (req, res, next) {
 
         function (err, results) {
           res.send('ERRONEOUS!');
-        }
+        };
     })
 
     .on('success', (name, field) => {
       console.log('Field')
-    })
+    });    
 }
 
 
