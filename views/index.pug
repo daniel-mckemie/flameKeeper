@@ -14,7 +14,7 @@ block content
       
       //- Identity details
       section.profileHeader
-        button(id="btn") Play
+        //- button(id="btn") Play
         button(id="fullscreen" onclick="goFullScreen()") Fullscreen
         h1 The FlameKeeper
         h3 A LIVE STREAMING ART INSTALLATION&nbsp;
@@ -83,6 +83,10 @@ block content
         span Email / Social
             
     script.
+      
+      
+      const AudioContext = window.AudioContext || window.webkitAudioContext
+      const audioCtx = new AudioContext();
       
       function begin() {        
         document.getElementById('beginButton').style.visibility = 'hidden';
@@ -257,8 +261,7 @@ block content
             container.appendChild(group);
           }
 
-          const AudioContext = window.AudioContext || window.webkitAudioContext
-          const audioCtx = new AudioContext();                    
+                              
           fetch(wf.url)
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
@@ -280,12 +283,12 @@ block content
             
             setTimeout(function() {
               audio.play();
-            }, 9000);
+            }, 5000);
 
             document.body.appendChild(audio);     
             const source = audioCtx.createMediaElementSource(audio);
             
-            const panner = new PannerNode(audioCtx);
+            //- const panner = new PannerNode(audioCtx);
 
             const compressor = audioCtx.createDynamicsCompressor();
             compressor.threshold.setValueAtTime(-10, audioCtx.currentTime);
@@ -294,18 +297,19 @@ block content
             compressor.attack.setValueAtTime(0, audioCtx.currentTime);
             compressor.release.setValueAtTime(0.25, audioCtx.currentTime)
             
-            panner.setPosition(wf.panAmount,0,1-Math.abs(wf.panAmount));
-            source.connect(panner).connect(compressor).connect(audioCtx.destination);
+            //- panner.setPosition(wf.panAmount,0,1-Math.abs(wf.panAmount));
+            //- source.connect(panner).connect(compressor).connect(audioCtx.destination);
+            source.connect(compressor).connect(audioCtx.destination);
 
 
                                                   
             
             
-            document.getElementById('btn').addEventListener('click', function() {
-              audioCtx.resume().then(() => {
-              console.log('Playback resumed successfully');
-          });
-        });
+          //-   //- document.getElementById('btn').addEventListener('click', function() {
+          //-   //-   audioCtx.resume().then(() => {
+          //-   //-   console.log('Playback resumed successfully');
+          //- });
+        //- });
         });
         //});
 

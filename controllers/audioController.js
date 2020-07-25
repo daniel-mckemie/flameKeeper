@@ -14,6 +14,9 @@ const DeletePhoto = require('../models/deletePhoto');
 const DeleteDoc = require('../models/deleteDoc');
 const SnapshotAppend = require('../models/snapshotAppend');
 
+const StandardizedAudioContext = require('standardized-audio-context');
+
+
 const formidable = require('formidable');
 const fs = require('fs');
 
@@ -54,13 +57,17 @@ exports.list_function = function (req, res) {
         return
       }
       let dataToTreat = await neatCsv(data);
-      fileInfo = dataToTreat;
+      fileInfo = dataToTreat;            
       return fileInfo;
     });    
+    
 
     return new Promise(resolve => {
-      setTimeout(function () {
-        resolve(res.render('index', fileInfo));
+      setTimeout(function () {        
+        resolve(res.render('index', {
+          audioContext: StandardizedAudioContext,
+          fileInfo: fileInfo
+        }));
       }, 2000)
     })
   }
