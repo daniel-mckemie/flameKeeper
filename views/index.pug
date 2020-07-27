@@ -89,6 +89,10 @@ block content
       
       function begin() {        
         document.getElementById('beginButton').style.visibility = 'hidden';
+        
+        audioCtx.resume().then(() => {
+          console.log('Playback resumed successfully');
+        });
       
 
         let returns0 = `!{JSON.stringify(fileInfo[0].Name)}`;
@@ -299,16 +303,6 @@ block content
             //- panner.setPosition(wf.panAmount,0,1-Math.abs(wf.panAmount));
             //- source.connect(panner).connect(compressor).connect(audioCtx.destination);
             source.connect(compressor).connect(audioCtx.destination);
-
-
-                                                  
-            
-            
-          //-   //- document.getElementById('btn').addEventListener('click', function() {
-          //-   //-   audioCtx.resume().then(() => {
-          //-   //-   console.log('Playback resumed successfully');
-          //- });
-        //- });
         });
         //});
 
